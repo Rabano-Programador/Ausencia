@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     #region Awake & Start
     private void Awake()
     {
@@ -71,7 +70,6 @@ public class PlayerController : MonoBehaviour
         originalCameraPos = camTransform.localPosition;
     }
     #endregion
-
 
     #region Update
     void Update()
@@ -163,7 +161,6 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-
     #region Agacharse
     private void Crouch()
     {
@@ -186,7 +183,6 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-
     #region Suelo (CompareTag)
     private void OnCollisionEnter(Collision collision)
     {
@@ -200,7 +196,6 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
     }
     #endregion
-
 
     #region Grab
     private void GrabTransform(Transform transformToGrab)
@@ -236,6 +231,18 @@ public class PlayerController : MonoBehaviour
         }
 
         grabbedTransform = null;
+    }
+    #endregion
+
+    #region QTE Control
+    public void SetCanMove(bool state)
+    {
+        canMove = state;
+    }
+
+    public void TeleportTo(Vector3 newPos)
+    {
+        transform.position = newPos;
     }
     #endregion
 }
