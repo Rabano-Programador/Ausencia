@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -40,6 +41,13 @@ public class PlayerController : MonoBehaviour
     public Transform grabbedTransform;
     public Transform playerHands;
     #endregion
+
+    [Header("Configuración de Reposición")]
+    public float distanciaDeColocacion = 3.5f;
+
+    [Header("UI Interacción")]
+    public TextMeshProUGUI textoInteraccion;
+
 
     [SerializeField] Collider playerDetection;
 
@@ -127,6 +135,8 @@ public class PlayerController : MonoBehaviour
 
         isLookingAtItem = false;
 
+        if (textoInteraccion != null) textoInteraccion.text = "";
+
         if (grabbedTransform == null)
         {
             if (Physics.Raycast(ray, out hit, RayDistance))
@@ -134,6 +144,13 @@ public class PlayerController : MonoBehaviour
                 if (hit.transform.CompareTag("Item"))
                 {
                     isLookingAtItem = true;
+
+                    ProductBox cajaMirada = hit.transform.GetComponent<ProductBox>();
+
+                    if (cajaMirada != null && cajaMirada.datosProducto != null && textoInteraccion != null)
+                    {
+                        textoInteraccion.text = "Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
+                    }
 
                     if (Input.GetKeyDown(KeyCode.E))
                     {
@@ -144,6 +161,15 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if (textoInteraccion != null)
+            {
+                ProductBox cajaEnMano = grabbedTransform.GetComponent<ProductBox>();
+                if (cajaEnMano != null && cajaEnMano.datosProducto != null)
+                {
+                    textoInteraccion.text = "Cargando: " + cajaEnMano.datosProducto.nombreProducto + " (" + cajaEnMano.unidadesRestantes + ")\n[LMB] Reponer | [E] Soltar";
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 ReleaseTransform();
@@ -154,8 +180,39 @@ public class PlayerController : MonoBehaviour
         #region Grab Follow Camera
         if (grabbedTransform != null)
         {
-            grabbedTransform.position = camTransform.position + camTransform.forward * holdDistance;
+            float distanciaActual = holdDistance;
+            RaycastHit wallHit;
+            if (Physics.Raycast(camTransform.position, camTransform.forward, out wallHit, holdDistance))
+            {
+                distanciaActual = wallHit.distance - 0.2f;
+            }
+
+            grabbedTransform.position = camTransform.position + camTransform.forward * distanciaActual;
             grabbedTransform.rotation = camTransform.rotation;
+        }
+        #endregion
+
+        #region Colocación en Estantería (LMB)
+        if (grabbedTransform != null && Input.GetMouseButtonDown(0))
+        {
+            Ray placementRay = new Ray(camTransform.position, camTransform.forward);
+            RaycastHit placementHit;
+
+            if (Physics.Raycast(placementRay, out placementHit, distanciaDeColocacion))
+            {
+                RestockShelf estante = placementHit.transform.GetComponent<RestockShelf>();
+                ProductBox caja = grabbedTransform.GetComponent<ProductBox>();
+
+                if (estante != null && caja != null)
+                {
+                    estante.ReponerProducto(caja);
+                }
+              
+            }
+            else
+            {
+                Debug.Log("Estás muy lejos");
+            }
         }
         #endregion
     }
