@@ -3,7 +3,7 @@ using UnityEngine;
 public class RandomSpawner : MonoBehaviour
 {
     [Header("Configuración del Spawn")]
-    public GameObject cajaPrefab; 
+    public GameObject cajaPrefab;
 
     public ProductoData[] posiblesProductos;
 

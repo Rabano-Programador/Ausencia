@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
                 {
                     estante.ReponerProducto(caja);
                 }
-              
+
             }
             else
             {
