@@ -5,8 +5,12 @@ public class RestockShelf : MonoBehaviour
 {
     [Header("Configuración del Estante")]
     public ProductoData productoRequerido;
-    public int stockActual = 0;
-    public int stockMaximo = 25;
+
+    [Tooltip("Crea Emptys donde quieres que aparezcan los productos y arrástralos aquí")]
+    public Transform[] puntosDeColocacion;
+
+    [HideInInspector] public int stockActual = 0;
+    private GameObject[] productosVisuales;
 
     [Header("UI Cuota Global (KPI)")]
     public TextMeshProUGUI textoKPI;
@@ -14,48 +18,51 @@ public class RestockShelf : MonoBehaviour
 
     private void Start()
     {
+        productosVisuales = new GameObject[puntosDeColocacion.Length];
         ActualizarUITienda();
     }
 
-    //Por mientras añadi debugs para saber si los productos estan bien o mal o si esta llena la estanteria etc, luego se pueden cambiar por animaciones o sonidos o lo que se quiera para dar feedback al jugador.
     public void ReponerProducto(ProductBox cajaDelJugador)
     {
-        if (stockActual >= stockMaximo)
+        if (stockActual >= puntosDeColocacion.Length)
         {
             Debug.Log("<color=orange>El estante ya está lleno.</color>");
             return;
         }
 
-        if (cajaDelJugador.datosProducto == null)
-        {
-            return;
-        }
-        if (productoRequerido == null)
-        {
-            return;
-        }
+        if (cajaDelJugador.datosProducto == null || productoRequerido == null) return;
 
         if (cajaDelJugador.datosProducto == productoRequerido)
         {
             if (cajaDelJugador.PillarProducto())
             {
+                Transform punto = puntosDeColocacion[stockActual];
+                GameObject nuevoItem = Instantiate(productoRequerido.prefabIndividual, punto.position, punto.rotation);
+
+                productosVisuales[stockActual] = nuevoItem;
+
                 stockActual++;
                 totalReposicionesSemanales++;
                 ActualizarUITienda();
-                Debug.Log("<color=green>¡Producto guardado exitosamente!</color>");
+
+                if (GameManager.Instance != null) GameManager.Instance.RegistrarTrabajo(15f);
             }
         }
-        else
+    }
+
+    public ProductoData TomarProductoNPC()
+    {
+        if (stockActual > 0)
         {
-            Debug.Log("<color=red>RECHAZADO: Este estante pide " + productoRequerido.nombreProducto + " y tú traes " + cajaDelJugador.datosProducto.nombreProducto + "</color>");
+            stockActual--;
+            Destroy(productosVisuales[stockActual]); 
+            return productoRequerido;
         }
+        return null;
     }
 
     private void ActualizarUITienda()
     {
-        if (textoKPI != null)
-        {
-            textoKPI.text = "Reposiciones: " + totalReposicionesSemanales + "/25";
-        }
+        if (textoKPI != null) textoKPI.text = "Reposiciones: " + totalReposicionesSemanales;
     }
 }

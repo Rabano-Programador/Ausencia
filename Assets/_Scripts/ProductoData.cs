@@ -4,6 +4,9 @@ using UnityEngine;
 public class ProductoData : ScriptableObject
 {
     public string nombreProducto;
+    public float precio;
     public Sprite iconoCaja;
-    // public float precio; 
+
+    [Header("Modelo 3D Individual")]
+    public GameObject prefabIndividual;
 }

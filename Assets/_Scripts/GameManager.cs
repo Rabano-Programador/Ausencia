@@ -3,27 +3,21 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    /* ===================================================================================
-    PROPUESTA DE SISTEMA: TIEMPO, PRODUCTIVIDAD Y FATIGA (ESTRÉS)
-    ===================================================================================
-    Revisen esta lógica. La idea es quitar los triggers aleatorios invisibles
-    y hacer que el ataque dependa de cuánto ha trabajado el jugador.
-
-    Scripts que tendriamos que modificar si lo hicieramos:
-    RestockShelf
-    CajaRegistradora
-    QTEManager
-    
     public static GameManager Instance;
 
     [Header("Horario Laboral")]
-    public float duracionDelTurnoEnMinutos = 5f; // El turno dura 5 minutos reales
+    public float duracionDelTurnoEnMinutos = 5f;
     private float tiempoRestante;
-    public TextMeshProUGUI textoReloj; // Para mostrar ej: "14:00 PM"
+    public TextMeshProUGUI textoReloj;
+
+    [Header("Productividad (KPI / Dinero)")]
+    public float dineroAcumulado = 0f;
+    public TextMeshProUGUI textoProductividad;
 
     [Header("Sistema de Estrés (Sobrecarga)")]
     public float nivelDeEstres = 0f;
-    public float limiteParaAtaque = 100f; // Si llega a 100, el próximo cobro da ataque
+    public float limiteParaAtaque = 100f;
+    public TextMeshProUGUI textoEstres; // Opcional, para ver el % de estrés en pantalla
 
     private void Awake()
     {
@@ -33,65 +27,63 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // 1. EL RELOJ DEL JUEGO
-        // El tiempo va bajando. Si llega a 0, se termina el turno (Victoria o Derrota del día)
         if (tiempoRestante > 0)
         {
             tiempoRestante -= Time.deltaTime;
-            ActualizarRelojUI();
+            ActualizarUI();
         }
         else
         {
-            TerminarTurno();
+            Debug.Log("¡TURNO TERMINADO! Evaluar victoria/derrota.");
         }
 
-        // 2. EL ESTRÉS BAJA LENTAMENTE SI DESCANSAS (Opcional)
-        // Si el jugador se queda quieto, el estrés podría bajar, pero pierde tiempo de trabajo.
         if (nivelDeEstres > 0)
         {
-            nivelDeEstres -= Time.deltaTime * 2f; // Baja 2 puntos por segundo
+            nivelDeEstres -= Time.deltaTime * 1.5f; 
         }
     }
 
-    // 3. ESTO LO LLAMA LA ESTANTERÍA AL GUARDAR UNA CAJA
-    public void RegistrarTrabajoRealizado(float cantidadEstres)
+    public void RegistrarTrabajo(float estresAgregado)
     {
-        nivelDeEstres += cantidadEstres;
-        Debug.Log("Trabajaste. Nivel de estrés actual: " + nivelDeEstres);
+        nivelDeEstres += estresAgregado;
+        ChequearAtaqueEpilepsia();
     }
 
-    // 4. ESTO LO LLAMA LA CAJA REGISTRADORA ANTES DE ATENDER A UN CLIENTE
-    public bool IntentarAtenderCaja()
+    public void RegistrarVenta(float monto, bool cobroCorrecto)
+    {
+        if (cobroCorrecto)
+        {
+            dineroAcumulado += monto;
+            nivelDeEstres += 10f; 
+        }
+        else
+        {
+            dineroAcumulado -= (monto / 2);
+            nivelDeEstres += 25f; 
+            Debug.Log("<color=red>¡Cobro incorrecto! Productividad reducida.</color>");
+        }
+
+        ChequearAtaqueEpilepsia();
+    }
+
+    private void ChequearAtaqueEpilepsia()
     {
         if (nivelDeEstres >= limiteParaAtaque)
         {
-            Debug.Log("¡SOBRECARGA SENSORIAL! Gatillando ataque en la caja...");
-            
-            // Reiniciamos el estrés para que no tenga 2 ataques seguidos
-            nivelDeEstres = 0f; 
-            
-            // Llamamos al sistema que hicimos antes
-            QTEManager.Instance.StartSeizure(); 
-            
-            return false; // Retorna falso porque NO te deja atender la caja
+            Debug.Log("¡SOBRECARGA! Gatillando ataque...");
+            nivelDeEstres = 0f;
+            QTEManager.Instance.StartSeizure();
         }
-        
-        // Si no está estresado, le sumamos un poco de estrés por atender a la persona
-        RegistrarTrabajoRealizado(20f); 
-        return true; // Retorna true para que empiece el minijuego de matemáticas
     }
 
-    private void ActualizarRelojUI()
+    private void ActualizarUI()
     {
-        // Matemáticas simples para convertir los segundos restantes en un formato "HH:MM" simulado
-        // (Podemos pulirlo después)
-    }
+        int minutos = Mathf.FloorToInt(tiempoRestante / 60F);
+        int segundos = Mathf.FloorToInt(tiempoRestante - minutos * 60);
+        if (textoReloj != null) textoReloj.text = string.Format("{0:00}:{1:00}", minutos, segundos);
 
-    private void TerminarTurno()
-    {
-        // Aquí conectamos las condiciones de victoria y derrota del GDD
-        Debug.Log("Se acabó el día. Evaluando la productividad...");
+        if (textoProductividad != null) textoProductividad.text = "Productividad: $" + dineroAcumulado.ToString("F2");
+
+        if (textoEstres != null) textoEstres.text = "Estrés: " + Mathf.Clamp(nivelDeEstres, 0, 100).ToString("F0") + "%";
     }
-    ===================================================================================
-    */
 }

@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89df57f89557769489ecffc388de14ef, type: 3}
-  m_Name: Agua
+  m_Name: Mantequilla
   m_EditorClassIdentifier: 
-  nombreProducto: Agua
+  nombreProducto: Mantequilla
+  precio: 2
   iconoCaja: {fileID: 0}
+  prefabIndividual: {fileID: 772914500736294148, guid: 7a340c6c0f14f344eb8564e6439ced82, type: 3}

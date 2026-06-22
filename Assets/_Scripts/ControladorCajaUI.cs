@@ -8,19 +8,22 @@ public class ControladorCajaUI : MonoBehaviour
 
     private float totalCuenta = 0f;
 
-    // Reinicia la cuenta a cero (ideal para cuando entra el jugador)
     private void OnEnable()
     {
         totalCuenta = 0f;
         ActualizarPantalla();
     }
 
-    // Recibe el precio desde el PlayerController y lo suma
     public void RegistrarProductoEscaneado(float precioProducto)
     {
         totalCuenta += precioProducto;
         ActualizarPantalla();
-        Debug.Log("Producto escaneado. Total actual: $" + totalCuenta);
+        GameManager.Instance.RegistrarVenta(precioProducto, true);
+    }
+
+    public void RegistrarCobroEquivocado(float precioProducto)
+    {
+        GameManager.Instance.RegistrarVenta(precioProducto, false);
     }
 
     private void ActualizarPantalla()

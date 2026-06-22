@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89df57f89557769489ecffc388de14ef, type: 3}
-  m_Name: Duraznos
+  m_Name: Papas en bolsa
   m_EditorClassIdentifier: 
-  nombreProducto: Duraznos en Lata
+  nombreProducto: Papas en bolsa
+  precio: 1
   iconoCaja: {fileID: 0}
+  prefabIndividual: {fileID: 1598905163101991359, guid: 341c387ba034a1345a9b5fc92692a6b3, type: 3}
