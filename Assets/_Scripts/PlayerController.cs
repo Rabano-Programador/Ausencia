@@ -59,9 +59,14 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     [Header("Configuración Caja Registradora")]
-    public Transform puntoCajaTransform; // El punto a donde todo el personaje será transportado
-    public Transform puntoDespachoDestino; // El Trigger B de salida
+    public Transform puntoCajaTransform;
+    public Transform puntoDespachoDestino;
+
+    [Header("Configuración Transbank")]
+    public Transform puntoCamaraTransbank;
+
     private bool estaEnLaCaja = false;
+    private bool estaEnTransbank = false;
 
     #endregion
 
@@ -89,14 +94,25 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         #region Camara
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        if (!estaEnTransbank)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        horizontalRotation += mouseX;
-        verticalRotation = Mathf.Clamp(verticalRotation - mouseY, -90f, 90f);
+            horizontalRotation += mouseX;
+            verticalRotation = Mathf.Clamp(verticalRotation - mouseY, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
-        camTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+            transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
+            camTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        }
+        else
+        {
+            if (puntoCamaraTransbank != null)
+            {
+                camTransform.position = puntoCamaraTransbank.position;
+                camTransform.rotation = puntoCamaraTransbank.rotation;
+            }
+        }
         #endregion
 
         #region Movimiento
@@ -115,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
             transform.Translate(PlayerMovement * Time.deltaTime, Space.World);
         }
-        else if (estaEnLaCaja && puntoCajaTransform != null)
+        else if (estaEnLaCaja && puntoCajaTransform != null && !estaEnTransbank)
         {
             transform.position = puntoCajaTransform.position;
         }
@@ -150,7 +166,7 @@ public class PlayerController : MonoBehaviour
         Color colorDebug = estaEnLaCaja ? Color.cyan : Color.red;
         Debug.DrawRay(ray.origin, ray.direction * RayDistance, colorDebug);
 
-        if (grabbedTransform == null)
+        if (grabbedTransform == null && !estaEnTransbank)
         {
             if (Physics.Raycast(ray, out hit, RayDistance))
             {
@@ -161,6 +177,15 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         EntrarAModoCaja();
+                    }
+                }
+                else if (hit.transform.CompareTag("Transbank") && estaEnLaCaja)
+                {
+                    if (textoInteraccion != null) textoInteraccion.text = "[LMB] Cobrar con Tarjeta";
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        EntrarAModoTransbank();
                     }
                 }
                 else if (hit.transform.CompareTag("Item"))
@@ -178,7 +203,6 @@ public class PlayerController : MonoBehaviour
 
                             if (Input.GetMouseButtonDown(0))
                             {
-                                // 1. REGISTRAR EL COBRO EN LA UI
                                 ControladorCajaUI cajaUI = GetComponentInChildren<ControladorCajaUI>();
                                 if (cajaUI == null) cajaUI = FindFirstObjectByType<ControladorCajaUI>();
 
@@ -187,7 +211,6 @@ public class PlayerController : MonoBehaviour
                                     cajaUI.RegistrarProductoEscaneado(objetoCaja.precioProducto);
                                 }
 
-                                // 2. TELETRANSPORTAR AL EXTREMO DE SALIDA
                                 if (puntoDespachoDestino != null)
                                 {
                                     objetoCaja.TeletransportarA(puntoDespachoDestino.position);
@@ -213,17 +236,13 @@ public class PlayerController : MonoBehaviour
                                 GrabTransform(hit.transform);
                             }
                         }
-                        else
-                        {
-                            if (textoInteraccion != null) textoInteraccion.text = "El producto no está bien posicionado en el mostrador";
-                        }
                     }
                 }
             }
         }
         else
         {
-            if (textoInteraccion != null)
+            if (textoInteraccion != null && grabbedTransform != null)
             {
                 ProductBox cajaEnMano = grabbedTransform.GetComponent<ProductBox>();
                 if (cajaEnMano != null && cajaEnMano.datosProducto != null)
@@ -232,13 +251,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && grabbedTransform != null)
             {
                 ReleaseTransform();
             }
         }
 
-        if (estaEnLaCaja && Input.GetKeyDown(KeyCode.Escape))
+        if (estaEnLaCaja && !estaEnTransbank && Input.GetKeyDown(KeyCode.Escape))
         {
             SalirDeModoCaja();
         }
@@ -275,10 +294,6 @@ public class PlayerController : MonoBehaviour
                     estante.ReponerProducto(caja);
                 }
             }
-            else
-            {
-                Debug.Log("Estás muy lejos");
-            }
         }
         #endregion
     }
@@ -288,20 +303,16 @@ public class PlayerController : MonoBehaviour
     private void Crouch()
     {
         isCrouching = true;
-
         capsule.height = crouchHeight;
         capsule.center = new Vector3(originalCenter.x, originalCenter.y - (originalHeight - crouchHeight) / 2f, originalCenter.z);
-
         camTransform.localPosition = originalCameraPos + new Vector3(0, crouchCameraOffset, 0);
     }
 
     private void StandUp()
     {
         isCrouching = false;
-
         capsule.height = originalHeight;
         capsule.center = originalCenter;
-
         camTransform.localPosition = originalCameraPos;
     }
     #endregion
@@ -309,14 +320,12 @@ public class PlayerController : MonoBehaviour
     #region Suelo (CompareTag)
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = true;
+        if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = false;
+        if (collision.gameObject.CompareTag("Ground")) isGrounded = false;
     }
     #endregion
 
@@ -324,40 +333,23 @@ public class PlayerController : MonoBehaviour
     private void GrabTransform(Transform transformToGrab)
     {
         grabbedTransform = transformToGrab;
-
         Rigidbody rb = grabbedTransform.GetComponent<Rigidbody>();
         Collider col = grabbedTransform.GetComponent<Collider>();
-
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-            rb.useGravity = false;
-        }
-
-        if (col != null)
-            col.enabled = false;
+        if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
+        if (col != null) col.enabled = false;
     }
 
     private void ReleaseTransform()
     {
         Rigidbody rb = grabbedTransform.GetComponent<Rigidbody>();
         Collider col = grabbedTransform.GetComponent<Collider>();
-
-        if (col != null)
-            col.enabled = true;
-
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            rb.freezeRotation = false;
-        }
-
+        if (col != null) col.enabled = true;
+        if (rb != null) { rb.isKinematic = false; rb.useGravity = true; rb.freezeRotation = false; }
         grabbedTransform = null;
     }
     #endregion
 
-    #region Funciones de Bloqueo de Caja
+    #region Gestión de Estados de Caja y Transbank
     private void EntrarAModoCaja()
     {
         estaEnLaCaja = true;
@@ -367,7 +359,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = puntoCajaTransform.position;
             transform.rotation = puntoCajaTransform.rotation;
-
             horizontalRotation = puntoCajaTransform.eulerAngles.y;
             verticalRotation = 0f;
         }
@@ -380,6 +371,23 @@ public class PlayerController : MonoBehaviour
     {
         estaEnLaCaja = false;
         SetCanMove(true);
+    }
+
+    private void EntrarAModoTransbank()
+    {
+        estaEnTransbank = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void SalirDeModoTransbank()
+    {
+        estaEnTransbank = false;
+
+        camTransform.localPosition = originalCameraPos;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     #endregion
 

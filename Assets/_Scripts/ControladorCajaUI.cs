@@ -33,4 +33,15 @@ public class ControladorCajaUI : MonoBehaviour
             textoTotalPantalla.text = "TOTAL: $" + totalCuenta.ToString("F2");
         }
     }
+
+    public float ObtenerTotalCuenta()
+    {
+        return totalCuenta;
+    }
+
+    public void LimpiarCajaFinTurno()
+    {
+        totalCuenta = 0f;
+        ActualizarPantalla();
+    }
 }

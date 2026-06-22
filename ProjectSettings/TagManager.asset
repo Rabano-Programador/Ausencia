@@ -11,6 +11,7 @@ TagManager:
   - ProductoSuelto
   - ComputadoraCaja
   - Salida
+  - Transbank
   layers:
   - Default
   - TransparentFX
