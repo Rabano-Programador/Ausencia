@@ -9,6 +9,7 @@ TagManager:
   - CajaRegistradora
   - ZonaEsperaCobro
   - ProductoSuelto
+  - ComputadoraCaja
   layers:
   - Default
   - TransparentFX

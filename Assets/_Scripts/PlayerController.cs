@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -57,6 +58,11 @@ public class PlayerController : MonoBehaviour
     public bool isLookingAtItem;
     #endregion
 
+    [Header("Configuración Caja Registradora")]
+    public Transform puntoCajaTransform; // El punto a donde todo el personaje será transportado
+    public Transform puntoDespachoDestino; // El Trigger B de salida
+    private bool estaEnLaCaja = false;
+
     #endregion
 
     #region Awake & Start
@@ -109,6 +115,10 @@ public class PlayerController : MonoBehaviour
 
             transform.Translate(PlayerMovement * Time.deltaTime, Space.World);
         }
+        else if (estaEnLaCaja && puntoCajaTransform != null)
+        {
+            transform.position = puntoCajaTransform.position;
+        }
         #endregion
 
         #region Salto
@@ -137,24 +147,76 @@ public class PlayerController : MonoBehaviour
 
         if (textoInteraccion != null) textoInteraccion.text = "";
 
+        Color colorDebug = estaEnLaCaja ? Color.cyan : Color.red;
+        Debug.DrawRay(ray.origin, ray.direction * RayDistance, colorDebug);
+
         if (grabbedTransform == null)
         {
             if (Physics.Raycast(ray, out hit, RayDistance))
             {
-                if (hit.transform.CompareTag("Item"))
+                if (hit.transform.CompareTag("ComputadoraCaja") && !estaEnLaCaja)
+                {
+                    if (textoInteraccion != null) textoInteraccion.text = "[LMB] Operar Caja Registradora";
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        EntrarAModoCaja();
+                    }
+                }
+                else if (hit.transform.CompareTag("Item"))
                 {
                     isLookingAtItem = true;
 
                     ProductBox cajaMirada = hit.transform.GetComponent<ProductBox>();
+                    ObjetoCaja objetoCaja = hit.transform.GetComponent<ObjetoCaja>();
 
-                    if (cajaMirada != null && cajaMirada.datosProducto != null && textoInteraccion != null)
+                    if (objetoCaja != null && objetoCaja.estaEnZonaEspera)
                     {
-                        textoInteraccion.text = "Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
+                        if (estaEnLaCaja)
+                        {
+                            if (textoInteraccion != null) textoInteraccion.text = "[LMB] Marcar y Despachar";
+
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                // 1. REGISTRAR EL COBRO EN LA UI
+                                ControladorCajaUI cajaUI = GetComponentInChildren<ControladorCajaUI>();
+                                if (cajaUI == null) cajaUI = FindFirstObjectByType<ControladorCajaUI>();
+
+                                if (cajaUI != null)
+                                {
+                                    cajaUI.RegistrarProductoEscaneado(objetoCaja.precioProducto);
+                                }
+
+                                // 2. TELETRANSPORTAR AL EXTREMO DE SALIDA
+                                if (puntoDespachoDestino != null)
+                                {
+                                    objetoCaja.TeletransportarA(puntoDespachoDestino.position);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (textoInteraccion != null) textoInteraccion.text = "Usa la computadora para empezar a cobrar";
+                        }
                     }
-
-                    if (Input.GetKeyDown(KeyCode.E))
+                    else
                     {
-                        GrabTransform(hit.transform);
+                        if (!estaEnLaCaja)
+                        {
+                            if (cajaMirada != null && cajaMirada.datosProducto != null && textoInteraccion != null)
+                            {
+                                textoInteraccion.text = "Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
+                            }
+
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                GrabTransform(hit.transform);
+                            }
+                        }
+                        else
+                        {
+                            if (textoInteraccion != null) textoInteraccion.text = "El producto no está bien posicionado en el mostrador";
+                        }
                     }
                 }
             }
@@ -174,6 +236,11 @@ public class PlayerController : MonoBehaviour
             {
                 ReleaseTransform();
             }
+        }
+
+        if (estaEnLaCaja && Input.GetKeyDown(KeyCode.Escape))
+        {
+            SalirDeModoCaja();
         }
         #endregion
 
@@ -207,7 +274,6 @@ public class PlayerController : MonoBehaviour
                 {
                     estante.ReponerProducto(caja);
                 }
-
             }
             else
             {
@@ -288,6 +354,32 @@ public class PlayerController : MonoBehaviour
         }
 
         grabbedTransform = null;
+    }
+    #endregion
+
+    #region Funciones de Bloqueo de Caja
+    private void EntrarAModoCaja()
+    {
+        estaEnLaCaja = true;
+        SetCanMove(false);
+
+        if (puntoCajaTransform != null)
+        {
+            transform.position = puntoCajaTransform.position;
+            transform.rotation = puntoCajaTransform.rotation;
+
+            horizontalRotation = puntoCajaTransform.eulerAngles.y;
+            verticalRotation = 0f;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void SalirDeModoCaja()
+    {
+        estaEnLaCaja = false;
+        SetCanMove(true);
     }
     #endregion
 
