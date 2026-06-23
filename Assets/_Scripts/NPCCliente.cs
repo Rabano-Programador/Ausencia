@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class NPCCliente : MonoBehaviour
 {
-    [HideInInspector] public Transform zonaFilaCaja, mesaDeCobro, puntoSalida;
+    [HideInInspector] public Transform zonaFilaCaja, puntoSalida;
+    [HideInInspector, FormerlySerializedAs("mesaDeCobro")] public Transform puntoDespachoProductos;
     [HideInInspector] public GameObject objetoCajaPrefab;
 
     [Header("Comportamiento de compra")]
@@ -33,6 +35,7 @@ public class NPCCliente : MonoBehaviour
     private float tiempoInicio;
     private bool esperandoPrimerProducto;
     private bool productosEntregadosEnCaja;
+    private float tiempoEsperandoEnCaja;
     private readonly List<GameObject> productosEnInventarioVisual = new List<GameObject>();
 
     private enum EstadoNPC
@@ -115,7 +118,16 @@ public class NPCCliente : MonoBehaviour
 
             case EstadoNPC.SiendoAtendido:
                 if (!agent.pathPending && HaLlegado() && !productosEntregadosEnCaja)
-                    DejarProductosEnCaja();
+                {
+                    tiempoEsperandoEnCaja += Time.deltaTime;
+
+                    if (tiempoEsperandoEnCaja >= 2f)
+                        DejarProductosEnCaja();
+                }
+                else
+                {
+                    tiempoEsperandoEnCaja = 0f;
+                }
                 break;
 
             case EstadoNPC.Saliendo:
@@ -395,6 +407,7 @@ public class NPCCliente : MonoBehaviour
     {
         estadoActual = EstadoNPC.SiendoAtendido;
         productosEntregadosEnCaja = false;
+        tiempoEsperandoEnCaja = 0f;
 
         if (!IntentarMoverA(posicionMesa, 5f, true))
             Debug.LogWarning("<color=orange>NPC: No pude moverme correctamente al punto de cobro.</color>");
@@ -434,6 +447,7 @@ public class NPCCliente : MonoBehaviour
         {
             estadoActual = EstadoNPC.SiendoAtendido;
             productosEntregadosEnCaja = false;
+            tiempoEsperandoEnCaja = 0f;
             IntentarMoverA(zonaFilaCaja.position, 5f, true);
         }
         else
@@ -476,20 +490,37 @@ public class NPCCliente : MonoBehaviour
     {
         productosEntregadosEnCaja = true;
 
-        if (mesaDeCobro == null || objetoCajaPrefab == null)
+        if (puntoDespachoProductos == null)
         {
-            Debug.LogWarning("<color=orange>NPC: Falta mesaDeCobro u objetoCajaPrefab para dejar productos.</color>");
+            Debug.LogWarning("<color=orange>NPC: Falta puntoDespachoProductos para dejar productos.</color>");
             return;
         }
+
+        Debug.Log($"<color=cyan>NPC: Dejando productos en PuntoDespacho '{puntoDespachoProductos.name}' en {puntoDespachoProductos.position}.</color>");
 
         for (int i = 0; i < productosRecogidos.Count; i++)
         {
             ProductoData producto = productosRecogidos[i];
+            GameObject prefabAInstanciar = producto != null && producto.prefabIndividual != null
+                ? producto.prefabIndividual
+                : objetoCajaPrefab;
+
+            if (prefabAInstanciar == null)
+            {
+                Debug.LogWarning($"<color=orange>NPC: No tengo prefab para dejar '{(producto != null ? producto.nombreProducto : "producto nulo")}'.</color>");
+                continue;
+            }
+
             Vector3 offset = new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.2f, 0.2f));
-            GameObject itemCaja = Instantiate(objetoCajaPrefab, mesaDeCobro.position + offset, Quaternion.identity);
+            GameObject itemCaja = Instantiate(prefabAInstanciar, puntoDespachoProductos.position + offset, Quaternion.identity);
+            itemCaja.name = producto != null ? producto.nombreProducto + " Cobro" : itemCaja.name;
+            itemCaja.tag = "Item";
+
             ObjetoCaja scriptObjeto = itemCaja.GetComponent<ObjetoCaja>();
-            if (scriptObjeto != null)
-                scriptObjeto.datosProducto = producto;
+            if (scriptObjeto == null)
+                scriptObjeto = itemCaja.AddComponent<ObjetoCaja>();
+
+            scriptObjeto.ConfigurarProducto(producto);
 
             if (i < productosEnInventarioVisual.Count && productosEnInventarioVisual[i] != null)
                 Destroy(productosEnInventarioVisual[i]);

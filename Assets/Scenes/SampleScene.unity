@@ -2360,7 +2360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372747536153014756, guid: 8ed2f9c559cbf2d4a938b2a6cc5c8478, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.01
+      value: -4.44
       objectReference: {fileID: 0}
     - target: {fileID: 7372747536153014756, guid: 8ed2f9c559cbf2d4a938b2a6cc5c8478, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7365,8 +7365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zonaFilaCaja: {fileID: 0}
-  mesaDeCobro: {fileID: 0}
   puntoSalida: {fileID: 0}
+  puntoDespachoProductos: {fileID: 0}
   objetoCajaPrefab: {fileID: 0}
   maxProductosARecoger: 4
   tiempoMaximoSinProductos: 60
@@ -8011,7 +8011,7 @@ MonoBehaviour:
   radioBusquedaNavMeshSpawn: 3
   maxNPCsEnEscena: 5
   zonaFilaCaja: {fileID: 1874933207}
-  mesaDeCobro: {fileID: 1341923018}
+  puntoDespachoProductos: {fileID: 1341923018}
   puntoSalida: {fileID: 1485786415}
   objetoCajaPrefab: {fileID: 7414991489169191876, guid: 1adb9a145d3a99743bd9ce8833121f89, type: 3}
 --- !u!1 &1137132704
@@ -15348,7 +15348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372747536153014756, guid: 8ed2f9c559cbf2d4a938b2a6cc5c8478, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.68
+      value: -8.519
       objectReference: {fileID: 0}
     - target: {fileID: 7372747536153014756, guid: 8ed2f9c559cbf2d4a938b2a6cc5c8478, type: 3}
       propertyPath: m_LocalRotation.w

@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private bool estaEnLaCaja = false;
     private bool estaEnTransbank = false;
+    private float bloqueoInteraccionCajaHasta = 0f;
 
     #endregion
 
@@ -180,9 +181,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (hit.transform.CompareTag("ComputadoraCaja") && !estaEnLaCaja)
                 {
-                    if (textoInteraccion != null) textoInteraccion.text = "[LMB] Operar Caja Registradora";
+                    if (textoInteraccion != null) textoInteraccion.text = "[E] Operar Caja Registradora";
 
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetKeyDown(KeyCode.E) && Time.unscaledTime >= bloqueoInteraccionCajaHasta)
                     {
                         EntrarAModoCaja();
                     }
@@ -200,14 +201,18 @@ public class PlayerController : MonoBehaviour
                 {
                     isLookingAtItem = true;
 
-                    ProductBox cajaMirada = hit.transform.GetComponent<ProductBox>();
-                    ObjetoCaja objetoCaja = hit.transform.GetComponent<ObjetoCaja>();
+                    ProductBox cajaMirada = hit.transform.GetComponentInParent<ProductBox>();
+                    ObjetoCaja objetoCaja = hit.transform.GetComponentInParent<ObjetoCaja>();
 
                     if (objetoCaja != null && objetoCaja.estaEnZonaEspera)
                     {
                         if (estaEnLaCaja)
                         {
-                            if (textoInteraccion != null) textoInteraccion.text = "[LMB] Marcar y Despachar";
+                            if (textoInteraccion != null)
+                            {
+                                string nombreProducto = objetoCaja.datosProducto != null ? objetoCaja.datosProducto.nombreProducto : "Producto";
+                                textoInteraccion.text = $"[LMB] Marcar y Despachar\n{nombreProducto}: ${objetoCaja.precioProducto:F2}";
+                            }
 
                             if (Input.GetMouseButtonDown(0))
                             {
@@ -217,6 +222,12 @@ public class PlayerController : MonoBehaviour
                                 if (cajaUI != null)
                                 {
                                     cajaUI.RegistrarProductoEscaneado(objetoCaja.precioProducto);
+                                }
+
+                                if (textoInteraccion != null)
+                                {
+                                    string nombreProducto = objetoCaja.datosProducto != null ? objetoCaja.datosProducto.nombreProducto : "Producto";
+                                    textoInteraccion.text = $"{nombreProducto} cobrado por ${objetoCaja.precioProducto:F2}";
                                 }
 
                                 if (puntoDespachoDestino != null)
@@ -265,6 +276,11 @@ public class PlayerController : MonoBehaviour
             {
                 ReleaseTransform();
             }
+        }
+
+        if (estaEnLaCaja && !estaEnTransbank && Input.GetKeyDown(KeyCode.E) && Time.unscaledTime >= bloqueoInteraccionCajaHasta)
+        {
+            SalirDeModoCaja();
         }
 
         #endregion
@@ -360,6 +376,7 @@ public class PlayerController : MonoBehaviour
     private void EntrarAModoCaja()
     {
         estaEnLaCaja = true;
+        bloqueoInteraccionCajaHasta = Time.unscaledTime + 0.2f;
         SetCanMove(false);
 
         if (puntoCajaTransform != null)
@@ -377,6 +394,7 @@ public class PlayerController : MonoBehaviour
     private void SalirDeModoCaja()
     {
         estaEnLaCaja = false;
+        bloqueoInteraccionCajaHasta = Time.unscaledTime + 0.2f;
         SetCanMove(true);
     }
 

@@ -13,10 +13,7 @@ public class ObjetoCaja : MonoBehaviour
 
     private void Start()
     {
-        if (datosProducto != null)
-        {
-            precioProducto = datosProducto.precio;
-        }
+        ActualizarPrecioDesdeDatos();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,5 +37,17 @@ public class ObjetoCaja : MonoBehaviour
     {
         transform.position = posicionDestino;
         estaEnZonaEspera = false;
+    }
+
+    public void ConfigurarProducto(ProductoData producto)
+    {
+        datosProducto = producto;
+        ActualizarPrecioDesdeDatos();
+    }
+
+    void ActualizarPrecioDesdeDatos()
+    {
+        if (datosProducto != null)
+            precioProducto = datosProducto.precio;
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class NPCSystem : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class NPCSystem : MonoBehaviour
     public int maxNPCsEnEscena = 5;
 
     public Transform zonaFilaCaja;
-    public Transform mesaDeCobro;
+    [FormerlySerializedAs("mesaDeCobro")] public Transform puntoDespachoProductos;
     public Transform puntoSalida;
 
     public GameObject objetoCajaPrefab;
@@ -67,7 +68,7 @@ public class NPCSystem : MonoBehaviour
         if (ia != null)
         {
             ia.zonaFilaCaja = this.zonaFilaCaja;
-            ia.mesaDeCobro = this.mesaDeCobro;
+            ia.puntoDespachoProductos = this.puntoDespachoProductos;
             ia.puntoSalida = this.puntoSalida;
             ia.objetoCajaPrefab = this.objetoCajaPrefab;
 
