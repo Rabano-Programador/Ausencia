@@ -1,13 +1,20 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class RestockShelf : MonoBehaviour
 {
+    public static readonly List<RestockShelf> Instancias = new List<RestockShelf>();
+
     [Header("Configuración del Estante")]
     public ProductoData productoRequerido;
 
     [Tooltip("Crea Emptys donde quieres que aparezcan los productos y arrástralos aquí")]
     public Transform[] puntosDeColocacion;
+
+    [Header("Indicador de Reposición")]
+    public TMP_Text textoIndicador;
+    public string mensajeIndicador = "Trae este producto aqui";
 
     [HideInInspector] public int stockActual = 0;
     private GameObject[] productosVisuales;
@@ -15,6 +22,19 @@ public class RestockShelf : MonoBehaviour
     [Header("UI Cuota Global (KPI)")]
     public TextMeshProUGUI textoKPI;
     private static int totalReposicionesSemanales = 0;
+
+    private void OnEnable()
+    {
+        if (!Instancias.Contains(this))
+            Instancias.Add(this);
+
+        OcultarIndicador();
+    }
+
+    private void OnDisable()
+    {
+        Instancias.Remove(this);
+    }
 
     private void Start()
     {
@@ -80,6 +100,34 @@ public class RestockShelf : MonoBehaviour
             return productoRequerido;
         }
         return null;
+    }
+
+    public bool PuedeRecibirProducto(ProductoData producto)
+    {
+        return producto != null &&
+            productoRequerido != null &&
+            producto == productoRequerido &&
+            stockActual < puntosDeColocacion.Length;
+    }
+
+    public void MostrarIndicadorPara(ProductoData producto)
+    {
+        if (textoIndicador == null)
+            return;
+
+        bool mostrar = PuedeRecibirProducto(producto);
+        textoIndicador.gameObject.SetActive(mostrar);
+
+        if (mostrar)
+            textoIndicador.text = string.IsNullOrWhiteSpace(mensajeIndicador)
+                ? productoRequerido.nombreProducto
+                : mensajeIndicador;
+    }
+
+    public void OcultarIndicador()
+    {
+        if (textoIndicador != null)
+            textoIndicador.gameObject.SetActive(false);
     }
 
     private void ActualizarUITienda()

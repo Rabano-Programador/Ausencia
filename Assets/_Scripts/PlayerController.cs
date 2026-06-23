@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
         {
             if (textoInteraccion != null)
                 textoInteraccion.text = "";
+            OcultarIndicadoresEstantes();
             return;
         }
 
@@ -258,6 +259,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+            ActualizarIndicadoresEstantes();
+
             if (Input.GetKeyDown(KeyCode.E) && grabbedTransform != null)
             {
                 ReleaseTransform();
@@ -349,6 +352,7 @@ public class PlayerController : MonoBehaviour
         if (col != null) col.enabled = true;
         if (rb != null) { rb.isKinematic = false; rb.useGravity = true; rb.freezeRotation = false; }
         grabbedTransform = null;
+        OcultarIndicadoresEstantes();
     }
     #endregion
 
@@ -402,6 +406,33 @@ public class PlayerController : MonoBehaviour
     public void TeleportTo(Vector3 newPos)
     {
         transform.position = newPos;
+    }
+
+    void ActualizarIndicadoresEstantes()
+    {
+        ProductBox cajaEnMano = grabbedTransform != null ? grabbedTransform.GetComponent<ProductBox>() : null;
+        ProductoData producto = cajaEnMano != null ? cajaEnMano.datosProducto : null;
+
+        if (producto == null)
+        {
+            OcultarIndicadoresEstantes();
+            return;
+        }
+
+        foreach (RestockShelf estante in RestockShelf.Instancias)
+        {
+            if (estante != null)
+                estante.MostrarIndicadorPara(producto);
+        }
+    }
+
+    void OcultarIndicadoresEstantes()
+    {
+        foreach (RestockShelf estante in RestockShelf.Instancias)
+        {
+            if (estante != null)
+                estante.OcultarIndicador();
+        }
     }
 
     public void AplicarEstadoCursor()
