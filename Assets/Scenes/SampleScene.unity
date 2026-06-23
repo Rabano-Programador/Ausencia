@@ -494,8 +494,8 @@ Transform:
   m_GameObject: {fileID: 58300900}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.715, y: 0.379, z: -0.24}
-  m_LocalScale: {x: 1.9376538, y: 0.5, z: 0.33507}
+  m_LocalPosition: {x: 0.6, y: 0.379, z: -0.2859}
+  m_LocalScale: {x: 1.5334592, y: 0.5, z: 0.33507}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1341923018}
@@ -8011,7 +8011,7 @@ MonoBehaviour:
   radioBusquedaNavMeshSpawn: 3
   maxNPCsEnEscena: 5
   zonaFilaCaja: {fileID: 1874933207}
-  puntoDespachoProductos: {fileID: 1341923018}
+  puntoDespachoProductos: {fileID: 58300901}
   puntoSalida: {fileID: 1485786415}
   objetoCajaPrefab: {fileID: 7414991489169191876, guid: 1adb9a145d3a99743bd9ce8833121f89, type: 3}
 --- !u!1 &1137132704
