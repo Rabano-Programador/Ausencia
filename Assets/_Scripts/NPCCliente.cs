@@ -20,10 +20,20 @@ public class NPCCliente : MonoBehaviour
     [Tooltip("Intentos para encontrar un punto válido de NavMesh mientras vaga.")]
     public int intentosVagabundeo = 8;
 
+    [Header("Inventario NPC")]
+    public Transform puntoInventarioVisual;
+    public Vector3 offsetInventarioInicial = new Vector3(0f, 1.2f, -0.35f);
+    public Vector3 separacionInventario = new Vector3(0f, 0.18f, 0f);
+    public Vector3 rotacionInventario;
+    public Vector3 escalaInventario = Vector3.one * 0.4f;
+
     private NavMeshAgent agent;
     private List<ProductoData> productosRecogidos = new List<ProductoData>();
     private int productosObjetivo;
     private float tiempoInicio;
+    private bool esperandoPrimerProducto;
+    private bool productosEntregadosEnCaja;
+    private readonly List<GameObject> productosEnInventarioVisual = new List<GameObject>();
 
     private enum EstadoNPC
     {
@@ -88,7 +98,7 @@ public class NPCCliente : MonoBehaviour
             case EstadoNPC.Vagando:
                 ChequearTraba();
 
-                if (productosRecogidos.Count == 0 && Time.time - tiempoInicio >= tiempoMaximoSinProductos)
+                if (!esperandoPrimerProducto && productosRecogidos.Count == 0 && Time.time - tiempoInicio >= tiempoMaximoSinProductos)
                 {
                     Debug.Log("<color=orange>NPC: Llevo demasiado tiempo sin encontrar productos. Me voy.</color>");
                     IrASalida();
@@ -104,7 +114,8 @@ public class NPCCliente : MonoBehaviour
                 break;
 
             case EstadoNPC.SiendoAtendido:
-                
+                if (!agent.pathPending && HaLlegado() && !productosEntregadosEnCaja)
+                    DejarProductosEnCaja();
                 break;
 
             case EstadoNPC.Saliendo:
@@ -199,12 +210,14 @@ public class NPCCliente : MonoBehaviour
             }
             else
             {
+                esperandoPrimerProducto = true;
                 Debug.Log("<color=orange>NPC: No encontré estantes disponibles. Voy a vagar por la tienda.</color>");
                 ComenzarVagabundeo();
             }
             return;
         }
 
+        esperandoPrimerProducto = false;
         estantesVisitados.Add(objetivo);
         estadoActual = EstadoNPC.BuscandoEstante;
         ResetearTraba();
@@ -241,6 +254,7 @@ public class NPCCliente : MonoBehaviour
             if (producto != null)
             {
                 productosRecogidos.Add(producto);
+                AgregarVisualAlInventario(producto);
                 Debug.Log($"<color=cyan>NPC: Tomé '{producto.nombreProducto}'. Total: {productosRecogidos.Count}/{productosObjetivo}.</color>");
             }
             else
@@ -313,6 +327,12 @@ public class NPCCliente : MonoBehaviour
         RestockShelf objetivo = ElegirEstante();
         if (objetivo != null)
         {
+            if (esperandoPrimerProducto)
+            {
+                productosObjetivo = 1;
+                Debug.Log("<color=cyan>NPC: Encontré stock. Tomaré un producto y luego iré a caja.</color>");
+            }
+
             BuscarSiguienteEstante();
             return;
         }
@@ -374,24 +394,10 @@ public class NPCCliente : MonoBehaviour
     public void RecibirTurnoEnCaja(Vector3 posicionMesa)
     {
         estadoActual = EstadoNPC.SiendoAtendido;
+        productosEntregadosEnCaja = false;
 
         if (!IntentarMoverA(posicionMesa, 5f, true))
             Debug.LogWarning("<color=orange>NPC: No pude moverme correctamente al punto de cobro.</color>");
-
-        if (mesaDeCobro != null)
-        {
-            foreach (ProductoData producto in productosRecogidos)
-            {
-                if (objetoCajaPrefab != null)
-                {
-                    Vector3 offset = new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.2f, 0.2f));
-                    GameObject itemCaja = Instantiate(objetoCajaPrefab, mesaDeCobro.position + offset, Quaternion.identity);
-                    ObjetoCaja scriptObjeto = itemCaja.GetComponent<ObjetoCaja>();
-                    if (scriptObjeto != null) scriptObjeto.datosProducto = producto;
-                }
-            }
-            Debug.Log($"<color=cyan>NPC: Turno en caja. {productosRecogidos.Count} producto(s) en mesa.</color>");
-        }
     }
 
     public void RecibirPermisoDeSalir()
@@ -427,17 +433,8 @@ public class NPCCliente : MonoBehaviour
         if (zonaFilaCaja != null)
         {
             estadoActual = EstadoNPC.SiendoAtendido;
+            productosEntregadosEnCaja = false;
             IntentarMoverA(zonaFilaCaja.position, 5f, true);
-
-            if (mesaDeCobro != null && objetoCajaPrefab != null)
-            {
-                foreach (ProductoData producto in productosRecogidos)
-                {
-                    GameObject itemCaja = Instantiate(objetoCajaPrefab, mesaDeCobro.position, Quaternion.identity);
-                    ObjetoCaja script = itemCaja.GetComponent<ObjetoCaja>();
-                    if (script != null) script.datosProducto = producto;
-                }
-            }
         }
         else
         {
@@ -452,6 +449,54 @@ public class NPCCliente : MonoBehaviour
         if (agent.pathPending) return false;
         if (!agent.hasPath) return true;
         return agent.remainingDistance <= agent.stoppingDistance + 0.15f;
+    }
+
+    void AgregarVisualAlInventario(ProductoData producto)
+    {
+        if (producto == null || producto.prefabIndividual == null)
+            return;
+
+        Transform padre = puntoInventarioVisual != null ? puntoInventarioVisual : transform;
+        GameObject visual = Instantiate(producto.prefabIndividual, padre);
+        visual.name = producto.nombreProducto + " Inventario";
+        visual.transform.localPosition = offsetInventarioInicial + separacionInventario * productosEnInventarioVisual.Count;
+        visual.transform.localRotation = Quaternion.Euler(rotacionInventario);
+        visual.transform.localScale = escalaInventario;
+
+        foreach (Collider col in visual.GetComponentsInChildren<Collider>())
+            col.enabled = false;
+
+        foreach (Rigidbody rb in visual.GetComponentsInChildren<Rigidbody>())
+            rb.isKinematic = true;
+
+        productosEnInventarioVisual.Add(visual);
+    }
+
+    void DejarProductosEnCaja()
+    {
+        productosEntregadosEnCaja = true;
+
+        if (mesaDeCobro == null || objetoCajaPrefab == null)
+        {
+            Debug.LogWarning("<color=orange>NPC: Falta mesaDeCobro u objetoCajaPrefab para dejar productos.</color>");
+            return;
+        }
+
+        for (int i = 0; i < productosRecogidos.Count; i++)
+        {
+            ProductoData producto = productosRecogidos[i];
+            Vector3 offset = new Vector3(Random.Range(-0.3f, 0.3f), 0f, Random.Range(-0.2f, 0.2f));
+            GameObject itemCaja = Instantiate(objetoCajaPrefab, mesaDeCobro.position + offset, Quaternion.identity);
+            ObjetoCaja scriptObjeto = itemCaja.GetComponent<ObjetoCaja>();
+            if (scriptObjeto != null)
+                scriptObjeto.datosProducto = producto;
+
+            if (i < productosEnInventarioVisual.Count && productosEnInventarioVisual[i] != null)
+                Destroy(productosEnInventarioVisual[i]);
+        }
+
+        productosEnInventarioVisual.Clear();
+        Debug.Log($"<color=cyan>NPC: Dejé {productosRecogidos.Count} producto(s) en caja.</color>");
     }
 
     private void OnTriggerEnter(Collider other)

@@ -5,7 +5,7 @@ public class ObjetoCaja : MonoBehaviour
     [Header("Datos")]
     public ProductoData datosProducto;
 
-    [Header("Configuración de Cobro")]
+    [Header("ConfiguraciÃ³n de Cobro")]
     public float precioProducto = 4.99f;
 
     [HideInInspector]

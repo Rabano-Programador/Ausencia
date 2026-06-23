@@ -43,10 +43,10 @@ public class PlayerController : MonoBehaviour
     public Transform playerHands;
     #endregion
 
-    [Header("Configuración de Reposición")]
+    [Header("ConfiguraciÃ³n de ReposiciÃ³n")]
     public float distanciaDeColocacion = 3.5f;
 
-    [Header("UI Interacción")]
+    [Header("UI InteracciÃ³n")]
     public TextMeshProUGUI textoInteraccion;
 
 
@@ -58,11 +58,11 @@ public class PlayerController : MonoBehaviour
     public bool isLookingAtItem;
     #endregion
 
-    [Header("Configuración Caja Registradora")]
+    [Header("ConfiguraciÃ³n Caja Registradora")]
     public Transform puntoCajaTransform;
     public Transform puntoDespachoDestino;
 
-    [Header("Configuración Transbank")]
+    [Header("ConfiguraciÃ³n Transbank")]
     public Transform puntoCamaraTransbank;
 
     private bool estaEnLaCaja = false;
@@ -93,6 +93,13 @@ public class PlayerController : MonoBehaviour
     #region Update
     void Update()
     {
+        if (PauseManager.IsPaused)
+        {
+            if (textoInteraccion != null)
+                textoInteraccion.text = "";
+            return;
+        }
+
         #region Camara
         if (!estaEnTransbank)
         {
@@ -257,10 +264,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (estaEnLaCaja && !estaEnTransbank && Input.GetKeyDown(KeyCode.Escape))
-        {
-            SalirDeModoCaja();
-        }
         #endregion
 
         #region Grab Follow Camera
@@ -278,7 +281,7 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
-        #region Colocación en Estantería (LMB)
+        #region ColocaciÃ³n en EstanterÃ­a (LMB)
         if (grabbedTransform != null && Input.GetMouseButtonDown(0))
         {
             Ray placementRay = new Ray(camTransform.position, camTransform.forward);
@@ -349,7 +352,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Gestión de Estados de Caja y Transbank
+    #region GestiÃ³n de Estados de Caja y Transbank
     private void EntrarAModoCaja()
     {
         estaEnLaCaja = true;
@@ -386,8 +389,7 @@ public class PlayerController : MonoBehaviour
         estaEnTransbank = false;
 
         camTransform.localPosition = originalCameraPos;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        AplicarEstadoCursor();
     }
     #endregion
 
@@ -400,6 +402,23 @@ public class PlayerController : MonoBehaviour
     public void TeleportTo(Vector3 newPos)
     {
         transform.position = newPos;
+    }
+
+    public void AplicarEstadoCursor()
+    {
+        if (PauseManager.IsPaused)
+            return;
+
+        if (estaEnTransbank)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
     #endregion
 }

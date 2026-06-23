@@ -21,6 +21,12 @@ public class QueueManager : MonoBehaviour
     public Vector3 UnirseACola(NPCCliente npc)
     {
         colaDeEspera.Enqueue(npc);
+        if (npcSiendoAtendido == null)
+        {
+            AvanzarCola();
+            return puntoMesaCobro != null ? puntoMesaCobro.position : npc.transform.position;
+        }
+
         return ObtenerPosicionEnCola(colaDeEspera.Count - 1);
     }
 

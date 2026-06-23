@@ -41,7 +41,7 @@ public class NPCSystem : MonoBehaviour
             }
             else
             {
-                Debug.Log($"<color=orange>NPC Spawner: Límite alcanzado ({npcsActivos.Count}/{maxNPCsEnEscena}). Esperando espacio.</color>");
+                Debug.Log($"<color=orange>NPC Spawner: LÃ­mite alcanzado ({npcsActivos.Count}/{maxNPCsEnEscena}). Esperando espacio.</color>");
             }
 
             CalcularSiguienteCliente();
@@ -55,7 +55,7 @@ public class NPCSystem : MonoBehaviour
 
         if (!NavMesh.SamplePosition(transform.position, out hitSpawn, radioBusquedaNavMeshSpawn, NavMesh.AllAreas))
         {
-            Debug.LogWarning("<color=orange>NPC Spawner: No encontré NavMesh cerca del punto de spawn. NPC cancelado.</color>");
+            Debug.LogWarning("<color=orange>NPC Spawner: No encontrÃ© NavMesh cerca del punto de spawn. NPC cancelado.</color>");
             return;
         }
 
@@ -74,6 +74,20 @@ public class NPCSystem : MonoBehaviour
             npcsActivos.Add(ia);
             Debug.Log($"<color=green>NPC Spawner: Nuevo cliente spawneado en {posicionSpawn} ({npcsActivos.Count}/{maxNPCsEnEscena}).</color>");
         }
+    }
+
+    public void ForzarSpawnNPC()
+    {
+        npcsActivos.RemoveAll(n => n == null);
+
+        if (npcsActivos.Count >= maxNPCsEnEscena)
+        {
+            Debug.LogWarning("<color=orange>NPC Spawner: No puedo forzar spawn, ya se alcanzó el máximo de NPCs.</color>");
+            return;
+        }
+
+        SpawnearNPC();
+        CalcularSiguienteCliente();
     }
 
     void CalcularSiguienteCliente()

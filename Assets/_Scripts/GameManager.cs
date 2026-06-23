@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     public float dineroAcumulado = 0f;
     public TextMeshProUGUI textoProductividad;
 
-    [Header("Sistema de Estrés (Sobrecarga)")]
+    [Header("Sistema de EstrÃ©s (Sobrecarga)")]
     public float nivelDeEstres = 0f;
     public float limiteParaAtaque = 100f;
-    public TextMeshProUGUI textoEstres; // Opcional, para ver el % de estrés en pantalla
+    public TextMeshProUGUI textoEstres; // Opcional, para ver el % de estrÃ©s en pantalla
 
     private void Awake()
     {
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("¡TURNO TERMINADO! Evaluar victoria/derrota.");
+            Debug.Log("Â¡TURNO TERMINADO! Evaluar victoria/derrota.");
         }
 
         if (nivelDeEstres > 0)
@@ -60,17 +60,42 @@ public class GameManager : MonoBehaviour
         {
             dineroAcumulado -= (monto / 2);
             nivelDeEstres += 25f; 
-            Debug.Log("<color=red>¡Cobro incorrecto! Productividad reducida.</color>");
+            Debug.Log("<color=red>Â¡Cobro incorrecto! Productividad reducida.</color>");
         }
 
         ChequearAtaqueEpilepsia();
+    }
+
+    public void SumarDineroDebug(float monto)
+    {
+        dineroAcumulado += monto;
+        ActualizarUI();
+    }
+
+    public void AgregarEstresDebug(float cantidad)
+    {
+        nivelDeEstres += cantidad;
+        ChequearAtaqueEpilepsia();
+        ActualizarUI();
+    }
+
+    public void ResetearEstresDebug()
+    {
+        nivelDeEstres = 0f;
+        ActualizarUI();
+    }
+
+    public void AjustarTiempoRestanteDebug(float segundos)
+    {
+        tiempoRestante = Mathf.Max(0f, tiempoRestante + segundos);
+        ActualizarUI();
     }
 
     private void ChequearAtaqueEpilepsia()
     {
         if (nivelDeEstres >= limiteParaAtaque)
         {
-            Debug.Log("¡SOBRECARGA! Gatillando ataque...");
+            Debug.Log("Â¡SOBRECARGA! Gatillando ataque...");
             nivelDeEstres = 0f;
             QTEManager.Instance.StartSeizure();
         }
@@ -84,6 +109,6 @@ public class GameManager : MonoBehaviour
 
         if (textoProductividad != null) textoProductividad.text = "Productividad: $" + dineroAcumulado.ToString("F2");
 
-        if (textoEstres != null) textoEstres.text = "Estrés: " + Mathf.Clamp(nivelDeEstres, 0, 100).ToString("F0") + "%";
+        if (textoEstres != null) textoEstres.text = "EstrÃ©s: " + Mathf.Clamp(nivelDeEstres, 0, 100).ToString("F0") + "%";
     }
 }

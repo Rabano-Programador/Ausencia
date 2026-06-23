@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class RandomSpawner : MonoBehaviour
 {
-    [Header("Configuración del Spawn")]
+    [Header("ConfiguraciÃ³n del Spawn")]
     public GameObject cajaPrefab;
     public ProductoData[] posiblesProductos;
 
@@ -70,10 +70,22 @@ public class RandomSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("<color=red>No se encontró un producto válido. Destruyendo caja defectuosa...</color>");
+                Debug.Log("<color=red>No se encontrÃ³ un producto vÃ¡lido. Destruyendo caja defectuosa...</color>");
                 Destroy(nuevaCaja);
             }
         }
+    }
+
+    public void ForzarSpawnCaja()
+    {
+        if (AreaEstaBloqueada())
+        {
+            Debug.LogWarning("<color=orange>RandomSpawner: No puedo forzar spawn porque el área está bloqueada.</color>");
+            return;
+        }
+
+        SpawnearCaja();
+        AsignarNuevoTiempo();
     }
 
     ProductoData ElegirProductoFaltante()
