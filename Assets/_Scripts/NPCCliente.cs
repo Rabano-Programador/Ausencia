@@ -25,7 +25,6 @@ public class NPCCliente : MonoBehaviour
     private int productosObjetivo;
     private float tiempoInicio;
 
-    // ─── Máquina de estados ─────────────────────────────────────────────────
     private enum EstadoNPC
     {
         BuscandoEstante,
@@ -38,9 +37,6 @@ public class NPCCliente : MonoBehaviour
 
     private HashSet<RestockShelf> estantesVisitados = new HashSet<RestockShelf>();
 
-    // ─── Anti-traba ─────────────────────────────────────────────────────────
-    // Si el NPC no avanza más de stuckDistancia en stuckTimeout segundos → está trabado.
-    // En ese caso marcamos el estante como visitado y buscamos otro (o vamos a caja).
     [Header("Anti-traba")]
     [Tooltip("Segundos sin moverse antes de considerar al NPC trabado")]
     public float stuckTimeout = 4f;
@@ -50,7 +46,6 @@ public class NPCCliente : MonoBehaviour
     private float stuckTimer = 0f;
     private Vector3 lastPosition;
 
-    // ────────────────────────────────────────────────────────────────────────
 
     void Start()
     {
@@ -105,22 +100,18 @@ public class NPCCliente : MonoBehaviour
                 break;
 
             case EstadoNPC.EsperandoEnCola:
-                // QueueManager notifica via RecibirTurnoEnCaja cuando es su turno.
+                
                 break;
 
             case EstadoNPC.SiendoAtendido:
-                // El jugador escanea y llama RecibirPermisoDeSalir.
+                
                 break;
 
             case EstadoNPC.Saliendo:
-                // OnTriggerEnter con tag "Salida" destruye al NPC.
                 break;
         }
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    // Anti-traba
-    // ────────────────────────────────────────────────────────────────────────
 
     void ChequearTraba()
     {
@@ -128,7 +119,6 @@ public class NPCCliente : MonoBehaviour
 
         if (dist > stuckDistancia)
         {
-            // Se está moviendo con normalidad: resetear
             stuckTimer = 0f;
             lastPosition = transform.position;
         }
@@ -141,7 +131,6 @@ public class NPCCliente : MonoBehaviour
                 Debug.LogWarning("<color=orange>NPC TRABADO: Sin movimiento por " + stuckTimeout + "s. Saltando al siguiente estante.</color>");
                 stuckTimer = 0f;
                 lastPosition = transform.position;
-                // Forzar avance: buscar otro estante o ir a caja
                 BuscarSiguienteEstante();
             }
         }
@@ -189,9 +178,7 @@ public class NPCCliente : MonoBehaviour
         return agent.SetPath(path);
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    // Lógica de recogida de productos
-    // ────────────────────────────────────────────────────────────────────────
+ 
 
     void BuscarSiguienteEstante()
     {
@@ -222,8 +209,6 @@ public class NPCCliente : MonoBehaviour
         estadoActual = EstadoNPC.BuscandoEstante;
         ResetearTraba();
 
-        // Calcular el punto del NavMesh más cercano al estante.
-        // Radio grande (5u) para cubrir estantes que están encima de muebles altos.
         Vector3 destino = objetivo.transform.position;
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(destino, out navHit, 5f, NavMesh.AllAreas))
@@ -233,16 +218,13 @@ public class NPCCliente : MonoBehaviour
         }
         else
         {
-            // No hay NavMesh cerca del estante: marcarlo como visitado y buscar otro
             Debug.LogWarning($"<color=orange>NPC: No hay NavMesh cerca de '{objetivo.gameObject.name}'. Descartando.</color>");
             BuscarSiguienteEstante();
             return;
         }
 
-        // Verificar que el path es completo antes de asignarlo
         if (!IntentarMoverA(destino))
         {
-            // Path parcial o imposible: descartar este estante y buscar otro
             Debug.LogWarning($"<color=orange>NPC: No se pudo calcular un path válido a '{objetivo.gameObject.name}'. Descartando.</color>");
             BuscarSiguienteEstante();
             return;
@@ -362,9 +344,7 @@ public class NPCCliente : MonoBehaviour
         return false;
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    // Lógica de cola
-    // ────────────────────────────────────────────────────────────────────────
+  
 
     void UnirseACola()
     {
@@ -427,10 +407,7 @@ public class NPCCliente : MonoBehaviour
             IntentarMoverA(nuevaPosicion, 5f, true);
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    // Salida
-    // ────────────────────────────────────────────────────────────────────────
-
+    
     void IrASalida()
     {
         estadoActual = EstadoNPC.Saliendo;
@@ -468,9 +445,7 @@ public class NPCCliente : MonoBehaviour
         }
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    // Detección de llegada
-    // ────────────────────────────────────────────────────────────────────────
+   
 
     bool HaLlegado()
     {
