@@ -60,18 +60,15 @@ public class TransbankUI : MonoBehaviour
         {
             float totalRealCaja = cajaUI.ObtenerTotalCuenta();
 
-            Debug.Log("Transbank leyó: " + montoIngresado + " | La computadora tiene: " + totalRealCaja);
 
             if (Mathf.Abs(montoIngresado - totalRealCaja) < 0.02f)
             {
-                Debug.Log("<color=green>¡Monto Coincide! Cobro Exitoso.</color>");
 
                 cajaUI.LimpiarCajaFinTurno();
                 player.SalirDeModoTransbank();
             }
             else
             {
-                Debug.LogWarning("<color=orange>ERROR: Los montos no coinciden matemáticamente.</color>");
             }
         }
     }

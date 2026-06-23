@@ -27,7 +27,6 @@ public class EscenasManager : MonoBehaviour
     {
         if (panelOpciones == null)
         {
-            Debug.LogWarning("EscenasManager: Falta asignar el panel de opciones.");
             return;
         }
 
@@ -46,7 +45,6 @@ public class EscenasManager : MonoBehaviour
     public void Salir()
     {
         Application.Quit();
-        Debug.Log("EscenasManager: Cerrando juego.");
     }
 
     void SetMenuPrincipalActivo(bool activo)

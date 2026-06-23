@@ -21,7 +21,6 @@ public class ObjetoCaja : MonoBehaviour
         if (other.CompareTag("ZonaEsperaCobro"))
         {
             estaEnZonaEspera = true;
-            Debug.Log("Objeto listo en la mesa de espera.");
         }
     }
 

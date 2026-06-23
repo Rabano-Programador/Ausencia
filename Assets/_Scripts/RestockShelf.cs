@@ -46,19 +46,16 @@ public class RestockShelf : MonoBehaviour
     {
         if (stockActual >= puntosDeColocacion.Length)
         {
-            Debug.Log("<color=orange>El estante ya está lleno.</color>");
             return;
         }
 
         if (cajaDelJugador == null || cajaDelJugador.datosProducto == null || productoRequerido == null)
         {
-            Debug.LogWarning("<color=orange>RestockShelf: Faltan datos para reponer el producto.</color>");
             return;
         }
 
         if (productoRequerido.prefabIndividual == null)
         {
-            Debug.LogWarning($"<color=orange>RestockShelf: '{productoRequerido.nombreProducto}' no tiene prefabIndividual asignado.</color>");
             return;
         }
 
@@ -69,7 +66,6 @@ public class RestockShelf : MonoBehaviour
                 Transform punto = puntosDeColocacion[stockActual];
                 if (punto == null)
                 {
-                    Debug.LogWarning($"<color=orange>RestockShelf: El punto de colocación {stockActual} no está asignado.</color>");
                     return;
                 }
 
@@ -85,10 +81,7 @@ public class RestockShelf : MonoBehaviour
                 if (GameManager.Instance != null) GameManager.Instance.RegistrarTrabajo(15f);
             }
         }
-        else
-        {
-            Debug.Log($"<color=orange>RestockShelf: Este estante requiere '{productoRequerido.nombreProducto}' y la caja tiene '{cajaDelJugador.datosProducto.nombreProducto}'.</color>");
-        }
+        
     }
 
     public ProductoData TomarProductoNPC()

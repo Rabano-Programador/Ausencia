@@ -66,14 +66,12 @@ public class NPCCliente : MonoBehaviour
 
         if (agent == null)
         {
-            Debug.LogError("<color=red>NPC ERROR: Falta el componente NavMeshAgent.</color>");
             Destroy(gameObject);
             return;
         }
 
         if (!agent.isOnNavMesh && !IntentarSnapAlNavMesh(transform.position, 3f))
         {
-            Debug.LogError("<color=red>NPC ERROR: No está en el NavMesh y no se pudo corregir su posición al iniciar.</color>");
             Destroy(gameObject);
             return;
         }
@@ -81,7 +79,6 @@ public class NPCCliente : MonoBehaviour
         productosObjetivo = Random.Range(1, maxProductosARecoger + 1);
         tiempoInicio = Time.time;
         lastPosition = transform.position;
-        Debug.Log($"<color=cyan>NPC: Voy a buscar {productosObjetivo} producto(s).</color>");
 
         BuscarSiguienteEstante();
     }
@@ -103,17 +100,17 @@ public class NPCCliente : MonoBehaviour
 
                 if (!esperandoPrimerProducto && productosRecogidos.Count == 0 && Time.time - tiempoInicio >= tiempoMaximoSinProductos)
                 {
-                    Debug.Log("<color=orange>NPC: Llevo demasiado tiempo sin encontrar productos. Me voy.</color>");
                     IrASalida();
                     break;
                 }
 
                 if (!agent.pathPending && HaLlegado())
+                {
                     EvaluarSiguienteAccionVagando();
+                }
                 break;
 
             case EstadoNPC.EsperandoEnCola:
-                
                 break;
 
             case EstadoNPC.SiendoAtendido:
@@ -151,7 +148,6 @@ public class NPCCliente : MonoBehaviour
 
             if (stuckTimer >= stuckTimeout)
             {
-                Debug.LogWarning("<color=orange>NPC TRABADO: Sin movimiento por " + stuckTimeout + "s. Saltando al siguiente estante.</color>");
                 stuckTimer = 0f;
                 lastPosition = transform.position;
                 BuscarSiguienteEstante();
@@ -201,8 +197,6 @@ public class NPCCliente : MonoBehaviour
         return agent.SetPath(path);
     }
 
- 
-
     void BuscarSiguienteEstante()
     {
         if (productosRecogidos.Count >= productosObjetivo)
@@ -217,13 +211,11 @@ public class NPCCliente : MonoBehaviour
         {
             if (productosRecogidos.Count > 0)
             {
-                Debug.Log("<color=orange>NPC: No encontré más estantes disponibles. Voy a la caja.</color>");
                 UnirseACola();
             }
             else
             {
                 esperandoPrimerProducto = true;
-                Debug.Log("<color=orange>NPC: No encontré estantes disponibles. Voy a vagar por la tienda.</color>");
                 ComenzarVagabundeo();
             }
             return;
@@ -239,47 +231,18 @@ public class NPCCliente : MonoBehaviour
         if (NavMesh.SamplePosition(destino, out navHit, 5f, NavMesh.AllAreas))
         {
             destino = navHit.position;
-            Debug.Log($"<color=cyan>NPC: Destino sampledNavMesh={destino}. Yendo a '{objetivo.gameObject.name}'.</color>");
         }
         else
         {
-            Debug.LogWarning($"<color=orange>NPC: No hay NavMesh cerca de '{objetivo.gameObject.name}'. Descartando.</color>");
             BuscarSiguienteEstante();
             return;
         }
 
         if (!IntentarMoverA(destino))
         {
-            Debug.LogWarning($"<color=orange>NPC: No se pudo calcular un path válido a '{objetivo.gameObject.name}'. Descartando.</color>");
             BuscarSiguienteEstante();
             return;
         }
-    }
-
-    void TomarProductoDelEstante()
-    {
-        RestockShelf estanteCercano = EncontrarEstanteCercano();
-
-        if (estanteCercano != null)
-        {
-            ProductoData producto = estanteCercano.TomarProductoNPC();
-            if (producto != null)
-            {
-                productosRecogidos.Add(producto);
-                AgregarVisualAlInventario(producto);
-                Debug.Log($"<color=cyan>NPC: Tomé '{producto.nombreProducto}'. Total: {productosRecogidos.Count}/{productosObjetivo}.</color>");
-            }
-            else
-            {
-                Debug.Log("<color=orange>NPC: El estante estaba vacío.</color>");
-            }
-        }
-        else
-        {
-            Debug.Log("<color=orange>NPC: Llegué pero no hay estante en el radio de 3u.</color>");
-        }
-
-        BuscarSiguienteEstante();
     }
 
     RestockShelf ElegirEstante()
@@ -316,6 +279,23 @@ public class NPCCliente : MonoBehaviour
         return masCercano;
     }
 
+    void TomarProductoDelEstante()
+    {
+        RestockShelf estanteCercano = EncontrarEstanteCercano();
+
+        if (estanteCercano != null)
+        {
+            ProductoData producto = estanteCercano.TomarProductoNPC();
+            if (producto != null)
+            {
+                productosRecogidos.Add(producto);
+                AgregarVisualAlInventario(producto);
+            }
+
+            BuscarSiguienteEstante();
+        }
+    }
+
     void ComenzarVagabundeo()
     {
         estadoActual = EstadoNPC.Vagando;
@@ -323,7 +303,6 @@ public class NPCCliente : MonoBehaviour
 
         if (!MoverAUnPuntoAleatorio())
         {
-            Debug.LogWarning("<color=orange>NPC: No encontré un punto válido para vagar. Reintentando búsqueda de estantes.</color>");
             BuscarSiguienteEstante();
         }
     }
@@ -342,17 +321,13 @@ public class NPCCliente : MonoBehaviour
             if (esperandoPrimerProducto)
             {
                 productosObjetivo = 1;
-                Debug.Log("<color=cyan>NPC: Encontré stock. Tomaré un producto y luego iré a caja.</color>");
             }
 
             BuscarSiguienteEstante();
             return;
         }
 
-        if (!MoverAUnPuntoAleatorio())
-        {
-            Debug.LogWarning("<color=orange>NPC: No encontré otro punto válido para seguir vagando.</color>");
-        }
+        MoverAUnPuntoAleatorio();
     }
 
     bool MoverAUnPuntoAleatorio()
@@ -368,7 +343,6 @@ public class NPCCliente : MonoBehaviour
 
             if (IntentarMoverA(hit.position, 2f, true))
             {
-                Debug.Log($"<color=cyan>NPC: Vagando hacia {hit.position}.</color>");
                 return true;
             }
         }
@@ -376,20 +350,16 @@ public class NPCCliente : MonoBehaviour
         return false;
     }
 
-  
-
     void UnirseACola()
     {
         if (productosRecogidos.Count == 0)
         {
-            Debug.Log("<color=orange>NPC: Sin productos. Me voy.</color>");
             IrASalida();
             return;
         }
 
         if (QueueManager.Instance == null)
         {
-            Debug.LogWarning("<color=red>NPC: No hay QueueManager. Modo legacy.</color>");
             IrACajaLegacy();
             return;
         }
@@ -397,10 +367,7 @@ public class NPCCliente : MonoBehaviour
         estadoActual = EstadoNPC.EsperandoEnCola;
         Vector3 posicionEspera = QueueManager.Instance.UnirseACola(this);
 
-        if (!IntentarMoverA(posicionEspera, 5f, true))
-            Debug.LogWarning("<color=orange>NPC: No pude encontrar un path válido hacia la cola.</color>");
-
-        Debug.Log("<color=cyan>NPC: Me uno a la cola.</color>");
+        IntentarMoverA(posicionEspera, 5f, true);
     }
 
     public void RecibirTurnoEnCaja(Vector3 posicionMesa)
@@ -409,8 +376,7 @@ public class NPCCliente : MonoBehaviour
         productosEntregadosEnCaja = false;
         tiempoEsperandoEnCaja = 0f;
 
-        if (!IntentarMoverA(posicionMesa, 5f, true))
-            Debug.LogWarning("<color=orange>NPC: No pude moverme correctamente al punto de cobro.</color>");
+        IntentarMoverA(posicionMesa, 5f, true);
     }
 
     public void RecibirPermisoDeSalir()
@@ -426,14 +392,12 @@ public class NPCCliente : MonoBehaviour
             IntentarMoverA(nuevaPosicion, 5f, true);
     }
 
-    
     void IrASalida()
     {
         estadoActual = EstadoNPC.Saliendo;
         if (puntoSalida != null)
         {
-            if (!IntentarMoverA(puntoSalida.position, 5f, true))
-                Debug.LogWarning("<color=orange>NPC: No pude encontrar un path válido hacia la salida.</color>");
+            IntentarMoverA(puntoSalida.position, 5f, true);
         }
         else
         {
@@ -455,8 +419,6 @@ public class NPCCliente : MonoBehaviour
             IrASalida();
         }
     }
-
-   
 
     bool HaLlegado()
     {
@@ -492,11 +454,8 @@ public class NPCCliente : MonoBehaviour
 
         if (puntoDespachoProductos == null)
         {
-            Debug.LogWarning("<color=orange>NPC: Falta puntoDespachoProductos para dejar productos.</color>");
             return;
         }
-
-        Debug.Log($"<color=cyan>NPC: Dejando productos en PuntoDespacho '{puntoDespachoProductos.name}' en {puntoDespachoProductos.position}.</color>");
 
         for (int i = 0; i < productosRecogidos.Count; i++)
         {
@@ -507,7 +466,6 @@ public class NPCCliente : MonoBehaviour
 
             if (prefabAInstanciar == null)
             {
-                Debug.LogWarning($"<color=orange>NPC: No tengo prefab para dejar '{(producto != null ? producto.nombreProducto : "producto nulo")}'.</color>");
                 continue;
             }
 
@@ -527,7 +485,6 @@ public class NPCCliente : MonoBehaviour
         }
 
         productosEnInventarioVisual.Clear();
-        Debug.Log($"<color=cyan>NPC: Dejé {productosRecogidos.Count} producto(s) en caja.</color>");
     }
 
     private void OnTriggerEnter(Collider other)

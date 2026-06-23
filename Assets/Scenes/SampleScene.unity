@@ -7689,6 +7689,28 @@ MonoBehaviour:
   mensajeIndicador: "Mantequilla Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+--- !u!64 &1072875621
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072875615}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7377673178080500892, guid: aa2b3eb6b2111eb47b9eac38b25fa3e7, type: 3}
 --- !u!1 &1090864341
 GameObject:
   m_ObjectHideFlags: 0
@@ -12950,6 +12972,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5136570864926832358, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1072875620}
+    - targetCorrespondingSourceObject: {fileID: 5136570864926832358, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1072875621}
     - targetCorrespondingSourceObject: {fileID: 2535147688332045567, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1698616727}

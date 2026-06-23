@@ -70,7 +70,6 @@ public class RandomSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("<color=red>No se encontrÃ³ un producto vÃ¡lido. Destruyendo caja defectuosa...</color>");
                 Destroy(nuevaCaja);
             }
         }
@@ -80,7 +79,6 @@ public class RandomSpawner : MonoBehaviour
     {
         if (AreaEstaBloqueada())
         {
-            Debug.LogWarning("<color=orange>RandomSpawner: No puedo forzar spawn porque el área está bloqueada.</color>");
             return;
         }
 
@@ -131,7 +129,6 @@ public class RandomSpawner : MonoBehaviour
 
         if (productoElegido.prefabIndividual == null)
         {
-            Debug.LogWarning($"<color=orange>RandomSpawner: '{productoElegido.nombreProducto}' no tiene prefabIndividual asignado.</color>");
             return;
         }
 

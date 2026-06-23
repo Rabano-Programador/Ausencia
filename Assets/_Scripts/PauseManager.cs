@@ -20,7 +20,6 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Color colorModoPruebasActivo = Color.green;
     [SerializeField] private Color colorModoPruebasInactivo = Color.red;
 
-    [Header("Debug F1-F9")]
     [SerializeField] private float dineroDebugF5 = 100f;
     [SerializeField] private float estresDebugF6 = 25f;
     [SerializeField] private float segundosDebugF8 = 60f;
@@ -134,7 +133,6 @@ public class PauseManager : MonoBehaviour
     {
         ModoPruebasActivo = !ModoPruebasActivo;
         ActualizarVisualModoPruebas();
-        Debug.Log($"<color=cyan>PauseManager: Modo pruebas {(ModoPruebasActivo ? "activado" : "desactivado")}.</color>");
     }
 
     private void ActualizarVisualModoPruebas()

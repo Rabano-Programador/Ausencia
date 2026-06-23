@@ -32,11 +32,7 @@ public class GameManager : MonoBehaviour
             tiempoRestante -= Time.deltaTime;
             ActualizarUI();
         }
-        else
-        {
-            Debug.Log("¡TURNO TERMINADO! Evaluar victoria/derrota.");
-        }
-
+       
         if (nivelDeEstres > 0)
         {
             nivelDeEstres -= Time.deltaTime * 1.5f; 
@@ -60,7 +56,6 @@ public class GameManager : MonoBehaviour
         {
             dineroAcumulado -= (monto / 2);
             nivelDeEstres += 25f; 
-            Debug.Log("<color=red>¡Cobro incorrecto! Productividad reducida.</color>");
         }
 
         ChequearAtaqueEpilepsia();
@@ -95,7 +90,6 @@ public class GameManager : MonoBehaviour
     {
         if (nivelDeEstres >= limiteParaAtaque)
         {
-            Debug.Log("¡SOBRECARGA! Gatillando ataque...");
             nivelDeEstres = 0f;
             QTEManager.Instance.StartSeizure();
         }
