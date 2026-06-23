@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 08d2d912c7320454b97ca691b07d590c
+guid: 8623b6b42e6a43c4092648a21ce6048a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: NpcMaleIdle
+      name: BossTalking2
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 216
+      lastFrame: 73
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
