@@ -3,10 +3,10 @@ using TMPro;
 
 public class RestockShelf : MonoBehaviour
 {
-    [Header("ConfiguraciÛn del Estante")]
+    [Header("Configuraci√≥n del Estante")]
     public ProductoData productoRequerido;
 
-    [Tooltip("Crea Emptys donde quieres que aparezcan los productos y arr·stralos aquÌ")]
+    [Tooltip("Crea Emptys donde quieres que aparezcan los productos y arr√°stralos aqu√≠")]
     public Transform[] puntosDeColocacion;
 
     [HideInInspector] public int stockActual = 0;
@@ -26,18 +26,35 @@ public class RestockShelf : MonoBehaviour
     {
         if (stockActual >= puntosDeColocacion.Length)
         {
-            Debug.Log("<color=orange>El estante ya est· lleno.</color>");
+            Debug.Log("<color=orange>El estante ya est√° lleno.</color>");
             return;
         }
 
-        if (cajaDelJugador.datosProducto == null || productoRequerido == null) return;
+        if (cajaDelJugador == null || cajaDelJugador.datosProducto == null || productoRequerido == null)
+        {
+            Debug.LogWarning("<color=orange>RestockShelf: Faltan datos para reponer el producto.</color>");
+            return;
+        }
+
+        if (productoRequerido.prefabIndividual == null)
+        {
+            Debug.LogWarning($"<color=orange>RestockShelf: '{productoRequerido.nombreProducto}' no tiene prefabIndividual asignado.</color>");
+            return;
+        }
 
         if (cajaDelJugador.datosProducto == productoRequerido)
         {
             if (cajaDelJugador.PillarProducto())
             {
                 Transform punto = puntosDeColocacion[stockActual];
+                if (punto == null)
+                {
+                    Debug.LogWarning($"<color=orange>RestockShelf: El punto de colocaci√≥n {stockActual} no est√° asignado.</color>");
+                    return;
+                }
+
                 GameObject nuevoItem = Instantiate(productoRequerido.prefabIndividual, punto.position, punto.rotation);
+                nuevoItem.transform.SetParent(punto, true);
 
                 productosVisuales[stockActual] = nuevoItem;
 
@@ -47,6 +64,10 @@ public class RestockShelf : MonoBehaviour
 
                 if (GameManager.Instance != null) GameManager.Instance.RegistrarTrabajo(15f);
             }
+        }
+        else
+        {
+            Debug.Log($"<color=orange>RestockShelf: Este estante requiere '{productoRequerido.nombreProducto}' y la caja tiene '{cajaDelJugador.datosProducto.nombreProducto}'.</color>");
         }
     }
 

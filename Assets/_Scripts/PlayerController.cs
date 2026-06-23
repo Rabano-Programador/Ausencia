@@ -43,10 +43,10 @@ public class PlayerController : MonoBehaviour
     public Transform playerHands;
     #endregion
 
-    [Header("Configuraci髇 de Reposici髇")]
+    [Header("Configuraci贸n de Reposici贸n")]
     public float distanciaDeColocacion = 3.5f;
 
-    [Header("UI Interacci髇")]
+    [Header("UI Interacci贸n")]
     public TextMeshProUGUI textoInteraccion;
 
 
@@ -58,11 +58,11 @@ public class PlayerController : MonoBehaviour
     public bool isLookingAtItem;
     #endregion
 
-    [Header("Configuraci髇 Caja Registradora")]
+    [Header("Configuraci贸n Caja Registradora")]
     public Transform puntoCajaTransform;
     public Transform puntoDespachoDestino;
 
-    [Header("Configuraci髇 Transbank")]
+    [Header("Configuraci贸n Transbank")]
     public Transform puntoCamaraTransbank;
 
     private bool estaEnLaCaja = false;
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
-        #region Colocaci髇 en Estanter韆 (LMB)
+        #region Colocaci贸n en Estanter铆a (LMB)
         if (grabbedTransform != null && Input.GetMouseButtonDown(0))
         {
             Ray placementRay = new Ray(camTransform.position, camTransform.forward);
@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(placementRay, out placementHit, distanciaDeColocacion))
             {
-                RestockShelf estante = placementHit.transform.GetComponent<RestockShelf>();
+                RestockShelf estante = placementHit.collider.GetComponentInParent<RestockShelf>();
                 ProductBox caja = grabbedTransform.GetComponent<ProductBox>();
 
                 if (estante != null && caja != null)
@@ -349,7 +349,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Gesti髇 de Estados de Caja y Transbank
+    #region Gesti贸n de Estados de Caja y Transbank
     private void EntrarAModoCaja()
     {
         estaEnLaCaja = true;

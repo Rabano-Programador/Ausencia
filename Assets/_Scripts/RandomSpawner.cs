@@ -3,9 +3,15 @@ using System.Collections.Generic;
 
 public class RandomSpawner : MonoBehaviour
 {
-    [Header("ConfiguraciÛn del Spawn")]
+    [Header("Configuraci√≥n del Spawn")]
     public GameObject cajaPrefab;
     public ProductoData[] posiblesProductos;
+
+    [Header("Visual de la Caja")]
+    public Vector3 offsetVisualProducto = Vector3.up * 0.35f;
+    public Vector3 rotacionVisualProducto;
+    public Vector3 escalaVisualProducto = Vector3.one * 0.6f;
+    public bool ocultarMeshCajaGenerica = true;
 
     [Header("Tiempos")]
     public float tiempoMinimo = 5f;
@@ -60,10 +66,11 @@ public class RandomSpawner : MonoBehaviour
                 scriptCaja.datosProducto = productoElegido;
                 scriptCaja.unidadesRestantes = 6;
                 nuevaCaja.name = "Caja de " + productoElegido.nombreProducto;
+                ConfigurarVisualCaja(nuevaCaja, productoElegido);
             }
             else
             {
-                Debug.Log("<color=red>No se encontrÛ un producto v·lido. Destruyendo caja defectuosa...</color>");
+                Debug.Log("<color=red>No se encontr√≥ un producto v√°lido. Destruyendo caja defectuosa...</color>");
                 Destroy(nuevaCaja);
             }
         }
@@ -103,6 +110,39 @@ public class RandomSpawner : MonoBehaviour
         }
 
         return null;
+    }
+
+    void ConfigurarVisualCaja(GameObject nuevaCaja, ProductoData productoElegido)
+    {
+        if (nuevaCaja == null || productoElegido == null)
+            return;
+
+        if (productoElegido.prefabIndividual == null)
+        {
+            Debug.LogWarning($"<color=orange>RandomSpawner: '{productoElegido.nombreProducto}' no tiene prefabIndividual asignado.</color>");
+            return;
+        }
+
+        if (ocultarMeshCajaGenerica)
+        {
+            MeshRenderer[] renderersCaja = nuevaCaja.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer renderer in renderersCaja)
+                renderer.enabled = false;
+        }
+
+        GameObject visualProducto = Instantiate(productoElegido.prefabIndividual, nuevaCaja.transform);
+        visualProducto.name = productoElegido.nombreProducto + " Visual";
+        visualProducto.transform.localPosition = offsetVisualProducto;
+        visualProducto.transform.localRotation = Quaternion.Euler(rotacionVisualProducto);
+        visualProducto.transform.localScale = escalaVisualProducto;
+
+        Collider[] collidersVisual = visualProducto.GetComponentsInChildren<Collider>();
+        foreach (Collider col in collidersVisual)
+            col.enabled = false;
+
+        Rigidbody[] rigidbodiesVisual = visualProducto.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodiesVisual)
+            rb.isKinematic = true;
     }
 
     void AsignarNuevoTiempo()
