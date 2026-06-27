@@ -8,6 +8,8 @@ public class PauseManager : MonoBehaviour
     public static bool IsPaused { get; private set; }
     public static bool ModoPruebasActivo { get; private set; }
 
+    public static bool AtaquesDesactivados { get; private set; } = false;
+
     [Header("UI Pausa")]
     [SerializeField] private GameObject panelPausa;
 
@@ -21,7 +23,6 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Color colorModoPruebasInactivo = Color.red;
 
     [SerializeField] private float dineroDebugF5 = 100f;
-    [SerializeField] private float estresDebugF6 = 25f;
     [SerializeField] private float segundosDebugF8 = 60f;
 
     private PlayerController player;
@@ -42,6 +43,7 @@ public class PauseManager : MonoBehaviour
         Instance = this;
         IsPaused = false;
         ModoPruebasActivo = false;
+        AtaquesDesactivados = false;
         player = FindFirstObjectByType<PlayerController>();
         npcSystem = FindFirstObjectByType<NPCSystem>();
         randomSpawner = FindFirstObjectByType<RandomSpawner>();
@@ -74,9 +76,7 @@ public class PauseManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.F5))
             AgregarDineroDebug();
         else if (Input.GetKeyDown(KeyCode.F6))
-            AgregarEstresDebug();
-        else if (Input.GetKeyDown(KeyCode.F7))
-            ResetearEstresDebug();
+            ToggleAtaquesPasivos();
         else if (Input.GetKeyDown(KeyCode.F8))
             SumarTiempoDebug();
         else if (Input.GetKeyDown(KeyCode.F9))
@@ -151,13 +151,19 @@ public class PauseManager : MonoBehaviour
                 "F3: Despachar NPC actual\n" +
                 "F4: Forzar QTE\n" +
                 "F5: Sumar dinero\n" +
-                "F6: Sumar estres\n" +
-                "F7: Resetear estres\n" +
+                "F6: Ataques Pasivos: " + (AtaquesDesactivados ? "OFF" : "ON") + "\n" +
                 "F8: Sumar 60s\n" +
                 "F9: Restar 60s";
 
             textoAyudaModoPruebas.color = ModoPruebasActivo ? colorModoPruebasActivo : colorModoPruebasInactivo;
         }
+    }
+
+    private void ToggleAtaquesPasivos()
+    {
+        AtaquesDesactivados = !AtaquesDesactivados;
+        ActualizarVisualModoPruebas();
+        Debug.Log("<color=yellow>Modo Pruebas:</color> Estado de ataques pasivos cambiado a -> " + (AtaquesDesactivados ? "APAGADO" : "ENCENDIDO"));
     }
 
     private void ForzarSpawnNPC()
@@ -203,24 +209,6 @@ public class PauseManager : MonoBehaviour
 
         if (gameManager != null)
             gameManager.SumarDineroDebug(dineroDebugF5);
-    }
-
-    private void AgregarEstresDebug()
-    {
-        if (gameManager == null)
-            gameManager = FindFirstObjectByType<GameManager>();
-
-        if (gameManager != null)
-            gameManager.AgregarEstresDebug(estresDebugF6);
-    }
-
-    private void ResetearEstresDebug()
-    {
-        if (gameManager == null)
-            gameManager = FindFirstObjectByType<GameManager>();
-
-        if (gameManager != null)
-            gameManager.ResetearEstresDebug();
     }
 
     private void SumarTiempoDebug()

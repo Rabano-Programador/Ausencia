@@ -77,11 +77,8 @@ public class RestockShelf : MonoBehaviour
                 stockActual++;
                 totalReposicionesSemanales++;
                 ActualizarUITienda();
-
-                if (GameManager.Instance != null) GameManager.Instance.RegistrarTrabajo(15f);
             }
         }
-        
     }
 
     public ProductoData TomarProductoNPC()
@@ -89,7 +86,7 @@ public class RestockShelf : MonoBehaviour
         if (stockActual > 0)
         {
             stockActual--;
-            Destroy(productosVisuales[stockActual]); 
+            Destroy(productosVisuales[stockActual]);
             return productoRequerido;
         }
         return null;

@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour
     private bool estaEnTransbank = false;
     private float bloqueoInteraccionCajaHasta = 0f;
 
+    // COMPATIBILIDAD CON QTEMANAGER
+    public bool EstaEnLaCaja => estaEnLaCaja;
+    public bool IsRunning => canMove && !isCrouching && Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
+
     #endregion
 
     #region Awake & Start
@@ -224,6 +228,12 @@ public class PlayerController : MonoBehaviour
                                     cajaUI.RegistrarProductoEscaneado(objetoCaja.precioProducto);
                                 }
 
+                                // INYECCIÓN: Sumar tensión activa por cobrar producto con éxito
+                                if (QTEManager.Instance != null)
+                                {
+                                    QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorCobrar);
+                                }
+
                                 if (textoInteraccion != null)
                                 {
                                     string nombreProducto = objetoCaja.datosProducto != null ? objetoCaja.datosProducto.nombreProducto : "Producto";
@@ -314,6 +324,12 @@ public class PlayerController : MonoBehaviour
                 if (estante != null && caja != null)
                 {
                     estante.ReponerProducto(caja);
+
+                    // INYECCIÓN: Sumar tensión activa por reponer producto con éxito
+                    if (QTEManager.Instance != null)
+                    {
+                        QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorReponer);
+                    }
                 }
             }
         }
@@ -369,6 +385,15 @@ public class PlayerController : MonoBehaviour
         if (rb != null) { rb.isKinematic = false; rb.useGravity = true; rb.freezeRotation = false; }
         grabbedTransform = null;
         OcultarIndicadoresEstantes();
+    }
+
+    // MÉTODO ACCESIBLE PARA EL QTEMANAGER
+    public void ForzarSoltarItem()
+    {
+        if (grabbedTransform != null)
+        {
+            ReleaseTransform();
+        }
     }
     #endregion
 
