@@ -5309,6 +5309,7 @@ MonoBehaviour:
   puntoCajaTransform: {fileID: 900402669}
   puntoDespachoDestino: {fileID: 58300901}
   puntoCamaraTransbank: {fileID: 1415344260}
+  intervaloPasos: 0.7
 --- !u!1 &591151557
 GameObject:
   m_ObjectHideFlags: 0
@@ -14109,6 +14110,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piso
       objectReference: {fileID: 0}
+    - target: {fileID: 7106767576208812826, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106767576208812826, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 441542659609750877, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
@@ -14450,9 +14459,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1759876869}
     - target: {fileID: 8329307916175868611, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
+      propertyPath: musicaNivel
+      value: 
+      objectReference: {fileID: 8300000, guid: 84dc284b521fbf24886f330bac565c39, type: 3}
+    - target: {fileID: 8329307916175868611, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
       propertyPath: masterSlider
       value: 
       objectReference: {fileID: 1539332385}
+    - target: {fileID: 8329307916175868611, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
+      propertyPath: sonidoAgacharse
+      value: 
+      objectReference: {fileID: 8300000, guid: 4442d74ab319e764e920432ed35c3145, type: 3}
+    - target: {fileID: 8329307916175868611, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
+      propertyPath: sonidoRecogerItem
+      value: 
+      objectReference: {fileID: 8300000, guid: fd31f71fa0ce3d148ab1bf853f1a8461, type: 3}
+    - target: {fileID: 8329307916175868611, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
+      propertyPath: sonidoPasosJugador
+      value: 
+      objectReference: {fileID: 8300000, guid: 98a5513726b83c24e88c8dcae3bc3a3d, type: 3}
+    - target: {fileID: 8329307916175868611, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
+      propertyPath: sonidoPasosJugador2
+      value: 
+      objectReference: {fileID: 8300000, guid: a844dfae1a9221f4e9353b8ba4b948db, type: 3}
     - target: {fileID: 8977086838352746586, guid: 19633f6f24bf38c4b8ea019e5cf10413, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.3649235
@@ -14522,7 +14551,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 84dc284b521fbf24886f330bac565c39, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.08
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -14619,7 +14648,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

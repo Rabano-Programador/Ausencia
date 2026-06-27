@@ -16,6 +16,7 @@ public class ControladorCajaUI : MonoBehaviour
 
     public void RegistrarProductoEscaneado(float precioProducto)
     {
+        AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoScannerCaja);
         totalCuenta += precioProducto;
         ActualizarPantalla();
         GameManager.Instance.RegistrarVenta(precioProducto, true);
