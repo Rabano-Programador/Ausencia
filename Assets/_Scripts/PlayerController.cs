@@ -69,9 +69,10 @@ public class PlayerController : MonoBehaviour
     private bool estaEnTransbank = false;
     private float bloqueoInteraccionCajaHasta = 0f;
 
-    // COMPATIBILIDAD CON QTEMANAGER
     public bool EstaEnLaCaja => estaEnLaCaja;
     public bool IsRunning => canMove && !isCrouching && Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
+
+    [HideInInspector] public bool bloquearCamaraPorAtaque = false;
 
     #endregion
 
@@ -107,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
 
         #region Camara
-        if (!estaEnTransbank)
+        if (!estaEnTransbank && !bloquearCamaraPorAtaque)
         {
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -118,7 +119,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
             camTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
         }
-        else
+        else if (estaEnTransbank)
         {
             if (puntoCamaraTransbank != null)
             {
@@ -228,7 +229,6 @@ public class PlayerController : MonoBehaviour
                                     cajaUI.RegistrarProductoEscaneado(objetoCaja.precioProducto);
                                 }
 
-                                // INYECCIÓN: Sumar tensión activa por cobrar producto con éxito
                                 if (QTEManager.Instance != null)
                                 {
                                     QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorCobrar);
@@ -325,7 +325,6 @@ public class PlayerController : MonoBehaviour
                 {
                     estante.ReponerProducto(caja);
 
-                    // INYECCIÓN: Sumar tensión activa por reponer producto con éxito
                     if (QTEManager.Instance != null)
                     {
                         QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorReponer);
@@ -387,7 +386,6 @@ public class PlayerController : MonoBehaviour
         OcultarIndicadoresEstantes();
     }
 
-    // MÉTODO ACCESIBLE PARA EL QTEMANAGER
     public void ForzarSoltarItem()
     {
         if (grabbedTransform != null)

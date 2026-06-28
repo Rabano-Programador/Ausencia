@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class QTEManager : MonoBehaviour
 {
@@ -39,16 +40,22 @@ public class QTEManager : MonoBehaviour
     }
     private List<ActiveLetter> activeLettersOnScreen = new List<ActiveLetter>();
 
-    // ==========================================
-    // NUEVAS VARIABLES: SISTEMA DE TENSIÓN
-    // ==========================================
     [Header("SISTEMA DE TENSIÓN (BARRA INVISIBLE)")]
-    public float velocidadPasiva = 0.2f;       // Cuánta tensión sube por segundo de forma natural (muy despacio)
-    public float tensionPorCorrer = 1.5f;      // Cuánta tensión extra sube por segundo al correr con Shift
-    public float tensionPorReponer = 8.0f;     // Empujón directo a la barra al colocar una caja en estante
-    public float tensionPorCobrar = 12.0f;     // Empujón directo a la barra al marcar un producto en la caja
-    public float maxTension = 100f;            // Límite para gatillar el ataque
-    public float delayAtaquePostCaja = 3.0f;   // El tiempo de espera (2 o 3 segundos) configurable en Inspector
+    public float velocidadPasiva = 0.2f;
+    public float tensionPorCorrer = 1.5f;
+    public float tensionPorReponer = 8.0f;
+    public float tensionPorCobrar = 12.0f;
+    public float maxTension = 100f;
+    public float delayAtaquePostCaja = 3.0f;
+
+    [Header("EFECTO VIÑETEADO (ANTICIPACIÓN)")]
+    public Image imagenViñeta;
+    public float tiempoAnticipacion = 3.0f;
+    [Range(0f, 1f)]
+    public float puntoCorteAbrupto = 0.6f;
+
+    [Header("ANIMACIÓN DE CÁMARA (CINEMACHINE)")]
+    public Animator animatorPivotPendulo;
 
     [Header("Monitoreo Debug (Inspector)")]
     [SerializeField] private float tensionActualVisual = 0f;
@@ -57,6 +64,9 @@ public class QTEManager : MonoBehaviour
     private bool ataqueEnEsperaPorCaja = false;
     private float timerDelayCaja = 0f;
 
+    private bool estaEnAnticipacion = false;
+    private float timerAnticipacion = 0f;
+
     #endregion
 
     #region Awake e inicio del ataque
@@ -64,6 +74,18 @@ public class QTEManager : MonoBehaviour
     {
         Instance = this;
         blackScreenCanvas.SetActive(false);
+
+        if (imagenViñeta != null)
+        {
+            imagenViñeta.gameObject.SetActive(false);
+            SetAlphaViñeta(0f);
+        }
+
+        Behaviour brain = GetCinemachineBrain();
+        if (brain != null)
+        {
+            brain.enabled = false;
+        }
     }
 
     public void StartSeizure()
@@ -87,7 +109,12 @@ public class QTEManager : MonoBehaviour
     #region Update
     private void Update()
     {
-        // Si el QTE no está activo, procesamos la acumulación del medidor de tensión pasivo/activo
+        if (estaEnAnticipacion)
+        {
+            ManejarAnimacionViñeta();
+            return;
+        }
+
         if (!isQTEActive)
         {
             ManejarAcumulacionTension();
@@ -154,8 +181,27 @@ public class QTEManager : MonoBehaviour
         isQTEActive = false;
         blackScreenCanvas.SetActive(false);
 
+        if (imagenViñeta != null)
+        {
+            imagenViñeta.gameObject.SetActive(false);
+            SetAlphaViñeta(0f);
+        }
+
         player.TeleportTo(originalPlayerPos);
         player.SetCanMove(true);
+
+        player.bloquearCamaraPorAtaque = false;
+
+        Behaviour brain = GetCinemachineBrain();
+        if (brain != null)
+        {
+            brain.enabled = false;
+        }
+
+        if (animatorPivotPendulo != null)
+        {
+            animatorPivotPendulo.SetTrigger("Levantarse");
+        }
 
         foreach (ActiveLetter letter in activeLettersOnScreen)
         {
@@ -165,10 +211,9 @@ public class QTEManager : MonoBehaviour
     }
     #endregion
 
-    #region Lógica interna de Tensión
+    #region Lógica de Tensión y Anticipación
     private void ManejarAcumulacionTension()
     {
-        // SEGURO DEBUG: Si desactivas los ataques desde el PauseManager, no acumula ni ataca
         if (PauseManager.AtaquesDesactivados)
         {
             currentTension = 0f;
@@ -178,64 +223,118 @@ public class QTEManager : MonoBehaviour
 
         if (player == null) return;
 
-        // 1. Acumulación Pasiva Temporal
         currentTension += velocidadPasiva * Time.deltaTime;
 
-        // 2. Acumulación Activa: Correr
         if (player.IsRunning)
         {
             currentTension += tensionPorCorrer * Time.deltaTime;
         }
 
         currentTension = Mathf.Clamp(currentTension, 0f, maxTension);
-        tensionActualVisual = currentTension; // Sincroniza la barra para monitorearla en el Inspector
+        tensionActualVisual = currentTension;
 
-        // 3. Gestión de la Caja Registradora (Seguro de Zona Activa)
         if (player.EstaEnLaCaja)
         {
             if (currentTension >= maxTension)
             {
-                ataqueEnEsperaPorCaja = true; // Queda en cola hasta que el jugador presione E para salir
+                ataqueEnEsperaPorCaja = true;
             }
         }
         else
         {
-            // Si el ataque se guardó mientras cobraba, procesa los 2-3 segundos de Delay configurados
             if (ataqueEnEsperaPorCaja)
             {
                 timerDelayCaja += Time.deltaTime;
                 if (timerDelayCaja >= delayAtaquePostCaja)
                 {
-                    GatillarAtaqueDefinitivo();
+                    IniciarAnticipacionAtaque();
                 }
             }
-            // Si la barra se llena estando afuera caminando normalmente, el ataque es directo
             else if (currentTension >= maxTension)
             {
-                GatillarAtaqueDefinitivo();
+                IniciarAnticipacionAtaque();
             }
         }
     }
 
-    // Método público para mandarle empujones directos desde el PlayerController (Cobrar/Reponer)
     public void AcumularTension(float cantidad)
     {
-        if (isQTEActive || PauseManager.AtaquesDesactivados) return;
+        if (isQTEActive || estaEnAnticipacion || PauseManager.AtaquesDesactivados) return;
         currentTension = Mathf.Clamp(currentTension + cantidad, 0f, maxTension);
     }
 
-    private void GatillarAtaqueDefinitivo()
+    private void IniciarAnticipacionAtaque()
     {
-        // SEGURO DE OBJETOS: Obliga al jugador a soltar lo que tenga en las manos para limpiar la pantalla
+        estaEnAnticipacion = true;
+        timerAnticipacion = 0f;
+
+        player.SetCanMove(false);
         player.ForzarSoltarItem();
 
-        // Reseteo completo del medidor de tensión
+        player.bloquearCamaraPorAtaque = true;
+
+        Behaviour brain = GetCinemachineBrain();
+        if (brain != null)
+        {
+            brain.enabled = true;
+        }
+
+        if (animatorPivotPendulo != null)
+        {
+            animatorPivotPendulo.SetTrigger("Caer");
+        }
+
+        if (imagenViñeta != null)
+        {
+            imagenViñeta.gameObject.SetActive(true);
+            SetAlphaViñeta(0f);
+        }
+
         currentTension = 0f;
         ataqueEnEsperaPorCaja = false;
         timerDelayCaja = 0f;
+    }
 
-        // Lanza el ataque
-        StartSeizure();
+    private void ManejarAnimacionViñeta()
+    {
+        timerAnticipacion += Time.deltaTime;
+        float porcentajeTiempo = timerAnticipacion / tiempoAnticipacion;
+
+        if (porcentajeTiempo < puntoCorteAbrupto)
+        {
+            float progresoSuave = porcentajeTiempo / puntoCorteAbrupto;
+            SetAlphaViñeta(progresoSuave * 0.5f);
+        }
+        else
+        {
+            SetAlphaViñeta(1f);
+        }
+
+        if (timerAnticipacion >= tiempoAnticipacion)
+        {
+            estaEnAnticipacion = false;
+            StartSeizure();
+        }
+    }
+
+    private void SetAlphaViñeta(float alpha)
+    {
+        if (imagenViñeta != null)
+        {
+            Color c = imagenViñeta.color;
+            c.a = alpha;
+            imagenViñeta.color = c;
+        }
+    }
+
+    private Behaviour GetCinemachineBrain()
+    {
+        Camera mainCam = Camera.main;
+        if (mainCam != null)
+        {
+            return mainCam.GetComponent("CinemachineBrain") as Behaviour;
+        }
+        return null;
     }
     #endregion
 }
