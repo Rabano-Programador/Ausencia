@@ -10,6 +10,10 @@ public class ObjetoCaja : MonoBehaviour
 
     [HideInInspector]
     public bool estaEnZonaEspera = false;
+    [HideInInspector]
+    public bool estaEnPuntoEntrega = false;
+    [HideInInspector]
+    public bool disponibleParaCobro = true;
 
     private void Start()
     {
@@ -18,6 +22,17 @@ public class ObjetoCaja : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("PuntoEntrega"))
+        {
+            estaEnPuntoEntrega = true;
+
+            PuntoEntregaTrigger triggerEntrega = other.GetComponent<PuntoEntregaTrigger>();
+            if (triggerEntrega != null)
+                triggerEntrega.RegistrarObjeto(this);
+
+            return;
+        }
+
         if (other.CompareTag("ZonaEsperaCobro"))
         {
             estaEnZonaEspera = true;
@@ -26,6 +41,15 @@ public class ObjetoCaja : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("PuntoEntrega"))
+        {
+            estaEnPuntoEntrega = false;
+            PuntoEntregaTrigger triggerEntrega = other.GetComponent<PuntoEntregaTrigger>();
+            if (triggerEntrega != null)
+                triggerEntrega.QuitarObjeto(this);
+            return;
+        }
+
         if (other.CompareTag("ZonaEsperaCobro"))
         {
             estaEnZonaEspera = false;
@@ -36,11 +60,13 @@ public class ObjetoCaja : MonoBehaviour
     {
         transform.position = posicionDestino;
         estaEnZonaEspera = false;
+        disponibleParaCobro = false;
     }
 
     public void ConfigurarProducto(ProductoData producto)
     {
         datosProducto = producto;
+        disponibleParaCobro = true;
         ActualizarPrecioDesdeDatos();
     }
 

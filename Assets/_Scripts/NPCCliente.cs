@@ -450,12 +450,20 @@ public class NPCCliente : MonoBehaviour
 
     void DejarProductosEnCaja()
     {
-        productosEntregadosEnCaja = true;
+        if (puntoDespachoProductos == null)
+        {
+            GameObject puntoDespachoEncontrado = GameObject.Find("PuntoDespacho");
+            if (puntoDespachoEncontrado != null)
+                puntoDespachoProductos = puntoDespachoEncontrado.transform;
+        }
 
         if (puntoDespachoProductos == null)
         {
+            Debug.LogWarning("<color=orange>NPC: No encontré PuntoDespacho para dejar productos.</color>");
             return;
         }
+
+        bool dejoAlMenosUnProducto = false;
 
         for (int i = 0; i < productosRecogidos.Count; i++)
         {
@@ -473,6 +481,14 @@ public class NPCCliente : MonoBehaviour
             GameObject itemCaja = Instantiate(prefabAInstanciar, puntoDespachoProductos.position + offset, Quaternion.identity);
             itemCaja.name = producto != null ? producto.nombreProducto + " Cobro" : itemCaja.name;
             itemCaja.tag = "Item";
+            dejoAlMenosUnProducto = true;
+
+            Rigidbody rbItem = itemCaja.GetComponent<Rigidbody>();
+            if (rbItem == null)
+                rbItem = itemCaja.AddComponent<Rigidbody>();
+
+            rbItem.isKinematic = true;
+            rbItem.useGravity = false;
 
             ObjetoCaja scriptObjeto = itemCaja.GetComponent<ObjetoCaja>();
             if (scriptObjeto == null)
@@ -484,7 +500,25 @@ public class NPCCliente : MonoBehaviour
                 Destroy(productosEnInventarioVisual[i]);
         }
 
-        productosEnInventarioVisual.Clear();
+        if (dejoAlMenosUnProducto)
+        {
+            productosEntregadosEnCaja = true;
+            productosEnInventarioVisual.Clear();
+            Debug.Log($"<color=cyan>NPC: Dejé {productosRecogidos.Count} producto(s) en PuntoDespacho.</color>");
+        }
+        else
+        {
+            Debug.LogWarning("<color=orange>NPC: Intenté dejar productos, pero no había prefabs válidos para instanciar.</color>");
+        }
+    }
+
+    public void RecogerProductoPagado(ProductoData producto)
+    {
+        if (producto == null)
+            return;
+
+        AgregarVisualAlInventario(producto);
+        Debug.Log($"<color=cyan>NPC: Recuperé '{producto.nombreProducto}' y me voy con él.</color>");
     }
 
     private void OnTriggerEnter(Collider other)

@@ -12,6 +12,7 @@ TagManager:
   - ComputadoraCaja
   - Salida
   - Transbank
+  - PuntoEntrega
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Configuracion Caja Registradora")]
     public Transform puntoCajaTransform;
-    public Transform puntoDespachoDestino;
+    [FormerlySerializedAs("puntoDespachoDestino")] public Transform puntoEntregaDestino;
 
     [Header("Configuracion Transbank")]
     public Transform puntoCamaraTransbank;
@@ -223,7 +224,20 @@ public class PlayerController : MonoBehaviour
                     ProductBox cajaMirada = hit.transform.GetComponentInParent<ProductBox>();
                     ObjetoCaja objetoCaja = hit.transform.GetComponentInParent<ObjetoCaja>();
 
-                    if (objetoCaja != null && objetoCaja.estaEnZonaEspera)
+                    if (!estaEnLaCaja && cajaMirada != null)
+                    {
+                        if (cajaMirada.datosProducto != null && textoInteraccion != null)
+                        {
+                            textoInteraccion.text = "[LMB] Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
+                        }
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            GrabTransform(cajaMirada.transform);
+                            AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoRecogerItem);
+                        }
+                    }
+                    else if (objetoCaja != null && objetoCaja.disponibleParaCobro)
                     {
                         if (estaEnLaCaja)
                         {
@@ -254,31 +268,15 @@ public class PlayerController : MonoBehaviour
                                     textoInteraccion.text = $"{nombreProducto} cobrado por ${objetoCaja.precioProducto:F2}";
                                 }
 
-                                if (puntoDespachoDestino != null)
+                                if (puntoEntregaDestino != null)
                                 {
-                                    objetoCaja.TeletransportarA(puntoDespachoDestino.position);
+                                    objetoCaja.TeletransportarA(puntoEntregaDestino.position);
                                 }
                             }
                         }
                         else
                         {
                             if (textoInteraccion != null) textoInteraccion.text = "Usa la computadora para empezar a cobrar";
-                        }
-                    }
-                    else
-                    {
-                        if (!estaEnLaCaja)
-                        {
-                            if (cajaMirada != null && cajaMirada.datosProducto != null && textoInteraccion != null)
-                            {
-                                textoInteraccion.text = "Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
-                            }
-
-                            if (Input.GetKeyDown(KeyCode.E))
-                            {
-                                GrabTransform(hit.transform);
-                                AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoRecogerItem);
-                            }
                         }
                     }
                 }
