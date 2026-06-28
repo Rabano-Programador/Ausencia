@@ -40,6 +40,8 @@ public class TransbankUI : MonoBehaviour
 
     private void ActualizarDisplay()
     {
+        AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoBotonTransbank);
+
         if (textoMontoIngresado != null)
         {
             textoMontoIngresado.text = "$ " + (string.IsNullOrEmpty(montoActualCadena) ? "00.00" : montoActualCadena);
@@ -49,11 +51,13 @@ public class TransbankUI : MonoBehaviour
     public void ProcesarPagoTarjeta()
     {
         float montoIngresado = 0f;
+        AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoCobroCaja);
         bool conversionExitosa = float.TryParse(
             montoActualCadena,
             System.Globalization.NumberStyles.Any,
             System.Globalization.CultureInfo.InvariantCulture,
             out montoIngresado
+
         );
 
         if (conversionExitosa)

@@ -17,13 +17,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sonidos del Jugador")]
     public AudioClip sonidoPasosJugador;
-
-    public AudioClip sonidoGolpePunio;
     public AudioClip sonidoRespiracion;
-    public AudioClip sonidoRecogerItem;
-
     public AudioClip sonidoPasosJugador2;
-    public AudioClip sonidoRespiracion;
     public AudioClip sonidoRecogerItem;
     public AudioClip sonidoAgacharse;
 
@@ -31,8 +26,10 @@ public class AudioManager : MonoBehaviour
     [Header("Sonidos de Caja")]
     public AudioClip sonidoScannerCaja;
     public AudioClip sonidoCobroCaja;
+    public AudioClip sonidoBotonTransbank;
+    
 
-    [Header("Sonidos de NPCS")]
+        [Header("Sonidos de NPCS")]
     public AudioClip sonidoMurmulloNPC;
 
     [Header("UI de Audio")]
