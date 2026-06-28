@@ -9,9 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3007745766936158166}
+  - component: {fileID: -2638035559204552667}
+  - component: {fileID: -4554563317023198976}
   - component: {fileID: 6029014067776961770}
   - component: {fileID: 4256535865142734026}
   - component: {fileID: 4524490308235466281}
+  - component: {fileID: -6995595187425907257}
   m_Layer: 0
   m_Name: Bebida
   m_TagString: Item
@@ -34,6 +37,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2638035559204552667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519724092368515206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa3afbc0ad82924b8c6b87e5f7377b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datosProducto: {fileID: 0}
+  precioProducto: 3.59
+  estaEnZonaEspera: 0
+--- !u!114 &-4554563317023198976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519724092368515206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96112edf28f0a574ca8bd293dc1865db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datosProducto: {fileID: 11400000, guid: ef1215622e62def4ab5cc70c955aaab8, type: 2}
+  unidadesRestantes: 6
 --- !u!33 &6029014067776961770
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110,3 +142,30 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!54 &-6995595187425907257
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519724092368515206}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

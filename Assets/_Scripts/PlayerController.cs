@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
+using static UnityEditor.ShaderData;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -64,6 +65,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("ConfiguraciÃ³n Transbank")]
     public Transform puntoCamaraTransbank;
+
+    [Header("Audio")]
+    public float intervaloPasos = 0.7f;
+    private float tiempoSiguientePaso;
+    private bool alternarPaso;
 
     private bool estaEnLaCaja = false;
     private bool estaEnTransbank = false;
@@ -139,6 +145,14 @@ public class PlayerController : MonoBehaviour
             PlayerMovement = new Vector3(move.x, 0, move.z);
 
             transform.Translate(PlayerMovement * Time.deltaTime, Space.World);
+            if (PlayerMovement.sqrMagnitude > 0.01f  && Time.time >= tiempoSiguientePaso)
+            {
+                Debug.Log("ESTOYCAMINDANDO");
+                AudioClip paso = alternarPaso ? AudioManager.instance.sonidoPasosJugador : AudioManager.instance.sonidoPasosJugador2;
+                AudioManager.instance.ReproducirSonido(paso);
+                alternarPaso = !alternarPaso;
+                tiempoSiguientePaso = Time.time + intervaloPasos;
+            }
         }
         else if (estaEnLaCaja && puntoCajaTransform != null && !estaEnTransbank)
         {
@@ -253,6 +267,8 @@ public class PlayerController : MonoBehaviour
                             if (Input.GetKeyDown(KeyCode.E))
                             {
                                 GrabTransform(hit.transform);
+                                AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoRecogerItem);
+
                             }
                         }
                     }
@@ -328,6 +344,7 @@ public class PlayerController : MonoBehaviour
         capsule.height = crouchHeight;
         capsule.center = new Vector3(originalCenter.x, originalCenter.y - (originalHeight - crouchHeight) / 2f, originalCenter.z);
         camTransform.localPosition = originalCameraPos + new Vector3(0, crouchCameraOffset, 0);
+        AudioManager.instance.sfxSource.PlayOneShot(AudioManager.instance.sonidoAgacharse, 3f);
     }
 
     private void StandUp()

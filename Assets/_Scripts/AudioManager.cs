@@ -17,9 +17,16 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sonidos del Jugador")]
     public AudioClip sonidoPasosJugador;
+
     public AudioClip sonidoGolpePunio;
     public AudioClip sonidoRespiracion;
     public AudioClip sonidoRecogerItem;
+
+    public AudioClip sonidoPasosJugador2;
+    public AudioClip sonidoRespiracion;
+    public AudioClip sonidoRecogerItem;
+    public AudioClip sonidoAgacharse;
+
 
     [Header("Sonidos de Caja")]
     public AudioClip sonidoScannerCaja;
