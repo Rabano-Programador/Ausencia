@@ -43,10 +43,10 @@ public class PlayerController : MonoBehaviour
     public Transform playerHands;
     #endregion
 
-    [Header("ConfiguraciÃ³n de ReposiciÃ³n")]
+    [Header("Configuracion de Reposicion")]
     public float distanciaDeColocacion = 3.5f;
 
-    [Header("UI InteracciÃ³n")]
+    [Header("UI Interaccion")]
     public TextMeshProUGUI textoInteraccion;
 
 
@@ -58,12 +58,17 @@ public class PlayerController : MonoBehaviour
     public bool isLookingAtItem;
     #endregion
 
-    [Header("ConfiguraciÃ³n Caja Registradora")]
+    [Header("Configuracion Caja Registradora")]
     public Transform puntoCajaTransform;
     public Transform puntoDespachoDestino;
 
-    [Header("ConfiguraciÃ³n Transbank")]
+    [Header("Configuracion Transbank")]
     public Transform puntoCamaraTransbank;
+
+    [Header("Audio")]
+    public float intervaloPasos = 0.7f;
+    private float tiempoSiguientePaso;
+    private bool alternarPaso;
 
     private bool estaEnLaCaja = false;
     private bool estaEnTransbank = false;
@@ -144,6 +149,15 @@ public class PlayerController : MonoBehaviour
             PlayerMovement = new Vector3(move.x, 0, move.z);
 
             transform.Translate(PlayerMovement * Time.deltaTime, Space.World);
+
+            if (PlayerMovement.sqrMagnitude > 0.01f && Time.time >= tiempoSiguientePaso)
+            {
+                Debug.Log("ESTOYCAMINDANDO");
+                AudioClip paso = alternarPaso ? AudioManager.instance.sonidoPasosJugador : AudioManager.instance.sonidoPasosJugador2;
+                AudioManager.instance.ReproducirSonido(paso);
+                alternarPaso = !alternarPaso;
+                tiempoSiguientePaso = Time.time + intervaloPasos;
+            }
         }
         else if (estaEnLaCaja && puntoCajaTransform != null && !estaEnTransbank)
         {
@@ -263,6 +277,7 @@ public class PlayerController : MonoBehaviour
                             if (Input.GetKeyDown(KeyCode.E))
                             {
                                 GrabTransform(hit.transform);
+                                AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoRecogerItem);
                             }
                         }
                     }
@@ -310,7 +325,7 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
-        #region ColocaciÃ³n en EstanterÃ­a (LMB)
+        #region Colocacion en Estanteria (LMB)
         if (grabbedTransform != null && Input.GetMouseButtonDown(0))
         {
             Ray placementRay = new Ray(camTransform.position, camTransform.forward);
@@ -343,6 +358,7 @@ public class PlayerController : MonoBehaviour
         capsule.height = crouchHeight;
         capsule.center = new Vector3(originalCenter.x, originalCenter.y - (originalHeight - crouchHeight) / 2f, originalCenter.z);
         camTransform.localPosition = originalCameraPos + new Vector3(0, crouchCameraOffset, 0);
+        AudioManager.instance.sfxSource.PlayOneShot(AudioManager.instance.sonidoAgacharse, 3f);
     }
 
     private void StandUp()
@@ -395,7 +411,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region GestiÃ³n de Estados de Caja y Transbank
+    #region Gestion de Estados de Caja y Transbank
     private void EntrarAModoCaja()
     {
         estaEnLaCaja = true;
