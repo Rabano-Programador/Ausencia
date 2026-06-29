@@ -30,11 +30,15 @@ public class QTEManager : MonoBehaviour
     private float currentSpawnRate;
     private float spawnTimer;
 
+    [Header("Sonidos QTE")]
+    public AudioClip[] sonidosAcierto;
+    public AudioClip[] sonidosFallo;
+
     private KeyCode[] possibleKeys = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V };
 
     private class ActiveLetter
     {
-        public GameObject gameObject;
+        public LetterQTE letter;
         public KeyCode key;
         public float expirationTime;
     }
@@ -148,12 +152,16 @@ public class QTEManager : MonoBehaviour
             if (Input.GetKeyDown(currentLetter.key))
             {
                 currentActiveTime += 0.5f;
-                Destroy(currentLetter.gameObject);
+                ReproducirSonidoAleatorio(sonidosAcierto);
+                if (currentLetter.letter != null)
+                    currentLetter.letter.MorirBien();
                 activeLettersOnScreen.RemoveAt(i);
             }
             else if (Time.time > currentLetter.expirationTime)
             {
-                Destroy(currentLetter.gameObject);
+                ReproducirSonidoAleatorio(sonidosFallo);
+                if (currentLetter.letter != null)
+                    currentLetter.letter.MorirMal();
                 activeLettersOnScreen.RemoveAt(i);
             }
         }
@@ -174,13 +182,18 @@ public class QTEManager : MonoBehaviour
         rect.anchoredPosition = new Vector2(randomX, randomY);
 
         KeyCode randomKey = possibleKeys[Random.Range(0, possibleKeys.Length)];
-        newLetterObj.GetComponent<TextMeshProUGUI>().text = randomKey.ToString();
 
-        float timeToLive = Mathf.Clamp(currentSpawnRate * 2f, 0.5f, 3f);
+        float timeToLive = Mathf.Clamp(currentSpawnRate * 1.8f, 0.5f, 3f);
+
+        LetterQTE letterScript = newLetterObj.GetComponent<LetterQTE>();
+        if (letterScript != null)
+        {
+            letterScript.Inicializar(randomKey, timeToLive);
+        }
 
         activeLettersOnScreen.Add(new ActiveLetter
         {
-            gameObject = newLetterObj,
+            letter = letterScript,
             key = randomKey,
             expirationTime = Time.time + timeToLive
         });
@@ -203,7 +216,8 @@ public class QTEManager : MonoBehaviour
 
         foreach (ActiveLetter letter in activeLettersOnScreen)
         {
-            Destroy(letter.gameObject);
+            if (letter.letter != null)
+                Destroy(letter.letter.gameObject);
         }
         activeLettersOnScreen.Clear();
     }
@@ -362,4 +376,12 @@ public class QTEManager : MonoBehaviour
         return null;
     }
     #endregion
+    private void ReproducirSonidoAleatorio(AudioClip[] sonidos)
+    {
+        if (sonidos == null || sonidos.Length == 0) return;
+        if (AudioManager.instance == null) return;
+
+        AudioClip clip = sonidos[Random.Range(0, sonidos.Length)];
+        AudioManager.instance.ReproducirSonido(clip);
+    }
 }
