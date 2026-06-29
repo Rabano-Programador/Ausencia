@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3007745766936158166}
-  - component: {fileID: -2638035559204552667}
-  - component: {fileID: -4554563317023198976}
   - component: {fileID: 6029014067776961770}
   - component: {fileID: 4256535865142734026}
   - component: {fileID: 4524490308235466281}
   - component: {fileID: -6995595187425907257}
+  - component: {fileID: -2638035559204552667}
+  - component: {fileID: -4554563317023198976}
   m_Layer: 0
   m_Name: Bebida
   m_TagString: Item
@@ -37,35 +37,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2638035559204552667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6519724092368515206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa3afbc0ad82924b8c6b87e5f7377b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  datosProducto: {fileID: 0}
-  precioProducto: 3.59
-  estaEnZonaEspera: 0
---- !u!114 &-4554563317023198976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6519724092368515206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96112edf28f0a574ca8bd293dc1865db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  datosProducto: {fileID: 11400000, guid: ef1215622e62def4ab5cc70c955aaab8, type: 2}
-  unidadesRestantes: 6
 --- !u!33 &6029014067776961770
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -169,3 +140,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2638035559204552667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519724092368515206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa3afbc0ad82924b8c6b87e5f7377b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datosProducto: {fileID: 0}
+  precioProducto: 3.59
+  estaEnZonaEspera: 0
+  estaEnPuntoEntrega: 0
+  disponibleParaCobro: 1
+--- !u!114 &-4554563317023198976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519724092368515206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96112edf28f0a574ca8bd293dc1865db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datosProducto: {fileID: 11400000, guid: ef1215622e62def4ab5cc70c955aaab8, type: 2}
+  unidadesRestantes: 6

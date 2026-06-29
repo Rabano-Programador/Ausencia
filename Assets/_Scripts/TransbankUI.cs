@@ -67,9 +67,20 @@ public class TransbankUI : MonoBehaviour
 
             if (Mathf.Abs(montoIngresado - totalRealCaja) < 0.02f)
             {
+                NPCCliente npcActual = QueueManager.Instance != null ? QueueManager.Instance.NPCActualEnCaja : null;
+                PuntoEntregaTrigger puntoEntrega = FindFirstObjectByType<PuntoEntregaTrigger>();
+                int objetosEntregados = 0;
+
+                if (npcActual != null && puntoEntrega != null)
+                    objetosEntregados = puntoEntrega.EntregarObjetosAlNPC(npcActual);
 
                 cajaUI.LimpiarCajaFinTurno();
                 player.SalirDeModoTransbank();
+
+                if (npcActual != null)
+                    npcActual.RecibirPermisoDeSalir();
+
+                Debug.Log($"<color=green>Pago exitoso. NPC recupera {objetosEntregados} objeto(s) de PuntoEntrega y se va.</color>");
             }
             else
             {

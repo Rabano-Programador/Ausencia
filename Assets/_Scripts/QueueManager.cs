@@ -100,4 +100,5 @@ public class QueueManager : MonoBehaviour
 
     public int CantidadEnCola => colaDeEspera.Count + (npcSiendoAtendido != null ? 1 : 0);
     public bool HayNPCSiendoAtendido => npcSiendoAtendido != null;
+    public NPCCliente NPCActualEnCaja => npcSiendoAtendido;
 }

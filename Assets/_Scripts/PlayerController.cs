@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.ShaderData;
+using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -44,10 +44,10 @@ public class PlayerController : MonoBehaviour
     public Transform playerHands;
     #endregion
 
-    [Header("ConfiguraciÃ³n de ReposiciÃ³n")]
+    [Header("Configuracion de Reposicion")]
     public float distanciaDeColocacion = 3.5f;
 
-    [Header("UI InteracciÃ³n")]
+    [Header("UI Interaccion")]
     public TextMeshProUGUI textoInteraccion;
 
 
@@ -59,11 +59,11 @@ public class PlayerController : MonoBehaviour
     public bool isLookingAtItem;
     #endregion
 
-    [Header("ConfiguraciÃ³n Caja Registradora")]
+    [Header("Configuracion Caja Registradora")]
     public Transform puntoCajaTransform;
-    public Transform puntoDespachoDestino;
+    [FormerlySerializedAs("puntoDespachoDestino")] public Transform puntoEntregaDestino;
 
-    [Header("ConfiguraciÃ³n Transbank")]
+    [Header("Configuracion Transbank")]
     public Transform puntoCamaraTransbank;
 
     [Header("Audio")]
@@ -74,6 +74,11 @@ public class PlayerController : MonoBehaviour
     private bool estaEnLaCaja = false;
     private bool estaEnTransbank = false;
     private float bloqueoInteraccionCajaHasta = 0f;
+
+    public bool EstaEnLaCaja => estaEnLaCaja;
+    public bool IsRunning => canMove && !isCrouching && Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
+
+    [HideInInspector] public bool bloquearCamaraPorAtaque = false;
 
     #endregion
 
@@ -109,7 +114,7 @@ public class PlayerController : MonoBehaviour
         }
 
         #region Camara
-        if (!estaEnTransbank)
+        if (!estaEnTransbank && !bloquearCamaraPorAtaque)
         {
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -120,7 +125,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
             camTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
         }
-        else
+        else if (estaEnTransbank)
         {
             if (puntoCamaraTransbank != null)
             {
@@ -145,7 +150,8 @@ public class PlayerController : MonoBehaviour
             PlayerMovement = new Vector3(move.x, 0, move.z);
 
             transform.Translate(PlayerMovement * Time.deltaTime, Space.World);
-            if (PlayerMovement.sqrMagnitude > 0.01f  && Time.time >= tiempoSiguientePaso)
+
+            if (PlayerMovement.sqrMagnitude > 0.01f && Time.time >= tiempoSiguientePaso)
             {
                 Debug.Log("ESTOYCAMINDANDO");
                 AudioClip paso = alternarPaso ? AudioManager.instance.sonidoPasosJugador : AudioManager.instance.sonidoPasosJugador2;
@@ -218,7 +224,20 @@ public class PlayerController : MonoBehaviour
                     ProductBox cajaMirada = hit.transform.GetComponentInParent<ProductBox>();
                     ObjetoCaja objetoCaja = hit.transform.GetComponentInParent<ObjetoCaja>();
 
-                    if (objetoCaja != null && objetoCaja.estaEnZonaEspera)
+                    if (!estaEnLaCaja && cajaMirada != null)
+                    {
+                        if (cajaMirada.datosProducto != null && textoInteraccion != null)
+                        {
+                            textoInteraccion.text = "[LMB] Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
+                        }
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            GrabTransform(cajaMirada.transform);
+                            AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoRecogerItem);
+                        }
+                    }
+                    else if (objetoCaja != null && objetoCaja.disponibleParaCobro)
                     {
                         if (estaEnLaCaja)
                         {
@@ -238,38 +257,33 @@ public class PlayerController : MonoBehaviour
                                     cajaUI.RegistrarProductoEscaneado(objetoCaja.precioProducto);
                                 }
 
+                                if (QTEManager.Instance != null)
+                                {
+                                    QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorCobrar);
+                                }
+
                                 if (textoInteraccion != null)
                                 {
                                     string nombreProducto = objetoCaja.datosProducto != null ? objetoCaja.datosProducto.nombreProducto : "Producto";
                                     textoInteraccion.text = $"{nombreProducto} cobrado por ${objetoCaja.precioProducto:F2}";
                                 }
 
-                                if (puntoDespachoDestino != null)
+                                if (puntoEntregaDestino != null)
                                 {
-                                    objetoCaja.TeletransportarA(puntoDespachoDestino.position);
+                                    objetoCaja.TeletransportarA(puntoEntregaDestino.position);
+
+                                    PuntoEntregaTrigger puntoEntregaTrigger = puntoEntregaDestino.GetComponent<PuntoEntregaTrigger>();
+                                    if (puntoEntregaTrigger != null)
+                                    {
+                                        objetoCaja.MarcarEnPuntoEntrega(true);
+                                        puntoEntregaTrigger.RegistrarObjeto(objetoCaja);
+                                    }
                                 }
                             }
                         }
                         else
                         {
                             if (textoInteraccion != null) textoInteraccion.text = "Usa la computadora para empezar a cobrar";
-                        }
-                    }
-                    else
-                    {
-                        if (!estaEnLaCaja)
-                        {
-                            if (cajaMirada != null && cajaMirada.datosProducto != null && textoInteraccion != null)
-                            {
-                                textoInteraccion.text = "Tomar:\n" + cajaMirada.datosProducto.nombreProducto + " (" + cajaMirada.unidadesRestantes + ")";
-                            }
-
-                            if (Input.GetKeyDown(KeyCode.E))
-                            {
-                                GrabTransform(hit.transform);
-                                AudioManager.instance.ReproducirSonido(AudioManager.instance.sonidoRecogerItem);
-
-                            }
                         }
                     }
                 }
@@ -316,7 +330,7 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
-        #region ColocaciÃ³n en EstanterÃ­a (LMB)
+        #region Colocacion en Estanteria (LMB)
         if (grabbedTransform != null && Input.GetMouseButtonDown(0))
         {
             Ray placementRay = new Ray(camTransform.position, camTransform.forward);
@@ -330,6 +344,11 @@ public class PlayerController : MonoBehaviour
                 if (estante != null && caja != null)
                 {
                     estante.ReponerProducto(caja);
+
+                    if (QTEManager.Instance != null)
+                    {
+                        QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorReponer);
+                    }
                 }
             }
         }
@@ -387,9 +406,17 @@ public class PlayerController : MonoBehaviour
         grabbedTransform = null;
         OcultarIndicadoresEstantes();
     }
+
+    public void ForzarSoltarItem()
+    {
+        if (grabbedTransform != null)
+        {
+            ReleaseTransform();
+        }
+    }
     #endregion
 
-    #region GestiÃ³n de Estados de Caja y Transbank
+    #region Gestion de Estados de Caja y Transbank
     private void EntrarAModoCaja()
     {
         estaEnLaCaja = true;
