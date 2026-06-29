@@ -63,6 +63,11 @@ public class ObjetoCaja : MonoBehaviour
         disponibleParaCobro = false;
     }
 
+    public void MarcarEnPuntoEntrega(bool enPuntoEntrega)
+    {
+        estaEnPuntoEntrega = enPuntoEntrega;
+    }
+
     public void ConfigurarProducto(ProductoData producto)
     {
         datosProducto = producto;

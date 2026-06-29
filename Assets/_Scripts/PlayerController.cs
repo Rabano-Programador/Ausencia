@@ -271,6 +271,13 @@ public class PlayerController : MonoBehaviour
                                 if (puntoEntregaDestino != null)
                                 {
                                     objetoCaja.TeletransportarA(puntoEntregaDestino.position);
+
+                                    PuntoEntregaTrigger puntoEntregaTrigger = puntoEntregaDestino.GetComponent<PuntoEntregaTrigger>();
+                                    if (puntoEntregaTrigger != null)
+                                    {
+                                        objetoCaja.MarcarEnPuntoEntrega(true);
+                                        puntoEntregaTrigger.RegistrarObjeto(objetoCaja);
+                                    }
                                 }
                             }
                         }
