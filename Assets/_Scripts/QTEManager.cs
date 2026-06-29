@@ -56,6 +56,7 @@ public class QTEManager : MonoBehaviour
 
     [Header("ANIMACIÓN DE CÁMARA (CINEMACHINE)")]
     public Animator animatorPivotPendulo;
+    public float tiempoLevantarse = 2.0f;
 
     [Header("Monitoreo Debug (Inspector)")]
     [SerializeField] private float tensionActualVisual = 0f;
@@ -66,6 +67,9 @@ public class QTEManager : MonoBehaviour
 
     private bool estaEnAnticipacion = false;
     private float timerAnticipacion = 0f;
+
+    private bool estaEnLevantarse = false;
+    private float timerLevantarse = 0f;
 
     #endregion
 
@@ -112,6 +116,12 @@ public class QTEManager : MonoBehaviour
         if (estaEnAnticipacion)
         {
             ManejarAnimacionViñeta();
+            return;
+        }
+
+        if (estaEnLevantarse)
+        {
+            ManejarAnimacionLevantarse();
             return;
         }
 
@@ -181,22 +191,10 @@ public class QTEManager : MonoBehaviour
         isQTEActive = false;
         blackScreenCanvas.SetActive(false);
 
-        if (imagenViñeta != null)
-        {
-            imagenViñeta.gameObject.SetActive(false);
-            SetAlphaViñeta(0f);
-        }
-
         player.TeleportTo(originalPlayerPos);
-        player.SetCanMove(true);
 
-        player.bloquearCamaraPorAtaque = false;
-
-        Behaviour brain = GetCinemachineBrain();
-        if (brain != null)
-        {
-            brain.enabled = false;
-        }
+        estaEnLevantarse = true;
+        timerLevantarse = 0f;
 
         if (animatorPivotPendulo != null)
         {
@@ -259,7 +257,7 @@ public class QTEManager : MonoBehaviour
 
     public void AcumularTension(float cantidad)
     {
-        if (isQTEActive || estaEnAnticipacion || PauseManager.AtaquesDesactivados) return;
+        if (isQTEActive || estaEnAnticipacion || estaEnLevantarse || PauseManager.AtaquesDesactivados) return;
         currentTension = Mathf.Clamp(currentTension + cantidad, 0f, maxTension);
     }
 
@@ -314,6 +312,33 @@ public class QTEManager : MonoBehaviour
         {
             estaEnAnticipacion = false;
             StartSeizure();
+        }
+    }
+
+    private void ManejarAnimacionLevantarse()
+    {
+        timerLevantarse += Time.deltaTime;
+        float porcentajeTiempo = timerLevantarse / tiempoLevantarse;
+
+        SetAlphaViñeta(Mathf.Clamp01(1f - porcentajeTiempo));
+
+        if (timerLevantarse >= tiempoLevantarse)
+        {
+            estaEnLevantarse = false;
+
+            player.SetCanMove(true);
+            player.bloquearCamaraPorAtaque = false;
+
+            Behaviour brain = GetCinemachineBrain();
+            if (brain != null)
+            {
+                brain.enabled = false;
+            }
+
+            if (imagenViñeta != null)
+            {
+                imagenViñeta.gameObject.SetActive(false);
+            }
         }
     }
 
