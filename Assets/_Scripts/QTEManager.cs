@@ -110,7 +110,8 @@ public class QTEManager : MonoBehaviour
         currentActiveTime = 0f;
         currentSpawnRate = initialSpawnRate;
         spawnTimer = 0f;
-        activeLettersOnScreen.Clear();
+
+        LimpiarTodasLasLetras();
     }
     #endregion
 
@@ -183,7 +184,7 @@ public class QTEManager : MonoBehaviour
 
         KeyCode randomKey = possibleKeys[Random.Range(0, possibleKeys.Length)];
 
-        float timeToLive = Mathf.Clamp(currentSpawnRate * 1.8f, 0.5f, 3f);
+        float timeToLive = Mathf.Clamp(currentSpawnRate * 1.8f, 1f, 3f);
 
         LetterQTE letterScript = newLetterObj.GetComponent<LetterQTE>();
         if (letterScript != null)
@@ -214,12 +215,7 @@ public class QTEManager : MonoBehaviour
             animatorPivotPendulo.SetTrigger("Levantarse");
         }
 
-        foreach (ActiveLetter letter in activeLettersOnScreen)
-        {
-            if (letter.letter != null)
-                Destroy(letter.letter.gameObject);
-        }
-        activeLettersOnScreen.Clear();
+        LimpiarTodasLasLetras();
     }
     #endregion
 
@@ -376,6 +372,7 @@ public class QTEManager : MonoBehaviour
         return null;
     }
     #endregion
+
     private void ReproducirSonidoAleatorio(AudioClip[] sonidos)
     {
         if (sonidos == null || sonidos.Length == 0) return;
@@ -383,5 +380,18 @@ public class QTEManager : MonoBehaviour
 
         AudioClip clip = sonidos[Random.Range(0, sonidos.Length)];
         AudioManager.instance.ReproducirSonido(clip);
+    }
+
+    private void LimpiarTodasLasLetras()
+    {
+        activeLettersOnScreen.Clear();
+
+        if (spawnArea != null)
+        {
+            for (int i = spawnArea.childCount - 1; i >= 0; i--)
+            {
+                Destroy(spawnArea.GetChild(i).gameObject);
+            }
+        }
     }
 }

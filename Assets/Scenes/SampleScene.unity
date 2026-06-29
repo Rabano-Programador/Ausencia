@@ -1193,7 +1193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &141641321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3806,7 +3806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &490213756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6056,7 +6056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &667351534
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9968,13 +9968,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 590905441}
   blackScreenCanvas: {fileID: 166086244}
-  letterPrefab: {fileID: 5714099462929182999, guid: 8c03eb4e163a9c4449d46e00f6de9573, type: 3}
+  letterPrefab: {fileID: 8888778354130643666, guid: 5c310288fa9473d4f9086adedc398462, type: 3}
   spawnArea: {fileID: 1930443567}
   voidDropPosition: {fileID: 1185271111}
   maxAbsoluteTime: 35
   requiredActiveTime: 15
-  initialSpawnRate: 1.5
-  minSpawnRate: 0.15
+  initialSpawnRate: 1
+  minSpawnRate: 0.35
+  sonidosAcierto:
+  - {fileID: 8300000, guid: 68a9c59ebc0c4114a91004d0a210d4e7, type: 3}
+  - {fileID: 8300000, guid: 12ba3fe4d689e2e46b17e9e9963ae87a, type: 3}
+  - {fileID: 8300000, guid: 907592d337db5c1429aaed76123e74b0, type: 3}
+  sonidosFallo:
+  - {fileID: 8300000, guid: be6e99bbfb6400f4180b15009829a169, type: 3}
+  - {fileID: 8300000, guid: 06fc6b1fdef883c41bab9a788213de69, type: 3}
+  - {fileID: 8300000, guid: 0513ee93861d7a843ac89e6badcd6faa, type: 3}
   velocidadPasiva: 0.2
   tensionPorCorrer: 1.5
   tensionPorReponer: 5
