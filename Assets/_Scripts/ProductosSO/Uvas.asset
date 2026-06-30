@@ -15,4 +15,8 @@ MonoBehaviour:
   nombreProducto: Uvas
   precio: 3
   iconoCaja: {fileID: 0}
-  prefabIndividual: {fileID: -4851770100157099968, guid: 0b07b9c1ea06aaf4db27149106811d10, type: 3}
+  prefabIndividual: {fileID: 4675009919761112959, guid: a929b6dbf876dba4684ccc93e8ce6be0, type: 3}
+  escalaEnEstanteria: {x: 40, y: 40, z: 40}
+  rotacionEnEstanteria: {x: 0, y: 0, z: 0}
+  escalaEnCaja: {x: 40, y: 40, z: 40}
+  rotacionEnCaja: {x: 0, y: 0, z: 0}

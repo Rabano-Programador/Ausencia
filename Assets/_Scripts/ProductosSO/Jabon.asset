@@ -15,4 +15,8 @@ MonoBehaviour:
   nombreProducto: Jabon
   precio: 4
   iconoCaja: {fileID: 0}
-  prefabIndividual: {fileID: 8105278354381233813, guid: 0b07b9c1ea06aaf4db27149106811d10, type: 3}
+  prefabIndividual: {fileID: 5394494666944783541, guid: 0af679156c8d54945890a6e64109e034, type: 3}
+  escalaEnEstanteria: {x: 40, y: 40, z: 40}
+  rotacionEnEstanteria: {x: 0, y: 0, z: 0}
+  escalaEnCaja: {x: 40, y: 40, z: 40}
+  rotacionEnCaja: {x: 0, y: 0, z: 0}

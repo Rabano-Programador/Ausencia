@@ -15,4 +15,8 @@ MonoBehaviour:
   nombreProducto: Leche
   precio: 3
   iconoCaja: {fileID: 0}
-  prefabIndividual: {fileID: -3762967090738830339, guid: 0b07b9c1ea06aaf4db27149106811d10, type: 3}
+  prefabIndividual: {fileID: 5871409336452249082, guid: 24f2c9dffe471bc45a446f7503e980fd, type: 3}
+  escalaEnEstanteria: {x: 40, y: 40, z: 40}
+  rotacionEnEstanteria: {x: 0, y: 0, z: 0}
+  escalaEnCaja: {x: 40, y: 60, z: 40}
+  rotacionEnCaja: {x: 0, y: 0, z: 0}
