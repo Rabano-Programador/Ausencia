@@ -142,8 +142,8 @@ public class RandomSpawner : MonoBehaviour
         GameObject visualProducto = Instantiate(productoElegido.prefabIndividual, nuevaCaja.transform);
         visualProducto.name = productoElegido.nombreProducto + " Visual";
         visualProducto.transform.localPosition = offsetVisualProducto;
-        visualProducto.transform.localRotation = Quaternion.Euler(rotacionVisualProducto);
-        visualProducto.transform.localScale = escalaVisualProducto;
+        visualProducto.transform.localRotation = Quaternion.Euler(rotacionVisualProducto + productoElegido.rotacionEnCaja);
+        visualProducto.transform.localScale = Vector3.Scale(escalaVisualProducto, productoElegido.escalaEnCaja);
 
         Collider[] collidersVisual = visualProducto.GetComponentsInChildren<Collider>();
         foreach (Collider col in collidersVisual)

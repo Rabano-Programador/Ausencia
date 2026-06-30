@@ -69,8 +69,14 @@ public class RestockShelf : MonoBehaviour
                     return;
                 }
 
-                GameObject nuevoItem = Instantiate(productoRequerido.prefabIndividual, punto.position, punto.rotation);
-                nuevoItem.transform.SetParent(punto, true);
+                GameObject nuevoItem = Instantiate(
+                    productoRequerido.prefabIndividual,
+                    punto.position,
+                    punto.rotation * Quaternion.Euler(productoRequerido.rotacionEnEstanteria));
+
+                nuevoItem.transform.localScale = Vector3.Scale(
+                    nuevoItem.transform.localScale,
+                    productoRequerido.escalaEnEstanteria);
 
                 productosVisuales[stockActual] = nuevoItem;
 
