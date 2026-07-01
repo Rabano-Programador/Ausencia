@@ -30,7 +30,14 @@ public class PreAtaqueManager : MonoBehaviour
 
     void Update()
     {
-        if (qteManager == null || eventoActivo || yaActivado) return;
+        if (qteManager == null || eventoActivo) return;
+
+        if (yaActivado)
+        {
+            if (qteManager.currentTension < qteManager.maxTension / 2f)
+                yaActivado = false;
+            return;
+        }
 
         if (qteManager.currentTension >= qteManager.maxTension / 2f)
         {
