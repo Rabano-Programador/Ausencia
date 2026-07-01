@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4118863960113055778}
   - component: {fileID: 1275984386883050066}
   - component: {fileID: 1264269299703074321}
+  - component: {fileID: 4298889850977854383}
   m_Layer: 0
   m_Name: Manzana (1)
   m_TagString: Untagged
@@ -87,3 +88,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4298889850977854383
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536554817271550901}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.025945874, y: 0.02573236, z: 0.033827048}
+  m_Center: {x: -0.000000019092111, y: 0, z: -0.0022723167}

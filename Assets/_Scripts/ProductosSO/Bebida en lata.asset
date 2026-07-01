@@ -18,5 +18,5 @@ MonoBehaviour:
   prefabIndividual: {fileID: 8923188557112939005, guid: 359223aca7fec0e478b488ba6a162234, type: 3}
   escalaEnEstanteria: {x: 25.87584, y: 25.87584, z: 37.74084}
   rotacionEnEstanteria: {x: 0, y: 0, z: 0}
-  escalaEnCaja: {x: 40, y: 40, z: 40}
+  escalaEnCaja: {x: 25.87584, y: 25.87584, z: 37.74084}
   rotacionEnCaja: {x: 0, y: 0, z: 0}

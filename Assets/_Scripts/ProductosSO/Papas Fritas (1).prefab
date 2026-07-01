@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1846391552013604093}
   - component: {fileID: 2492762346247775081}
   - component: {fileID: 3791509069866817786}
+  - component: {fileID: 259368978130315353}
   m_Layer: 0
   m_Name: Papas Fritas (1)
   m_TagString: Untagged
@@ -86,3 +87,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &259368978130315353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4857205176270171101}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.020438612, y: 0.018924508, z: 0.03172976}
+  m_Center: {x: 0.00023863418, y: 0.0012546497, z: 0.0030661891}

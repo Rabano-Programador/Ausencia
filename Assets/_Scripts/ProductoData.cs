@@ -17,4 +17,17 @@ public class ProductoData : ScriptableObject
     [Header("Ajuste Visual en Caja/Spawn")]
     public Vector3 escalaEnCaja = Vector3.one;
     public Vector3 rotacionEnCaja = Vector3.zero;
+
+    private void OnValidate()
+    {
+        escalaEnCaja = escalaEnEstanteria;
+    }
+
+    public Vector3 ObtenerEscalaParaCajaYSpawn()
+    {
+        if (escalaEnEstanteria == Vector3.zero)
+            return escalaEnCaja;
+
+        return escalaEnEstanteria;
+    }
 }

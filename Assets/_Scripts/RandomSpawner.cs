@@ -167,23 +167,40 @@ public class RandomSpawner : MonoBehaviour
                 renderer.enabled = false;
         }
 
-        GameObject visualProducto = Instantiate(productoElegido.prefabIndividual, nuevaCaja.transform);
+        GameObject pivoteVisual = new GameObject(productoElegido.nombreProducto + " Pivot");
+        pivoteVisual.transform.SetParent(nuevaCaja.transform, false);
+        pivoteVisual.transform.localPosition = offsetVisualProducto;
+        pivoteVisual.transform.localRotation = Quaternion.Euler(rotacionVisualProducto + productoElegido.rotacionEnCaja);
+
+        GameObject visualProducto = Instantiate(productoElegido.prefabIndividual, pivoteVisual.transform);
         visualProducto.name = productoElegido.nombreProducto + " Visual";
-        visualProducto.transform.localPosition = offsetVisualProducto;
-        visualProducto.transform.localRotation = Quaternion.Euler(rotacionVisualProducto + productoElegido.rotacionEnCaja);
-        visualProducto.transform.localScale = Vector3.Scale(escalaVisualProducto, productoElegido.escalaEnCaja);
+        Vector3 escalaObjetivoProducto = productoElegido.ObtenerEscalaParaCajaYSpawn();
+        visualProducto.transform.localScale = escalaObjetivoProducto;
+
+        Renderer[] renderersVisual = visualProducto.GetComponentsInChildren<Renderer>();
+        if (renderersVisual.Length > 0)
+        {
+            Bounds bounds = renderersVisual[0].bounds;
+            for (int i = 1; i < renderersVisual.Length; i++)
+                bounds.Encapsulate(renderersVisual[i].bounds);
+
+            Vector3 centroLocal = pivoteVisual.transform.InverseTransformPoint(bounds.center);
+            visualProducto.transform.localPosition -= centroLocal;
+        }
+
+        pivoteVisual.transform.localScale = escalaVisualProducto;
 
         visualesActivos.Add(new VisualProductoActivo
         {
-            visual = visualProducto.transform,
+            visual = pivoteVisual.transform,
             producto = productoElegido
         });
 
-        Collider[] collidersVisual = visualProducto.GetComponentsInChildren<Collider>();
+        Collider[] collidersVisual = pivoteVisual.GetComponentsInChildren<Collider>();
         foreach (Collider col in collidersVisual)
             col.enabled = false;
 
-        Rigidbody[] rigidbodiesVisual = visualProducto.GetComponentsInChildren<Rigidbody>();
+        Rigidbody[] rigidbodiesVisual = pivoteVisual.GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rb in rigidbodiesVisual)
             rb.isKinematic = true;
     }
