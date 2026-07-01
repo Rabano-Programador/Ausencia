@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip sonidoAgacharse;
 
 
+
     [Header("Sonidos de Caja")]
     public AudioClip sonidoScannerCaja;
     public AudioClip sonidoCobroCaja;

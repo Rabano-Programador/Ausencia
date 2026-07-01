@@ -65,7 +65,7 @@ public class QTEManager : MonoBehaviour
     [Header("Monitoreo Debug (Inspector)")]
     [SerializeField] private float tensionActualVisual = 0f;
 
-    private float currentTension = 0f;
+    public float currentTension = 0f;
     private bool ataqueEnEsperaPorCaja = false;
     private float timerDelayCaja = 0f;
 
