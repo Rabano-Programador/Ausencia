@@ -45,6 +45,9 @@ public class MotorSequelHandler : MonoBehaviour
     [Header("Bloqueo de camara/movimiento")]
     [SerializeField] private MonoBehaviour playerControllerToDisable;
 
+    [Header("Musica")]
+    [SerializeField] private AudioSource musicaNivel;
+
     [Header("Eventos")]
     public UnityEvent onSequelSuccess;
     public UnityEvent onSequelFailed;
@@ -144,7 +147,7 @@ public class MotorSequelHandler : MonoBehaviour
         }
     }
 
-    void ActivateSequel()
+    public void ActivateSequel()
     {
         active = true;
         holdTimer = 0f;
@@ -197,6 +200,8 @@ public class MotorSequelHandler : MonoBehaviour
 
         if (playerControllerToDisable != null)
             playerControllerToDisable.enabled = true;
+
+        if (musicaNivel != null) musicaNivel.UnPause();
     }
 
     void MoveTarget()
