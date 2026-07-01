@@ -16,7 +16,6 @@ public class RandomSpawner : MonoBehaviour
     [Header("Visual de la Caja")]
     public Vector3 offsetVisualProducto = Vector3.up * 0.35f;
     public Vector3 rotacionVisualProducto;
-    public Vector3 escalaVisualProducto = Vector3.one * 0.6f;
     public bool ocultarMeshCajaGenerica = true;
 
     [Header("Debug Spawn Pad Numerico")]
@@ -188,7 +187,7 @@ public class RandomSpawner : MonoBehaviour
             visualProducto.transform.localPosition -= centroLocal;
         }
 
-        pivoteVisual.transform.localScale = escalaVisualProducto;
+        pivoteVisual.transform.localScale = ObtenerEscalaInversaSegura(nuevaCaja.transform.localScale);
 
         visualesActivos.Add(new VisualProductoActivo
         {
@@ -209,6 +208,14 @@ public class RandomSpawner : MonoBehaviour
     {
         tiempoObjetivo = Random.Range(tiempoMinimo, tiempoMaximo);
         timer = 0f;
+    }
+
+    Vector3 ObtenerEscalaInversaSegura(Vector3 escala)
+    {
+        return new Vector3(
+            Mathf.Abs(escala.x) > 0.0001f ? 1f / escala.x : 1f,
+            Mathf.Abs(escala.y) > 0.0001f ? 1f / escala.y : 1f,
+            Mathf.Abs(escala.z) > 0.0001f ? 1f / escala.z : 1f);
     }
 
     void ProcesarSpawnConPad()

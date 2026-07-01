@@ -74,9 +74,7 @@ public class RestockShelf : MonoBehaviour
                     punto.position,
                     punto.rotation * Quaternion.Euler(productoRequerido.rotacionEnEstanteria));
 
-                nuevoItem.transform.localScale = Vector3.Scale(
-                    nuevoItem.transform.localScale,
-                    productoRequerido.escalaEnEstanteria);
+                nuevoItem.transform.localScale = productoRequerido.ObtenerEscalaParaEstanteria();
 
                 productosVisuales[stockActual] = nuevoItem;
 

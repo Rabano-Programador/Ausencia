@@ -30,4 +30,9 @@ public class ProductoData : ScriptableObject
 
         return escalaEnEstanteria;
     }
+
+    public Vector3 ObtenerEscalaParaEstanteria()
+    {
+        return escalaEnEstanteria;
+    }
 }
