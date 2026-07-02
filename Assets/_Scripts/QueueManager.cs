@@ -8,6 +8,7 @@ public class QueueManager : MonoBehaviour
     public Transform[] puntosDeEspera;
 
     public Transform puntoMesaCobro;
+    public bool debugQueueManager = true;
 
     private Queue<NPCCliente> colaDeEspera = new Queue<NPCCliente>();
     private NPCCliente npcSiendoAtendido = null;
@@ -21,6 +22,8 @@ public class QueueManager : MonoBehaviour
     public Vector3 UnirseACola(NPCCliente npc)
     {
         colaDeEspera.Enqueue(npc);
+        LogDebug($"NPC '{npc.name}' entro a la cola. En cola: {colaDeEspera.Count}, atendiendo: {(npcSiendoAtendido != null ? npcSiendoAtendido.name : "nadie")}.");
+
         if (npcSiendoAtendido == null)
         {
             AvanzarCola();
@@ -34,6 +37,7 @@ public class QueueManager : MonoBehaviour
     {
         if (npcSiendoAtendido == npc)
         {
+            LogDebug($"NPC '{npc.name}' fue notificado como atendido. Avanza la cola.");
             npcSiendoAtendido = null;
             AvanzarCola();
         }
@@ -54,6 +58,7 @@ public class QueueManager : MonoBehaviour
 
         NPCCliente siguiente = colaDeEspera.Dequeue();
         npcSiendoAtendido = siguiente;
+        LogDebug($"Nuevo NPC atendido: '{siguiente.name}'. Punto cobro: {(puntoMesaCobro != null ? puntoMesaCobro.name : "null")}.");
 
         siguiente.RecibirTurnoEnCaja(puntoMesaCobro != null ? puntoMesaCobro.position : siguiente.transform.position);
 
@@ -101,4 +106,12 @@ public class QueueManager : MonoBehaviour
     public int CantidadEnCola => colaDeEspera.Count + (npcSiendoAtendido != null ? 1 : 0);
     public bool HayNPCSiendoAtendido => npcSiendoAtendido != null;
     public NPCCliente NPCActualEnCaja => npcSiendoAtendido;
+
+    private void LogDebug(string mensaje)
+    {
+        if (!debugQueueManager)
+            return;
+
+        Debug.Log($"<color=#FFD166>QueueManager: {mensaje}</color>");
+    }
 }

@@ -5,6 +5,7 @@ public class TransbankUI : MonoBehaviour
 {
     [Header("Display de la Maquinita")]
     public TextMeshProUGUI textoMontoIngresado;
+    public bool debugTransbank = true;
 
     private string montoActualCadena = "";
     private ControladorCajaUI cajaUI;
@@ -63,6 +64,7 @@ public class TransbankUI : MonoBehaviour
         if (conversionExitosa)
         {
             float totalRealCaja = cajaUI.ObtenerTotalCuenta();
+            LogDebug($"Procesando pago. Ingresado: {montoIngresado:F2}, total real: {totalRealCaja:F2}.");
 
 
             if (Mathf.Abs(montoIngresado - totalRealCaja) < 0.02f)
@@ -84,7 +86,12 @@ public class TransbankUI : MonoBehaviour
             }
             else
             {
+                LogDebug($"Pago rechazado: monto ingresado no coincide con total real.", true);
             }
+        }
+        else
+        {
+            LogDebug($"Pago rechazado: no pude convertir '{montoActualCadena}' a numero.", true);
         }
     }
 
@@ -92,5 +99,16 @@ public class TransbankUI : MonoBehaviour
     {
         montoActualCadena = "";
         ActualizarDisplay();
+    }
+
+    private void LogDebug(string mensaje, bool advertencia = false)
+    {
+        if (!debugTransbank)
+            return;
+
+        if (advertencia)
+            Debug.LogWarning($"<color=orange>TransbankUI: {mensaje}</color>");
+        else
+            Debug.Log($"<color=#A0E7FF>TransbankUI: {mensaje}</color>");
     }
 }

@@ -29,6 +29,9 @@ public class NPCCliente : MonoBehaviour
     public Vector3 rotacionInventario;
     public Vector3 escalaInventario = Vector3.one * 0.4f;
 
+    [Header("Debug Compra NPC")]
+    public bool debugCompraNPC = true;
+
     [Header("Animacion")]
     public Animator animator;
     public float velocidadMinimaCaminar = 0.1f;
@@ -62,6 +65,7 @@ public class NPCCliente : MonoBehaviour
 
     private float stuckTimer = 0f;
     private Vector3 lastPosition;
+    private RestockShelf estanteObjetivoActual;
 
 
     void Start()
@@ -87,6 +91,7 @@ public class NPCCliente : MonoBehaviour
         tiempoInicio = Time.time;
         lastPosition = transform.position;
 
+        LogCompra($"Spawneado. Objetivo de compra: {productosObjetivo} producto(s).");
         BuscarSiguienteEstante();
     }
 
@@ -218,6 +223,7 @@ public class NPCCliente : MonoBehaviour
     {
         if (productosRecogidos.Count >= productosObjetivo)
         {
+            LogCompra($"Inventario completo ({productosRecogidos.Count}/{productosObjetivo}). Voy a la caja.");
             UnirseACola();
             return;
         }
@@ -228,38 +234,35 @@ public class NPCCliente : MonoBehaviour
         {
             if (productosRecogidos.Count > 0)
             {
+                LogCompra("No encontre mas estantes con stock. Voy a caja con lo que tengo.");
                 UnirseACola();
             }
             else
             {
                 esperandoPrimerProducto = true;
+                LogCompra("No encontre estantes con stock. Me quedo vagando hasta que repongan productos.");
                 ComenzarVagabundeo();
             }
             return;
         }
 
+        LogCompra($"Estante elegido: '{objetivo.name}' con '{objetivo.ObtenerNombreProducto()}' y stock {objetivo.stockActual}.");
         esperandoPrimerProducto = false;
-        estantesVisitados.Add(objetivo);
+        estanteObjetivoActual = objetivo;
         estadoActual = EstadoNPC.BuscandoEstante;
         ResetearTraba();
 
-        Vector3 destino = objetivo.transform.position;
-        NavMeshHit navHit;
-        if (NavMesh.SamplePosition(destino, out navHit, 5f, NavMesh.AllAreas))
+        if (!IntentarMoverAEstante(objetivo))
         {
-            destino = navHit.position;
-        }
-        else
-        {
+            LogCompra($"No pude crear ruta hacia '{objetivo.name}'. Probare otro estante.", true);
+
+            estantesVisitados.Add(objetivo);
+            estanteObjetivoActual = null;
             BuscarSiguienteEstante();
             return;
         }
 
-        if (!IntentarMoverA(destino))
-        {
-            BuscarSiguienteEstante();
-            return;
-        }
+        estantesVisitados.Add(objetivo);
     }
 
     RestockShelf ElegirEstante()
@@ -277,15 +280,37 @@ public class NPCCliente : MonoBehaviour
         return disponibles[Random.Range(0, disponibles.Count)];
     }
 
+    bool IntentarMoverAEstante(RestockShelf estante)
+    {
+        if (estante == null)
+            return false;
+
+        List<Vector3> candidatos = ObtenerPuntosAccesoEstante(estante);
+        for (int i = 0; i < candidatos.Count; i++)
+        {
+            Vector3 candidato = candidatos[i];
+            if (IntentarMoverA(candidato, 3f))
+            {
+                LogCompra($"Ruta creada hacia '{estante.name}' usando candidato {i}. Producto: '{estante.ObtenerNombreProducto()}'.");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     RestockShelf EncontrarEstanteCercano()
     {
+        if (estanteObjetivoActual != null && DistanciaAEstante(estanteObjetivoActual) <= 4f)
+            return estanteObjetivoActual;
+
         RestockShelf[] todos = FindObjectsByType<RestockShelf>(FindObjectsSortMode.None);
         RestockShelf masCercano = null;
-        float menorDistancia = 3f;
+        float menorDistancia = 4f;
 
         foreach (RestockShelf estante in todos)
         {
-            float dist = Vector3.Distance(transform.position, estante.transform.position);
+            float dist = DistanciaAEstante(estante);
             if (dist < menorDistancia)
             {
                 menorDistancia = dist;
@@ -307,10 +332,190 @@ public class NPCCliente : MonoBehaviour
             {
                 productosRecogidos.Add(producto);
                 AgregarVisualAlInventario(producto);
+                LogCompra($"Tome '{producto.nombreProducto}' desde '{estanteCercano.name}'. Inventario: {productosRecogidos.Count}/{productosObjetivo}.");
+            }
+            else
+            {
+                LogCompra($"Llegue a '{estanteCercano.name}', pero no pude tomar producto. Stock actual: {estanteCercano.stockActual}.", true);
             }
 
+            estanteObjetivoActual = null;
             BuscarSiguienteEstante();
         }
+        else
+        {
+            LogCompra("Llegue al destino, pero no encontre estante cercano para tomar producto.", true);
+            estanteObjetivoActual = null;
+            BuscarSiguienteEstante();
+        }
+    }
+
+    Vector3 ObtenerPuntoAccesoEstante(RestockShelf estante)
+    {
+        List<Vector3> candidatos = ObtenerPuntosAccesoEstante(estante);
+        return candidatos.Count > 0 ? candidatos[0] : transform.position;
+    }
+
+    List<Vector3> ObtenerPuntosAccesoEstante(RestockShelf estante)
+    {
+        List<Vector3> candidatos = new List<Vector3>();
+
+        if (estante == null)
+            return candidatos;
+
+        if (estante.ObtenerPuntoProductoDisponible(out Vector3 puntoProducto))
+        {
+            Vector3 direccionDesdeProducto = transform.position - puntoProducto;
+            direccionDesdeProducto.y = 0f;
+
+            if (direccionDesdeProducto.sqrMagnitude < 0.01f)
+                direccionDesdeProducto = -estante.transform.forward;
+
+            Vector3 haciaNPC = direccionDesdeProducto.normalized;
+            Vector3 forward = estante.transform.forward;
+            Vector3 right = estante.transform.right;
+
+            candidatos.Add(puntoProducto + haciaNPC * 1.2f);
+            candidatos.Add(puntoProducto + haciaNPC * 2.2f);
+            candidatos.Add(puntoProducto - forward * 1.4f);
+            candidatos.Add(puntoProducto + forward * 1.4f);
+            candidatos.Add(puntoProducto + right * 1.4f);
+            candidatos.Add(puntoProducto - right * 1.4f);
+
+            return candidatos;
+        }
+
+        if (TryObtenerCentroPuntosEstante(estante, out Vector3 centroPuntos))
+        {
+            Vector3 direccionDesdePuntos = transform.position - centroPuntos;
+            direccionDesdePuntos.y = 0f;
+
+            if (direccionDesdePuntos.sqrMagnitude < 0.01f)
+                direccionDesdePuntos = -estante.transform.forward;
+
+            Vector3 haciaNPC = direccionDesdePuntos.normalized;
+            Vector3 forward = estante.transform.forward;
+            Vector3 right = estante.transform.right;
+
+            candidatos.Add(centroPuntos + haciaNPC * 1.4f);
+            candidatos.Add(centroPuntos + haciaNPC * 2.4f);
+            candidatos.Add(centroPuntos - forward * 1.6f);
+            candidatos.Add(centroPuntos + forward * 1.6f);
+            candidatos.Add(centroPuntos + right * 1.6f);
+            candidatos.Add(centroPuntos - right * 1.6f);
+
+            return candidatos;
+        }
+
+        Collider[] colliders = estante.GetComponentsInChildren<Collider>();
+        if (colliders.Length == 0)
+        {
+            candidatos.Add(estante.transform.position);
+            return candidatos;
+        }
+
+        Bounds bounds = colliders[0].bounds;
+        for (int i = 1; i < colliders.Length; i++)
+        {
+            if (colliders[i] != null && colliders[i].enabled)
+                bounds.Encapsulate(colliders[i].bounds);
+        }
+
+        Vector3 desdeNPC = transform.position - bounds.center;
+        desdeNPC.y = 0f;
+        if (desdeNPC.sqrMagnitude < 0.01f)
+            desdeNPC = -estante.transform.forward;
+
+        candidatos.Add(bounds.center + desdeNPC.normalized * 1.4f);
+        candidatos.Add(bounds.center + desdeNPC.normalized * 2.4f);
+        return candidatos;
+    }
+
+    float DistanciaAEstante(RestockShelf estante)
+    {
+        if (estante == null)
+            return float.MaxValue;
+
+        if (estante.ObtenerPuntoProductoDisponible(out Vector3 puntoProducto))
+        {
+            Vector3 posicionNPC = transform.position;
+            posicionNPC.y = 0f;
+            puntoProducto.y = 0f;
+            return Vector3.Distance(posicionNPC, puntoProducto);
+        }
+
+        if (TryObtenerDistanciaAPuntosEstante(estante, out float distanciaPuntos))
+            return distanciaPuntos;
+
+        Collider[] colliders = estante.GetComponentsInChildren<Collider>();
+        if (colliders.Length == 0)
+            return Vector3.Distance(transform.position, estante.transform.position);
+
+        float menorDistancia = float.MaxValue;
+        foreach (Collider col in colliders)
+        {
+            if (col == null || !col.enabled)
+                continue;
+
+            Vector3 puntoCercano = col.ClosestPoint(transform.position);
+            float distancia = Vector3.Distance(transform.position, puntoCercano);
+            if (distancia < menorDistancia)
+                menorDistancia = distancia;
+        }
+
+        return menorDistancia;
+    }
+
+    bool TryObtenerCentroPuntosEstante(RestockShelf estante, out Vector3 centro)
+    {
+        centro = Vector3.zero;
+
+        if (estante == null || estante.puntosDeColocacion == null || estante.puntosDeColocacion.Length == 0)
+            return false;
+
+        int cantidad = 0;
+        foreach (Transform punto in estante.puntosDeColocacion)
+        {
+            if (punto == null)
+                continue;
+
+            centro += punto.position;
+            cantidad++;
+        }
+
+        if (cantidad == 0)
+            return false;
+
+        centro /= cantidad;
+        return true;
+    }
+
+    bool TryObtenerDistanciaAPuntosEstante(RestockShelf estante, out float distancia)
+    {
+        distancia = float.MaxValue;
+
+        if (estante == null || estante.puntosDeColocacion == null || estante.puntosDeColocacion.Length == 0)
+            return false;
+
+        bool encontroPunto = false;
+        foreach (Transform punto in estante.puntosDeColocacion)
+        {
+            if (punto == null)
+                continue;
+
+            Vector3 posicionNPC = transform.position;
+            Vector3 posicionPunto = punto.position;
+            posicionNPC.y = 0f;
+            posicionPunto.y = 0f;
+
+            float distanciaActual = Vector3.Distance(posicionNPC, posicionPunto);
+            if (distanciaActual < distancia)
+                distancia = distanciaActual;
+
+            encontroPunto = true;
+        }
+
+        return encontroPunto;
     }
 
     void ComenzarVagabundeo()
@@ -371,12 +576,14 @@ public class NPCCliente : MonoBehaviour
     {
         if (productosRecogidos.Count == 0)
         {
+            LogCompra("Me mandaron a cola sin productos. Me voy a salida.");
             IrASalida();
             return;
         }
 
         if (QueueManager.Instance == null)
         {
+            LogCompra("No existe QueueManager. Uso caja legacy.");
             IrACajaLegacy();
             return;
         }
@@ -384,6 +591,7 @@ public class NPCCliente : MonoBehaviour
         estadoActual = EstadoNPC.EsperandoEnCola;
         Vector3 posicionEspera = QueueManager.Instance.UnirseACola(this);
 
+        LogCompra($"Me uni a la cola con {productosRecogidos.Count} producto(s). Voy a posicion {posicionEspera}.");
         IntentarMoverA(posicionEspera, 5f, true);
     }
 
@@ -393,6 +601,7 @@ public class NPCCliente : MonoBehaviour
         productosEntregadosEnCaja = false;
         tiempoEsperandoEnCaja = 0f;
 
+        LogCompra($"Es mi turno en caja. Voy al punto de cobro {posicionMesa}.");
         IntentarMoverA(posicionMesa, 5f, true);
     }
 
@@ -414,10 +623,12 @@ public class NPCCliente : MonoBehaviour
         estadoActual = EstadoNPC.Saliendo;
         if (puntoSalida != null)
         {
+            LogCompra($"Voy a la salida '{puntoSalida.name}'.");
             IntentarMoverA(puntoSalida.position, 5f, true);
         }
         else
         {
+            LogCompra("No tengo puntoSalida asignado. Me destruyo en 3 segundos.", true);
             Destroy(gameObject, 3f);
         }
     }
@@ -429,6 +640,7 @@ public class NPCCliente : MonoBehaviour
             estadoActual = EstadoNPC.SiendoAtendido;
             productosEntregadosEnCaja = false;
             tiempoEsperandoEnCaja = 0f;
+            LogCompra($"Voy a caja legacy '{zonaFilaCaja.name}'.");
             IntentarMoverA(zonaFilaCaja.position, 5f, true);
         }
         else
@@ -491,6 +703,7 @@ public class NPCCliente : MonoBehaviour
 
             if (prefabAInstanciar == null)
             {
+                LogCompra($"No puedo dejar producto {i}: prefab nulo para '{(producto != null ? producto.nombreProducto : "Producto null")}'.", true);
                 continue;
             }
 
@@ -512,6 +725,7 @@ public class NPCCliente : MonoBehaviour
                 scriptObjeto = itemCaja.AddComponent<ObjetoCaja>();
 
             scriptObjeto.ConfigurarProducto(producto);
+            LogCompra($"Deje '{(producto != null ? producto.nombreProducto : "Producto null")}' en PuntoDespacho.");
 
             if (i < productosEnInventarioVisual.Count && productosEnInventarioVisual[i] != null)
                 Destroy(productosEnInventarioVisual[i]);
@@ -535,7 +749,22 @@ public class NPCCliente : MonoBehaviour
             return;
 
         AgregarVisualAlInventario(producto);
-        Debug.Log($"<color=cyan>NPC: Recuperé '{producto.nombreProducto}' y me voy con él.</color>");
+        LogCompra($"Recupere '{producto.nombreProducto}' despues del cobro y me voy con el.");
+    }
+
+    void LogCompra(string mensaje, bool advertencia = false)
+    {
+#if !UNITY_EDITOR
+        if (!debugCompraNPC)
+            return;
+#endif
+
+        string texto = $"NPC '{name}': {mensaje}";
+
+        if (advertencia)
+            Debug.LogWarning($"<color=orange>{texto}</color>");
+        else
+            Debug.Log($"<color=cyan>{texto}</color>");
     }
 
     private void OnTriggerEnter(Collider other)

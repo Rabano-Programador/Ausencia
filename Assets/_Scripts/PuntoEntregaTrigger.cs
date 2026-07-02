@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class PuntoEntregaTrigger : MonoBehaviour
 {
+    public bool debugPuntoEntrega = true;
     private readonly List<ObjetoCaja> objetosEnEntrega = new List<ObjetoCaja>();
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +30,10 @@ public class PuntoEntregaTrigger : MonoBehaviour
             return;
 
         if (!objetosEnEntrega.Contains(objetoCaja))
+        {
             objetosEnEntrega.Add(objetoCaja);
+            LogDebug($"Objeto registrado: '{objetoCaja.name}' ({(objetoCaja.datosProducto != null ? objetoCaja.datosProducto.nombreProducto : "sin ProductoData")}). Total en entrega: {objetosEnEntrega.Count}.");
+        }
     }
 
     public void QuitarObjeto(ObjetoCaja objetoCaja)
@@ -37,7 +41,8 @@ public class PuntoEntregaTrigger : MonoBehaviour
         if (objetoCaja == null)
             return;
 
-        objetosEnEntrega.Remove(objetoCaja);
+        if (objetosEnEntrega.Remove(objetoCaja))
+            LogDebug($"Objeto salio del punto entrega: '{objetoCaja.name}'. Total en entrega: {objetosEnEntrega.Count}.");
     }
 
     public int EntregarObjetosAlNPC(NPCCliente npc)
@@ -62,5 +67,12 @@ public class PuntoEntregaTrigger : MonoBehaviour
 
         Debug.Log($"<color=cyan>PuntoEntregaTrigger: Entregué {entregados} objeto(s) al NPC '{npc.name}'.</color>");
         return entregados;
+    }
+    void LogDebug(string mensaje)
+    {
+        if (!debugPuntoEntrega)
+            return;
+
+        Debug.Log($"<color=#B8F7FF>PuntoEntregaTrigger '{name}': {mensaje}</color>");
     }
 }
