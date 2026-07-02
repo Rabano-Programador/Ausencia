@@ -215,6 +215,11 @@ public class QTEManager : MonoBehaviour
             animatorPivotPendulo.SetTrigger("Levantarse");
         }
 
+        if (FatigueManager.Instance != null)
+        {
+            FatigueManager.Instance.IncrementarAtaquesCompletados();
+        }
+
         LimpiarTodasLasLetras();
     }
     #endregion

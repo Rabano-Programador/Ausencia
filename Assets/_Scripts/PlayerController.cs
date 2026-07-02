@@ -76,9 +76,13 @@ public class PlayerController : MonoBehaviour
     private float bloqueoInteraccionCajaHasta = 0f;
 
     public bool EstaEnLaCaja => estaEnLaCaja;
-    public bool IsRunning => canMove && !isCrouching && Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
+    public bool CanMove => canMove;
+
+    public bool IsRunning => canMove && !isCrouching && Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && (FatigueManager.Instance == null || FatigueManager.Instance.CanSprint);
 
     [HideInInspector] public bool bloquearCamaraPorAtaque = false;
+
+    public Transform GrabbedTransform => grabbedTransform;
 
     #endregion
 
@@ -141,7 +145,7 @@ public class PlayerController : MonoBehaviour
             if (isCrouching)
                 currentSpeed = crouchSpeed;
             else
-                currentSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
+                currentSpeed = IsRunning ? runSpeed : walkSpeed;
 
             float moveX = Input.GetAxis("Horizontal") * currentSpeed;
             float moveZ = Input.GetAxis("Vertical") * currentSpeed;
