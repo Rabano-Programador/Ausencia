@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Ground
   - Item
+  - CajaRegistradora
+  - ZonaEsperaCobro
+  - ProductoSuelto
+  - ComputadoraCaja
+  - Salida
+  - Transbank
+  - PuntoEntrega
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89df57f89557769489ecffc388de14ef, type: 3}
+  m_Name: Bebida en lata
+  m_EditorClassIdentifier: 
+  nombreProducto: Bebida en lata
+  precio: 3
+  iconoCaja: {fileID: 0}
+  prefabIndividual: {fileID: 8923188557112939005, guid: 359223aca7fec0e478b488ba6a162234, type: 3}
+  escalaEnEstanteria: {x: 12.33633, y: 12.33633, z: 17.99298}
+  rotacionEnEstanteria: {x: -90, y: 100, z: 0}
+  escalaEnCaja: {x: 12.33633, y: 12.33633, z: 17.99298}
+  rotacionEnCaja: {x: 0, y: 0, z: 0}

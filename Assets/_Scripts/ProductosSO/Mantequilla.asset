@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89df57f89557769489ecffc388de14ef, type: 3}
+  m_Name: Mantequilla
+  m_EditorClassIdentifier: 
+  nombreProducto: Mantequilla
+  precio: 2
+  iconoCaja: {fileID: 0}
+  prefabIndividual: {fileID: 6680459047524507317, guid: 6879a123c47a8fb4c9407e03406d60b9, type: 3}
+  escalaEnEstanteria: {x: 18.84059, y: 11.13739, z: 6.470758}
+  rotacionEnEstanteria: {x: 90, y: 0, z: 0}
+  escalaEnCaja: {x: 18.84059, y: 11.13739, z: 6.470758}
+  rotacionEnCaja: {x: 0, y: 0, z: 0}
