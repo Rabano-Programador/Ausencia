@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class NPCSystem : MonoBehaviour
 {
-    public GameObject npcPrefab;
+    public GameObject[] npcPrefabs;
     public float tiempoMin = 10f;
     public float tiempoMax = 25f;
     public float radioBusquedaNavMeshSpawn = 3f;
@@ -50,6 +50,9 @@ public class NPCSystem : MonoBehaviour
 
     void SpawnearNPC()
     {
+        if (npcPrefabs == null || npcPrefabs.Length == 0)
+            return;
+
         NavMeshHit hitSpawn;
         Vector3 posicionSpawn = transform.position;
 
@@ -60,7 +63,12 @@ public class NPCSystem : MonoBehaviour
 
         posicionSpawn = hitSpawn.position;
 
-        GameObject nuevoNPC = Instantiate(npcPrefab, posicionSpawn, transform.rotation);
+        GameObject prefabElegido = npcPrefabs[Random.Range(0, npcPrefabs.Length)];
+
+        if (prefabElegido == null)
+            return;
+
+        GameObject nuevoNPC = Instantiate(prefabElegido, posicionSpawn, transform.rotation);
         NPCCliente ia = nuevoNPC.GetComponent<NPCCliente>();
 
         if (ia != null)
