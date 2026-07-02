@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -54,16 +55,23 @@ public class PlayerController : MonoBehaviour
     public GameObject manosVacias;
     public GameObject manosConEscaner;
     public GameObject manosConCaja;
+    public bool buscarHUDBrazosAutomaticamente = true;
+    public string nombreManosVacias = "ManosVacias";
+    public string nombreManosConEscaner = "ManosConEscaner";
+    public string nombreManosConCaja = "ManosConCaja";
 
     [Header("HUD Brazos Movimiento")]
     public Transform contenedorBrazosHUD;
+    public bool usarContenedorBrazosParaJiggle = false;
     public bool activarJiggleBrazos = true;
     public bool probarJiggleBrazosSiempre = false;
     public float frecuenciaJiggleBrazos = 7f;
     public float amplitudVerticalJiggle = 0.04f;
     public float amplitudVerticalJiggleUI = 12f;
     public float suavizadoJiggleBrazos = 14f;
+    public float umbralMovimientoJiggle = 0.001f;
     private bool debeJigglearBrazos;
+    private Vector3 posicionJugadorFrameAnterior;
 
     [SerializeField] Collider playerDetection;
 
@@ -120,8 +128,10 @@ public class PlayerController : MonoBehaviour
         originalHeight = capsule.height;
         originalCenter = capsule.center;
         originalCameraPos = camTransform.localPosition;
+        ResolverReferenciasHUDBrazos();
         RegistrarOrigenesHUDBrazos();
         ActualizarHUDBrazos();
+        posicionJugadorFrameAnterior = transform.position;
     }
     #endregion
 
@@ -384,7 +394,9 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        debeJigglearBrazos = DebeMoverBrazosHUD();
         ActualizarJiggleHUDBrazos();
+        posicionJugadorFrameAnterior = transform.position;
     }
 
     #region Agacharse
@@ -592,6 +604,8 @@ public class PlayerController : MonoBehaviour
 
     void ActualizarHUDBrazos()
     {
+        ResolverReferenciasHUDBrazos();
+
         bool tieneCajaEnMano = grabbedTransform != null && grabbedTransform.GetComponent<ProductBox>() != null;
         bool mostrarEscaner = !tieneCajaEnMano && (estaEnLaCaja || estaEnTransbank);
         bool mostrarVacias = !tieneCajaEnMano && !mostrarEscaner;
@@ -603,6 +617,8 @@ public class PlayerController : MonoBehaviour
 
     void ActualizarJiggleHUDBrazos()
     {
+        ResolverReferenciasHUDBrazos();
+
         Transform objetivo = ObtenerTransformJiggleBrazos();
         if (objetivo == null)
             return;
@@ -639,7 +655,7 @@ public class PlayerController : MonoBehaviour
 
     Transform ObtenerTransformJiggleBrazos()
     {
-        if (contenedorBrazosHUD != null)
+        if (usarContenedorBrazosParaJiggle && contenedorBrazosHUD != null)
             return contenedorBrazosHUD;
 
         if (manosConCaja != null && manosConCaja.activeSelf)
@@ -665,7 +681,9 @@ public class PlayerController : MonoBehaviour
         bool hayInputMovimiento = Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.01f ||
             Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.01f;
 
-        return hayInputMovimiento || PlayerMovement.sqrMagnitude > 0.01f;
+        bool seMovioEsteFrame = (transform.position - posicionJugadorFrameAnterior).sqrMagnitude > umbralMovimientoJiggle * umbralMovimientoJiggle;
+
+        return hayInputMovimiento || PlayerMovement.sqrMagnitude > 0.01f || seMovioEsteFrame;
     }
 
     void RegistrarOrigenesHUDBrazos()
@@ -674,6 +692,79 @@ public class PlayerController : MonoBehaviour
         if (manosVacias != null) RegistrarOrigenHUD(manosVacias.transform);
         if (manosConEscaner != null) RegistrarOrigenHUD(manosConEscaner.transform);
         if (manosConCaja != null) RegistrarOrigenHUD(manosConCaja.transform);
+    }
+
+    void ResolverReferenciasHUDBrazos()
+    {
+        if (!buscarHUDBrazosAutomaticamente)
+            return;
+
+        if (manosVacias == null)
+            manosVacias = BuscarGameObjectEnEscena(nombreManosVacias);
+
+        if (manosConEscaner == null)
+            manosConEscaner = BuscarGameObjectEnEscena(nombreManosConEscaner);
+
+        if (manosConCaja == null)
+            manosConCaja = BuscarGameObjectEnEscena(nombreManosConCaja);
+
+        if (contenedorBrazosHUD == null)
+            contenedorBrazosHUD = EncontrarPadreComunHUDBrazos();
+    }
+
+    GameObject BuscarGameObjectEnEscena(string nombre)
+    {
+        if (string.IsNullOrWhiteSpace(nombre))
+            return null;
+
+        Transform encontradoEnJugador = BuscarHijoPorNombre(transform, nombre);
+        if (encontradoEnJugador != null)
+            return encontradoEnJugador.gameObject;
+
+        GameObject[] objetos = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject objeto in objetos)
+        {
+            if (objeto == null || objeto.name != nombre)
+                continue;
+
+            Scene escena = objeto.scene;
+            if (escena.IsValid() && escena.isLoaded)
+                return objeto;
+        }
+
+        return null;
+    }
+
+    Transform BuscarHijoPorNombre(Transform padre, string nombre)
+    {
+        if (padre == null)
+            return null;
+
+        Transform[] hijos = padre.GetComponentsInChildren<Transform>(true);
+        foreach (Transform hijo in hijos)
+        {
+            if (hijo.name == nombre)
+                return hijo;
+        }
+
+        return null;
+    }
+
+    Transform EncontrarPadreComunHUDBrazos()
+    {
+        if (manosVacias == null || manosConEscaner == null || manosConCaja == null)
+            return null;
+
+        Transform padre = manosVacias.transform.parent;
+        if (padre != null &&
+            padre.GetComponent<Canvas>() == null &&
+            manosConEscaner.transform.parent == padre &&
+            manosConCaja.transform.parent == padre)
+        {
+            return padre;
+        }
+
+        return null;
     }
 
     void RegistrarOrigenHUD(Transform objetivo)

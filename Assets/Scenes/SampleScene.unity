@@ -5341,6 +5341,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 857238672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &444812048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701563742747469244, guid: 34d31ee9800230d4c802cec4c94cb663, type: 3}
+  m_PrefabInstance: {fileID: 1860845889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &448015887
 GameObject:
   m_ObjectHideFlags: 0
@@ -8861,6 +8866,22 @@ MonoBehaviour:
   playerHands: {fileID: 740275225}
   distanciaDeColocacion: 3.5
   textoInteraccion: {fileID: 747970510}
+  manosVacias: {fileID: 444812048}
+  manosConEscaner: {fileID: 1133083886}
+  manosConCaja: {fileID: 1320142458}
+  buscarHUDBrazosAutomaticamente: 1
+  nombreManosVacias: ManosVacias
+  nombreManosConEscaner: ManosConEscaner
+  nombreManosConCaja: ManosConCaja
+  contenedorBrazosHUD: {fileID: 740275225}
+  usarContenedorBrazosParaJiggle: 0
+  activarJiggleBrazos: 1
+  probarJiggleBrazosSiempre: 0
+  frecuenciaJiggleBrazos: 3
+  amplitudVerticalJiggle: 2
+  amplitudVerticalJiggleUI: 12
+  suavizadoJiggleBrazos: 14
+  umbralMovimientoJiggle: 0.001
   playerDetection: {fileID: 0}
   isLookingAtItem: 0
   puntoCajaTransform: {fileID: 900402669}
@@ -10811,14 +10832,14 @@ RectTransform:
   m_GameObject: {fileID: 747970508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 4.3061137, y: 4.3061137, z: 4.3061137}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 882792881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -366}
+  m_AnchoredPosition: {x: -605, y: -41}
   m_SizeDelta: {x: 96.6483, y: 25.9816}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &747970510
@@ -10868,8 +10889,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.64
-  m_fontSizeBase: 20.64
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -13356,6 +13377,8 @@ MonoBehaviour:
   separacionInventario: {x: 0, y: 0.18, z: 0}
   rotacionInventario: {x: 0, y: 0, z: 0}
   escalaInventario: {x: 0.4, y: 0.4, z: 0.4}
+  animator: {fileID: 0}
+  velocidadMinimaCaminar: 0.1
   stuckTimeout: 4
   stuckDistancia: 0.15
 --- !u!1 &1067884509
@@ -14575,6 +14598,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 155513422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1133083886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8312461224127046298, guid: 34d31ee9800230d4c802cec4c94cb663, type: 3}
+  m_PrefabInstance: {fileID: 1860845889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1134138295
 GameObject:
   m_ObjectHideFlags: 0
@@ -14619,7 +14647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e660534f84d95f44b4e48fcd98499a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcPrefab: {fileID: 769879239272914982, guid: 9d1c529f355e9d54cb1f1724c6a52eb8, type: 3}
+  npcPrefabs: []
   tiempoMin: 10
   tiempoMax: 25
   radioBusquedaNavMeshSpawn: 3
@@ -17262,6 +17290,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2878ad57e2b127443b62088b491483ca, type: 3}
+--- !u!1 &1320142458 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3916948134392313671, guid: 34d31ee9800230d4c802cec4c94cb663, type: 3}
+  m_PrefabInstance: {fileID: 1860845889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1328361134
 GameObject:
   m_ObjectHideFlags: 0
@@ -17737,7 +17770,7 @@ Transform:
   m_GameObject: {fileID: 1392515476}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.07, y: 1.6, z: -27.95}
+  m_LocalPosition: {x: -11.18, y: 1.53, z: -47.248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
