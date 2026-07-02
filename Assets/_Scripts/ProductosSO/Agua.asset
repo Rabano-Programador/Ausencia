@@ -16,7 +16,7 @@ MonoBehaviour:
   precio: 2
   iconoCaja: {fileID: 0}
   prefabIndividual: {fileID: 8657502552957486054, guid: 766641bf9c5103645a52317cb6ea296d, type: 3}
-  escalaEnEstanteria: {x: 20.554937, y: 20.554937, z: 20.554937}
-  rotacionEnEstanteria: {x: 0, y: 0, z: 0}
-  escalaEnCaja: {x: 20.554937, y: 20.554937, z: 20.554937}
+  escalaEnEstanteria: {x: 13.33709, y: 13.33709, z: 13.33709}
+  rotacionEnEstanteria: {x: -90, y: 100, z: 0}
+  escalaEnCaja: {x: 13.33709, y: 13.33709, z: 13.33709}
   rotacionEnCaja: {x: 0, y: 0, z: 0}
