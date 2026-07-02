@@ -186,7 +186,6 @@ public class PlayerController : MonoBehaviour
 
             if (PlayerMovement.sqrMagnitude > 0.01f && Time.time >= tiempoSiguientePaso)
             {
-                Debug.Log("ESTOYCAMINDANDO");
                 AudioClip paso = alternarPaso ? AudioManager.instance.sonidoPasosJugador : AudioManager.instance.sonidoPasosJugador2;
                 AudioManager.instance.ReproducirSonido(paso);
                 alternarPaso = !alternarPaso;
@@ -436,8 +435,10 @@ public class PlayerController : MonoBehaviour
         grabbedTransform = transformToGrab;
         Rigidbody rb = grabbedTransform.GetComponent<Rigidbody>();
         Collider col = grabbedTransform.GetComponent<Collider>();
+        ProductBox caja = grabbedTransform.GetComponent<ProductBox>();
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
         if (col != null) col.enabled = false;
+        if (caja != null) caja.OcultarVisualAlCargar();
         ActualizarHUDBrazos();
     }
 
@@ -445,8 +446,10 @@ public class PlayerController : MonoBehaviour
     {
         Rigidbody rb = grabbedTransform.GetComponent<Rigidbody>();
         Collider col = grabbedTransform.GetComponent<Collider>();
+        ProductBox caja = grabbedTransform.GetComponent<ProductBox>();
         if (col != null) col.enabled = true;
         if (rb != null) { rb.isKinematic = false; rb.useGravity = true; rb.freezeRotation = false; }
+        if (caja != null) caja.MostrarVisualAlSoltar();
         grabbedTransform = null;
         OcultarIndicadoresEstantes();
         ActualizarHUDBrazos();
