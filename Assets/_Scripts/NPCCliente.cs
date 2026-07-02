@@ -29,6 +29,10 @@ public class NPCCliente : MonoBehaviour
     public Vector3 rotacionInventario;
     public Vector3 escalaInventario = Vector3.one * 0.4f;
 
+    [Header("Animacion")]
+    public Animator animator;
+    public float velocidadMinimaCaminar = 0.1f;
+
     private NavMeshAgent agent;
     private List<ProductoData> productosRecogidos = new List<ProductoData>();
     private int productosObjetivo;
@@ -70,6 +74,9 @@ public class NPCCliente : MonoBehaviour
             return;
         }
 
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
         if (!agent.isOnNavMesh && !IntentarSnapAlNavMesh(transform.position, 3f))
         {
             Destroy(gameObject);
@@ -86,6 +93,8 @@ public class NPCCliente : MonoBehaviour
     void Update()
     {
         if (agent == null || !agent.isOnNavMesh) return;
+
+        ActualizarAnimacion();
 
         switch (estadoActual)
         {
@@ -130,6 +139,14 @@ public class NPCCliente : MonoBehaviour
             case EstadoNPC.Saliendo:
                 break;
         }
+    }
+
+    void ActualizarAnimacion()
+    {
+        if (animator == null) return;
+
+        bool caminando = agent.velocity.sqrMagnitude > velocidadMinimaCaminar * velocidadMinimaCaminar;
+        animator.SetBool("isWalking", caminando);
     }
 
 
