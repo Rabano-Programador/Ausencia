@@ -30,20 +30,21 @@ public class FatigueManager : MonoBehaviour
     private bool estaAgotado = false;
 
     [Header("2. SISTEMA DE PARPADEO")]
-    public float tiempoMinEntreParpadeos = 6f;
-    public float tiempoMaxEntreParpadeos = 14f;
-    public float duracionParpadeo = 0.25f;
+    public float tiempoMinEntreParpadeos = 4f;
+    public float tiempoMaxEntreParpadeos = 8f;
+    public float duracionParpadeo = 0.3f;
     private float timerParpadeo;
 
     [Header("3. SISTEMA DE TIRITONES (TEMBLORES)")]
-    public float intensidadTiriton = 0.04f;
+    public float intensidadTiriton = 0.03f;
+    private Vector3 originalCamPos;
+    private bool camaraGuardada = false;
 
-    #region Propiedades Públicas (Para que otros scripts lean los estados)
+    #region Propiedades Públicas
     public bool CondicionStaminaActiva => ataquesCompletados >= ataquesParaStamina;
     public bool CondicionParpadeoActiva => ataquesCompletados >= ataquesParaParpadeo;
     public bool CondicionTiritonesActiva => ataquesCompletados >= ataquesParaTiritones;
 
-    // Propiedad que usará el PlayerController para saber si puede correr
     public bool CanSprint => CondicionStaminaActiva ? !estaAgotado : true;
     #endregion
 
@@ -56,62 +57,76 @@ public class FatigueManager : MonoBehaviour
 
         if (imagenParpadeo != null)
         {
+            imagenParpadeo.color = new Color(0f, 0f, 0f, 0f);
             imagenParpadeo.gameObject.SetActive(false);
-            SetAlphaParpadeo(0f);
         }
 
         ResetBlinkTimer();
     }
 
-    // Esta función la llamaremos desde el QTEManager al ganar el minijuego
     public void IncrementarAtaquesCompletados()
     {
         ataquesCompletados++;
-        Debug.Log("Fatiga Incrementada. Ataques totales sufridos: " + ataquesCompletados);
+        Debug.Log("[FatigueManager] Ataque sufrido. Total: " + ataquesCompletados);
     }
 
     private void Update()
     {
         if (player == null) return;
 
-        // 1. LÓGICA DE STAMINA (Correr)
         if (CondicionStaminaActiva)
         {
             ManejarStamina();
         }
 
-        // 2. LÓGICA DE PARPADEO (Falta de sueño)
         if (CondicionParpadeoActiva)
         {
             ManejarTiemposParpadeo();
         }
     }
 
-    // Usamos LateUpdate para los tiritones para que se apliquen DESPUÉS de que el PlayerController mueva la cámara
     private void LateUpdate()
     {
-        if (player == null || !CondicionTiritonesActiva) return;
+        if (player == null) return;
 
-        // Verificar las dos condiciones de tiritón: Agarrando objeto O en la Caja Registradora
+        Camera camaraPrincipal = Camera.main;
+        if (camaraPrincipal == null) return;
+
+        if (camaraGuardada)
+        {
+            camaraPrincipal.transform.localPosition = originalCamPos;
+            camaraGuardada = false;
+        }
+
+        if (!CondicionTiritonesActiva) return;
+
         bool agarrandoObjeto = player.GrabbedTransform != null;
         bool enLaCaja = player.EstaEnLaCaja;
 
         if (agarrandoObjeto || enLaCaja)
         {
-            AplicarTiritonCamara();
+            originalCamPos = camaraPrincipal.transform.localPosition;
+            camaraGuardada = true;
+
+            Vector3 offsetTemblores = new Vector3(
+                Random.Range(-intensidadTiriton, intensidadTiriton),
+                Random.Range(-intensidadTiriton, intensidadTiriton),
+                0f
+            );
+
+            camaraPrincipal.transform.localPosition += offsetTemblores;
         }
     }
 
-    #region Mecánica 1: Stamina
     private void ManejarStamina()
     {
-        if (player.IsRunning && player.CanMove) // Asumiendo que CanMove o variable similar valida el movimiento
+        if (player.IsRunning && player.CanMove)
         {
             staminaActual -= desgasteStamina * Time.deltaTime;
             if (staminaActual <= 0)
             {
                 staminaActual = 0;
-                estaAgotado = true; // Castigado: No puede correr hasta recuperarse
+                estaAgotado = true;
             }
         }
         else
@@ -120,15 +135,13 @@ public class FatigueManager : MonoBehaviour
             if (staminaActual >= maxStamina)
             {
                 staminaActual = maxStamina;
-                estaAgotado = false; // Recuperado por completo
+                estaAgotado = false;
             }
         }
 
         staminaActual = Mathf.Clamp(staminaActual, 0f, maxStamina);
     }
-    #endregion
 
-    #region Mecánica 2: Parpadeos
     private void ManejarTiemposParpadeo()
     {
         timerParpadeo -= Time.deltaTime;
@@ -144,24 +157,28 @@ public class FatigueManager : MonoBehaviour
         if (imagenParpadeo == null) yield break;
 
         imagenParpadeo.gameObject.SetActive(true);
+        SetAlphaParpadeo(0f);
 
-        // Cierra ojos (Va a negro)
         float t = 0;
-        while (t < duracionParpadeo / 2f)
+        float mitadDuracion = duracionParpadeo / 2f;
+        while (t < mitadDuracion)
         {
             t += Time.deltaTime;
-            SetAlphaParpadeo(Mathf.Lerp(0f, 1f, t / (duracionParpadeo / 2f)));
+            SetAlphaParpadeo(Mathf.Lerp(0f, 1f, t / mitadDuracion));
             yield return null;
         }
+        SetAlphaParpadeo(1f);
 
-        // Abre ojos (Vuelve transparente)
+        yield return new WaitForSeconds(0.05f);
+
         t = 0;
-        while (t < duracionParpadeo / 2f)
+        while (t < mitadDuracion)
         {
             t += Time.deltaTime;
-            SetAlphaParpadeo(Mathf.Lerp(1f, 0f, t / (duracionParpadeo / 2f)));
+            SetAlphaParpadeo(Mathf.Lerp(1f, 0f, t / mitadDuracion));
             yield return null;
         }
+        SetAlphaParpadeo(0f);
 
         imagenParpadeo.gameObject.SetActive(false);
     }
@@ -180,23 +197,4 @@ public class FatigueManager : MonoBehaviour
             imagenParpadeo.color = c;
         }
     }
-    #endregion
-
-    #region Mecánica 3: Tiritones
-    private void AplicarTiritonCamara()
-    {
-        Camera camaraPrincipal = Camera.main;
-        if (camaraPrincipal != null)
-        {
-            // Genera un desfase sutil y aleatorio frame a frame en la posición local de la cámara
-            Vector3 offsetTemblores = new Vector3(
-                Random.Range(-intensidadTiriton, intensidadTiriton),
-                Random.Range(-intensidadTiriton, intensidadTiriton),
-                0f
-            );
-
-            camaraPrincipal.transform.localPosition += offsetTemblores;
-        }
-    }
-    #endregion
 }
