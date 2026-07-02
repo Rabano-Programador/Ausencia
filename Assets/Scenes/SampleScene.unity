@@ -2013,7 +2013,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173890012}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.015000001, y: 0.023000002, z: 0.033}
@@ -2424,6 +2424,12 @@ MonoBehaviour:
   mensajeIndicador: "Uvas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &206232343
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4029,6 +4035,12 @@ MonoBehaviour:
   mensajeIndicador: "Platanos Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &329270331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4533,6 +4545,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: -0.018000001, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &380740427
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380740419}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.036995012, z: 0.019992579}
+  m_Center: {x: 3.2837796e-17, y: -0.018497502, z: -0.0000037106868}
 --- !u!1 &386975200
 GameObject:
   m_ObjectHideFlags: 0
@@ -6461,6 +6494,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7515429101286732190, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 824934841}
+    - targetCorrespondingSourceObject: {fileID: -7515429101286732190, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 824934845}
     - targetCorrespondingSourceObject: {fileID: -5754060345647867467, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 215502266}
@@ -6470,6 +6506,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -1558721567721526513, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1442745450}
+    - targetCorrespondingSourceObject: {fileID: -1558721567721526513, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1442745454}
     - targetCorrespondingSourceObject: {fileID: 26844662620191305, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 424126888}
@@ -6524,6 +6563,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4406072908233387757, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 380740423}
+    - targetCorrespondingSourceObject: {fileID: 4406072908233387757, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 380740427}
     - targetCorrespondingSourceObject: {fileID: 7553824377817690652, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1283380580}
@@ -9022,7 +9064,7 @@ Transform:
   m_GameObject: {fileID: 590905435}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.707106, z: -0, w: 0.7071076}
-  m_LocalPosition: {x: 0, y: 1.45, z: 0}
+  m_LocalPosition: {x: -15.3, y: 1.45, z: -45.25}
   m_LocalScale: {x: 1, y: 1.0854884, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11496,6 +11538,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: -0.001}
   m_TimeToStationary: 0.5
+--- !u!65 &824934845
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824934837}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02, y: 0.09333532, z: 0.039419085}
+  m_Center: {x: 0, y: -0.000000014901161, z: -0.0009955594}
 --- !u!1 &829486107
 GameObject:
   m_ObjectHideFlags: 0
@@ -12010,6 +12073,12 @@ MonoBehaviour:
   mensajeIndicador: "Papas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &857238675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13225,6 +13294,12 @@ MonoBehaviour:
   mensajeIndicador: "Leche Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1037013188
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13512,62 +13587,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1065614536 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4036347507611526034, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-  m_PrefabInstance: {fileID: 2139413547}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &1065614539
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1065614536}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &1065614540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1065614536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4359bad6fe331be43b236ae3ef3119f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zonaFilaCaja: {fileID: 0}
-  puntoSalida: {fileID: 0}
-  puntoDespachoProductos: {fileID: 0}
-  objetoCajaPrefab: {fileID: 0}
-  maxProductosARecoger: 4
-  tiempoMaximoSinProductos: 60
-  radioVagabundeo: 8
-  intentosVagabundeo: 8
-  puntoInventarioVisual: {fileID: 0}
-  offsetInventarioInicial: {x: 0, y: 1.2, z: -0.35}
-  separacionInventario: {x: 0, y: 0.18, z: 0}
-  rotacionInventario: {x: 0, y: 0, z: 0}
-  escalaInventario: {x: 0.4, y: 0.4, z: 0.4}
-  animator: {fileID: 0}
-  velocidadMinimaCaminar: 0.1
-  stuckTimeout: 4
-  stuckDistancia: 0.15
 --- !u!1 &1065934127 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4252702714118357385, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
@@ -13580,7 +13599,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065934127}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.021000002, y: 0.010000001, z: 0.040000003}
@@ -13899,6 +13918,12 @@ MonoBehaviour:
   mensajeIndicador: "Mantequilla Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!64 &1072875621
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14777,9 +14802,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrefabs:
-  - {fileID: 919132149155446097, guid: 16a902dc8d65591479eb02386b0e117d, type: 3}
-  - {fileID: 919132149155446097, guid: 374044c87e9f7544eb86f7602fd6339d, type: 3}
-  - {fileID: 919132149155446097, guid: 35e8289c0145059438c9ed9d50a431f0, type: 3}
+  - {fileID: 7120211551287465839, guid: 8b20caab51557654ba29478aaac1a9e8, type: 3}
+  - {fileID: 6719333657327739032, guid: 9d965285188b2984fb3502930a6a2d3b, type: 3}
+  - {fileID: 2826305018752192232, guid: d53c8845b9cee2343a11d3b0b8156a6e, type: 3}
   - {fileID: 919132149155446097, guid: 08d2d912c7320454b97ca691b07d590c, type: 3}
   tiempoMin: 10
   tiempoMax: 25
@@ -15866,6 +15891,12 @@ MonoBehaviour:
   mensajeIndicador: Agua aqui!
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1216222632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16663,6 +16694,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &1284102315
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -18283,6 +18320,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &1414075999
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -18556,6 +18599,12 @@ MonoBehaviour:
   mensajeIndicador: "Mantequilla Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1418819363
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18722,6 +18771,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.004, z: 0.001}
   m_TimeToStationary: 0.5
+--- !u!65 &1442745454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442745446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.036637265, y: 0.024348574, z: 0.052607153}
+  m_Center: {x: 0.007614205, y: 0.0040059234, z: 0.016303612}
 --- !u!1 &1442925125 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7271449666460269675, guid: 28fbc800270bb5245a18342e891fe2c1, type: 3}
@@ -21824,6 +21894,12 @@ MonoBehaviour:
   mensajeIndicador: "Papas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1671260404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21909,7 +21985,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677388130}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.011000001, y: 0.031000001, z: 0.011000001}
@@ -25637,6 +25713,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &1957364309
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -27023,6 +27105,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &2079080533
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -27150,6 +27238,12 @@ MonoBehaviour:
   mensajeIndicador: "Manzanas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &2083741295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27275,6 +27369,12 @@ MonoBehaviour:
   mensajeIndicador: "Bebidas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!1 &2090282682
 GameObject:
   m_ObjectHideFlags: 0
@@ -27588,85 +27688,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1957364304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2139413547
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.40000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.40000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.40000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3695251875714021672, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036347507611526034, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      propertyPath: m_Name
-      value: NPCMaleIdle
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4036347507611526034, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1065614540}
-    - targetCorrespondingSourceObject: {fileID: 4036347507611526034, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1065614539}
-  m_SourcePrefab: {fileID: 100100000, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
 --- !u!1001 &2173136052659761507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27724,6 +27745,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43492dcea0fee53429e098b6b2ceef4d, type: 3}
+--- !u!1001 &8526648557671217074
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519718732272018562, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292877285203967544, guid: f25363d99c901134b8798637a0769f87, type: 3}
+      propertyPath: m_Name
+      value: NPCMaleIdle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f25363d99c901134b8798637a0769f87, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -27750,7 +27828,7 @@ SceneRoots:
   - {fileID: 769366384}
   - {fileID: 1316528870}
   - {fileID: 2033081096}
-  - {fileID: 2139413547}
+  - {fileID: 8526648557671217074}
   - {fileID: 1361273643}
   - {fileID: 528828517}
   - {fileID: 358324133}
