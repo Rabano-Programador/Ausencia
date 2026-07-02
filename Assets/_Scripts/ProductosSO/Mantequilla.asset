@@ -17,6 +17,6 @@ MonoBehaviour:
   iconoCaja: {fileID: 0}
   prefabIndividual: {fileID: 6680459047524507317, guid: 6879a123c47a8fb4c9407e03406d60b9, type: 3}
   escalaEnEstanteria: {x: 18.84059, y: 11.13739, z: 6.470758}
-  rotacionEnEstanteria: {x: 0, y: 0, z: 0}
+  rotacionEnEstanteria: {x: 90, y: 0, z: 0}
   escalaEnCaja: {x: 18.84059, y: 11.13739, z: 6.470758}
   rotacionEnCaja: {x: 0, y: 0, z: 0}

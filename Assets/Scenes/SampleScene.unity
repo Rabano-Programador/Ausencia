@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &211165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211166}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211165}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.56, y: 0.034499995, z: -0.014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009307
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +349,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4897878}
   m_CullTransparentMesh: 1
+--- !u!1 &6742504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6742505}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (20)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6742505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742504}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.6300015, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7550543
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +441,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 155513422}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &43850993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43850994}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &43850994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43850993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.7600017, y: -0.20760025, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &45014252
 GameObject:
@@ -849,6 +942,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1671260401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &64292343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 64292344}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &64292344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64292343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.46, y: 0.034499995, z: -0.01400017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &74561783
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +1070,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2087677247}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &91077032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91077033}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (16)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &91077033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91077032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.740002, y: -0.20760025, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &95011756
 GameObject:
@@ -2302,6 +2457,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1072875616}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &194765572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194765573}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &194765573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194765572}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.56, y: 0.034499995, z: -0.030599976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206232340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2382,6 +2568,12 @@ MonoBehaviour:
   mensajeIndicador: "Uvas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &206232343
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2861,6 +3053,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223489796}
   m_CullTransparentMesh: 1
+--- !u!1 &231213077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231213078}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (21)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &231213078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231213077}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.760002, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &237047208
 GameObject:
   m_ObjectHideFlags: 0
@@ -3060,6 +3283,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240170038}
   m_CullTransparentMesh: 1
+--- !u!1 &248402163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248402164}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (19)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &248402164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248402163}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.67, y: 0.034499995, z: -0.030600145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &260405364
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,6 +3619,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1414075994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &290136598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290136599}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &290136599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290136598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.67, y: 0.034499995, z: -0.01400017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &293180688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5951197059573218882, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
@@ -3421,6 +3706,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1671260401}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &301214549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 301214550}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &301214550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301214549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.46, y: 0.034499995, z: -0.016599976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &302948815
 GameObject:
@@ -3754,7 +4070,7 @@ Transform:
   m_GameObject: {fileID: 319313872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.83, y: -0.242, z: 0}
+  m_LocalPosition: {x: -4.7600017, y: -0.20760025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3885,7 +4201,7 @@ Transform:
   m_GameObject: {fileID: 329270328}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.98, y: 24.62, z: 74.07}
+  m_LocalPosition: {x: 5.98, y: 24.33, z: 74.07}
   m_LocalScale: {x: 0.057925753, y: 3.6908028, z: 21.170223}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3924,6 +4240,12 @@ MonoBehaviour:
   mensajeIndicador: "Platanos Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &329270331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3943,7 +4265,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 47.973064, y: 0.22427486, z: 0.14068414}
+  m_Size: {x: 47.973064, y: 0.48, z: 0.14068414}
   m_Center: {x: 16.00535, y: -0.38786253, z: 0.024057621}
 --- !u!1 &330585543
 GameObject:
@@ -4171,7 +4493,7 @@ Transform:
   m_GameObject: {fileID: 335693489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.57, y: -0.242, z: 0}
+  m_LocalPosition: {x: -6.500002, y: -0.20760025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4277,6 +4599,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1414075994}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &356048285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356048286}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &356048286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356048285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.78, y: 0.034499995, z: -0.016599976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &358324133
 PrefabInstance:
@@ -4957,6 +5310,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431389467}
   m_CullTransparentMesh: 1
+--- !u!1 &439222783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 439222784}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &439222784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439222783}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.67, y: 0.034499995, z: -0.016599976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &448015887
 GameObject:
   m_ObjectHideFlags: 0
@@ -6070,7 +6454,7 @@ Transform:
   m_GameObject: {fileID: 456083174}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.46, y: 0, z: 0}
+  m_LocalPosition: {x: -0.46, y: 0.034499995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6826,7 +7210,7 @@ Transform:
   m_GameObject: {fileID: 523518227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.77, y: 0, z: 0}
+  m_LocalPosition: {x: -0.7000017, y: 0.03439974, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7163,6 +7547,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1698616723}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &532523048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 532523049}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (25)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &532523049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532523048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.409999, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &539499221
 GameObject:
@@ -7675,7 +8090,7 @@ Transform:
   m_GameObject: {fileID: 559457076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.05, y: 0, z: 0}
+  m_LocalPosition: {x: 5.1199985, y: 0.03439974, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7772,6 +8187,37 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &567627911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567627912}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (17)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &567627912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567627911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.78, y: 0.034499995, z: -0.030600145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &574313082
 GameObject:
   m_ObjectHideFlags: 0
@@ -8242,7 +8688,7 @@ Transform:
   m_GameObject: {fileID: 587915550}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.57, y: 0, z: 0}
+  m_LocalPosition: {x: -6.5, y: 0.0344, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8772,7 +9218,7 @@ Transform:
   m_GameObject: {fileID: 642444587}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.81, y: -0.242, z: 0}
+  m_LocalPosition: {x: -2.740002, y: -0.20760025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9149,7 +9595,7 @@ Transform:
   m_GameObject: {fileID: 664710157}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.34, y: 0, z: 0}
+  m_LocalPosition: {x: 8.409999, y: 0.03439974, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9761,7 +10207,7 @@ Transform:
   m_GameObject: {fileID: 700265400}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7, y: 0, z: 0}
+  m_LocalPosition: {x: -4.6300015, y: 0.03439974, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10138,6 +10584,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1418819360}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &732192726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732192727}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &732192727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732192726}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.56, y: 0.0345, z: -0.016599976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &740275224
 GameObject:
@@ -10779,7 +11256,38 @@ Transform:
   m_GameObject: {fileID: 803896046}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9, y: 0, z: 0}
+  m_LocalPosition: {x: 1.9699981, y: 0.03439974, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &812048934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 812048935}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (19)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &812048935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812048934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.210002, y: -0.46260026, z: -0.013299946}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10926,6 +11434,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1418819360}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &850618295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 850618296}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (17)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &850618296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850618295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.740002, y: -0.46260026, z: -0.0133}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &851939397
 GameObject:
@@ -11295,10 +11834,26 @@ MonoBehaviour:
   - {fileID: 1776197616}
   - {fileID: 456083175}
   - {fileID: 1613676735}
+  - {fileID: 211166}
+  - {fileID: 1209067612}
+  - {fileID: 2065650110}
+  - {fileID: 64292344}
+  - {fileID: 290136599}
+  - {fileID: 732192727}
+  - {fileID: 1097834494}
+  - {fileID: 356048286}
+  - {fileID: 301214550}
+  - {fileID: 439222784}
   textoIndicador: {fileID: 667351535}
   mensajeIndicador: "Papas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &857238675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12363,6 +12918,19 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 587915551}
+  - {fileID: 1711670627}
+  - {fileID: 1335975423}
+  - {fileID: 43850994}
+  - {fileID: 91077033}
+  - {fileID: 850618296}
+  - {fileID: 2146844925}
+  - {fileID: 812048935}
+  - {fileID: 6742505}
+  - {fileID: 231213078}
+  - {fileID: 2135294782}
+  - {fileID: 1232022498}
+  - {fileID: 1354474272}
+  - {fileID: 532523049}
   - {fileID: 335693490}
   - {fileID: 319313873}
   - {fileID: 642444588}
@@ -12414,6 +12982,19 @@ MonoBehaviour:
   productoRequerido: {fileID: 11400000, guid: 65a6fe90a7354853b27eb69690d4a2c1, type: 2}
   puntosDeColocacion:
   - {fileID: 587915551}
+  - {fileID: 1711670627}
+  - {fileID: 1335975423}
+  - {fileID: 43850994}
+  - {fileID: 91077033}
+  - {fileID: 850618296}
+  - {fileID: 2146844925}
+  - {fileID: 812048935}
+  - {fileID: 6742505}
+  - {fileID: 231213078}
+  - {fileID: 2135294782}
+  - {fileID: 1232022498}
+  - {fileID: 1354474272}
+  - {fileID: 532523049}
   - {fileID: 335693490}
   - {fileID: 319313873}
   - {fileID: 642444588}
@@ -12430,6 +13011,12 @@ MonoBehaviour:
   mensajeIndicador: "Leche Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1037013188
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13081,6 +13668,12 @@ MonoBehaviour:
   mensajeIndicador: "Mantequilla Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!64 &1072875621
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13382,6 +13975,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097672791}
   m_CullTransparentMesh: 1
+--- !u!1 &1097834493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097834494}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1097834494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097834493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.89, y: 0.034499995, z: -0.0166}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1097870346
 GameObject:
   m_ObjectHideFlags: 0
@@ -14672,6 +15296,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2083741293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1209067611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1209067612}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1209067612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209067611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.89, y: 0.034499995, z: -0.01400017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210594364
 GameObject:
   m_ObjectHideFlags: 0
@@ -15002,6 +15657,12 @@ MonoBehaviour:
   mensajeIndicador: Agua aqui!
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1216222632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15153,11 +15814,42 @@ Transform:
   m_GameObject: {fileID: 1228754971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.56, y: 0, z: 0}
+  m_LocalPosition: {x: -6.56, y: 0.0345, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1232022497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1232022498}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (23)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1232022498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232022497}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9699981, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1232327852
 GameObject:
@@ -15778,6 +16470,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &1284102315
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -15917,7 +16615,7 @@ Transform:
   m_GameObject: {fileID: 1301837884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.83, y: 0, z: 0}
+  m_LocalPosition: {x: -2.760002, y: 0.03439974, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16294,6 +16992,51 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1613676735}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 211166}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1209067612}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065650110}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 64292344}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 290136599}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 732192727}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1097834494}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 356048286}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 301214550}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 439222784}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 194765573}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2007919819}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 567627912}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1692319568}
+    - targetCorrespondingSourceObject: {fileID: 1542758033411662200, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 248402164}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4150869289999054220, guid: c541bc3b3beec31468943afeb00cf8aa, type: 3}
       insertIndex: -1
@@ -16426,6 +17169,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 155513422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1335975422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1335975423}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1335975423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335975422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.500002, y: -0.20760025, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1341923017
 GameObject:
   m_ObjectHideFlags: 0
@@ -16462,6 +17236,37 @@ Transform:
   - {fileID: 349095705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -0.181, z: 0}
+--- !u!1 &1354474271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1354474272}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (24)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1354474272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354474271}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.1199985, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357308479
 GameObject:
   m_ObjectHideFlags: 0
@@ -17192,6 +17997,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &1414075999
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17465,6 +18276,12 @@ MonoBehaviour:
   mensajeIndicador: "Mantequilla Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1418819363
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17604,7 +18421,7 @@ Transform:
   m_GameObject: {fileID: 1442578795}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.28, y: -0.497, z: 0}
+  m_LocalPosition: {x: -6.210002, y: -0.46260026, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20132,7 +20949,7 @@ Transform:
   m_GameObject: {fileID: 1602240613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.89, y: 0, z: 0}
+  m_LocalPosition: {x: -4.89, y: 0.034499995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20437,7 +21254,7 @@ Transform:
   m_GameObject: {fileID: 1613676734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.67, y: 0, z: 0}
+  m_LocalPosition: {x: 1.67, y: 0.034499995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20701,6 +21518,12 @@ MonoBehaviour:
   mensajeIndicador: "Papas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &1671260404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20961,6 +21784,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2079080528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1692319567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1692319568}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (18)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1692319568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692319567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.46, y: 0.034499995, z: -0.030600145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1698616722 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2535147688332045567, guid: 1104c5bccfd4977419e012af72b2b474, type: 3}
@@ -21059,6 +21913,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329270329}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1711670626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1711670627}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1711670627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711670626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.500002, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1719942982
 PrefabInstance:
@@ -21409,7 +22294,7 @@ Transform:
   m_GameObject: {fileID: 1722430133}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.81, y: -0.497, z: 0}
+  m_LocalPosition: {x: -2.740002, y: -0.46260026, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21686,7 +22571,7 @@ Transform:
   m_GameObject: {fileID: 1753083422}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.84, y: -0.497, z: 0}
+  m_LocalPosition: {x: -4.770002, y: -0.46260026, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21925,7 +22810,7 @@ Transform:
   m_GameObject: {fileID: 1776197615}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.78, y: 0, z: 0}
+  m_LocalPosition: {x: -2.78, y: 0.034499995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24279,6 +25164,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &1957364309
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -24414,6 +25305,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1698616723}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2007919818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2007919819}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (16)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2007919819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007919818}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.89, y: 0.034499995, z: -0.030600145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2016592728
 GameObject:
@@ -25425,6 +26347,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062881153}
   m_CullTransparentMesh: 1
+--- !u!1 &2065650109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2065650110}
+  m_Layer: 0
+  m_Name: PuntoDondePonerweas (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2065650110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065650109}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.78, y: 0.034499995, z: -0.01400017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857238672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2073590751
 GameObject:
   m_ObjectHideFlags: 0
@@ -25598,6 +26551,12 @@ MonoBehaviour:
   mensajeIndicador: Trae este producto aqui
   stockActual: 0
   textoKPI: {fileID: 1595399996}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!208 &2079080533
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -25725,6 +26684,12 @@ MonoBehaviour:
   mensajeIndicador: "Manzanas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!65 &2083741295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25856,6 +26821,12 @@ MonoBehaviour:
   mensajeIndicador: "Bebidas Aqu\xED!"
   stockActual: 0
   textoKPI: {fileID: 0}
+  mostrarPuntosEnEditor: 1
+  mostrarPuntosSoloSeleccionado: 0
+  mostrarNumerosPuntos: 1
+  colorPuntos: {r: 0, g: 1, b: 0.35, a: 0.75}
+  colorPuntoSiguiente: {r: 1, g: 0.75, b: 0, a: 0.9}
+  tamanoGizmoPunto: {x: 0.25, y: 0.25, z: 0.25}
 --- !u!1 &2090282682
 GameObject:
   m_ObjectHideFlags: 0
@@ -26148,6 +27119,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1957364304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2135294781
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2135294782}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (22)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2135294782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135294781}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7000017, y: 0.03439974, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2139413547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26223,6 +27225,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1065614539}
   m_SourcePrefab: {fileID: 100100000, guid: e91b057929f1bc143901df8f4cdde9ef, type: 3}
+--- !u!1 &2146844924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2146844925}
+  m_Layer: 0
+  m_Name: Puntodondeponerweas (18)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2146844925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146844924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.770002, y: -0.46260026, z: -0.013299946}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1037013185}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2173136052659761507
 PrefabInstance:
   m_ObjectHideFlags: 0

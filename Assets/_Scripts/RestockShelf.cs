@@ -1,6 +1,9 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class RestockShelf : MonoBehaviour
 {
@@ -23,6 +26,14 @@ public class RestockShelf : MonoBehaviour
     public TextMeshProUGUI textoKPI;
     private static int totalReposicionesSemanales = 0;
 
+    [Header("Debug Puntos de Colocacion")]
+    public bool mostrarPuntosEnEditor = true;
+    public bool mostrarPuntosSoloSeleccionado = false;
+    public bool mostrarNumerosPuntos = true;
+    public Color colorPuntos = new Color(0f, 1f, 0.35f, 0.75f);
+    public Color colorPuntoSiguiente = new Color(1f, 0.75f, 0f, 0.9f);
+    public Vector3 tamanoGizmoPunto = new Vector3(0.25f, 0.25f, 0.25f);
+
     private void OnEnable()
     {
         if (!Instancias.Contains(this))
@@ -42,21 +53,21 @@ public class RestockShelf : MonoBehaviour
         ActualizarUITienda();
     }
 
-    public void ReponerProducto(ProductBox cajaDelJugador)
+    public bool ReponerProducto(ProductBox cajaDelJugador)
     {
         if (stockActual >= puntosDeColocacion.Length)
         {
-            return;
+            return false;
         }
 
         if (cajaDelJugador == null || cajaDelJugador.datosProducto == null || productoRequerido == null)
         {
-            return;
+            return false;
         }
 
         if (productoRequerido.prefabIndividual == null)
         {
-            return;
+            return false;
         }
 
         if (cajaDelJugador.datosProducto == productoRequerido)
@@ -66,7 +77,7 @@ public class RestockShelf : MonoBehaviour
                 Transform punto = puntosDeColocacion[stockActual];
                 if (punto == null)
                 {
-                    return;
+                    return false;
                 }
 
                 GameObject nuevoItem = Instantiate(
@@ -81,8 +92,11 @@ public class RestockShelf : MonoBehaviour
                 stockActual++;
                 totalReposicionesSemanales++;
                 ActualizarUITienda();
+                return true;
             }
         }
+
+        return false;
     }
 
     public ProductoData TomarProductoNPC()
@@ -127,5 +141,52 @@ public class RestockShelf : MonoBehaviour
     private void ActualizarUITienda()
     {
         if (textoKPI != null) textoKPI.text = "Reposiciones: " + totalReposicionesSemanales;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (mostrarPuntosSoloSeleccionado)
+            return;
+
+        DibujarPuntosDeColocacion();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        DibujarPuntosDeColocacion();
+    }
+
+    private void DibujarPuntosDeColocacion()
+    {
+        if (!mostrarPuntosEnEditor || puntosDeColocacion == null)
+            return;
+
+        for (int i = 0; i < puntosDeColocacion.Length; i++)
+        {
+            Transform punto = puntosDeColocacion[i];
+            if (punto == null)
+                continue;
+
+            bool esSiguiente = i == stockActual;
+            Gizmos.color = esSiguiente ? colorPuntoSiguiente : colorPuntos;
+            Gizmos.matrix = Matrix4x4.TRS(punto.position, punto.rotation, Vector3.one);
+            Gizmos.DrawCube(Vector3.zero, tamanoGizmoPunto);
+            Gizmos.DrawWireCube(Vector3.zero, tamanoGizmoPunto * 1.1f);
+            Gizmos.matrix = Matrix4x4.identity;
+
+            if (i + 1 < puntosDeColocacion.Length && puntosDeColocacion[i + 1] != null)
+            {
+                Gizmos.color = colorPuntos;
+                Gizmos.DrawLine(punto.position, puntosDeColocacion[i + 1].position);
+            }
+
+#if UNITY_EDITOR
+            if (mostrarNumerosPuntos)
+            {
+                Handles.color = esSiguiente ? colorPuntoSiguiente : colorPuntos;
+                Handles.Label(punto.position + Vector3.up * tamanoGizmoPunto.y, i.ToString());
+            }
+#endif
+        }
     }
 }

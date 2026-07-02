@@ -333,22 +333,14 @@ public class PlayerController : MonoBehaviour
         #region Colocacion en Estanteria (LMB)
         if (grabbedTransform != null && Input.GetMouseButtonDown(0))
         {
-            Ray placementRay = new Ray(camTransform.position, camTransform.forward);
-            RaycastHit placementHit;
+            ProductBox caja = grabbedTransform.GetComponent<ProductBox>();
+            RestockShelf estante = EncontrarEstanteParaReposicion(caja);
 
-            if (Physics.Raycast(placementRay, out placementHit, distanciaDeColocacion))
+            if (estante != null && caja != null && estante.ReponerProducto(caja))
             {
-                RestockShelf estante = placementHit.collider.GetComponentInParent<RestockShelf>();
-                ProductBox caja = grabbedTransform.GetComponent<ProductBox>();
-
-                if (estante != null && caja != null)
+                if (QTEManager.Instance != null)
                 {
-                    estante.ReponerProducto(caja);
-
-                    if (QTEManager.Instance != null)
-                    {
-                        QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorReponer);
-                    }
+                    QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorReponer);
                 }
             }
         }
@@ -495,6 +487,62 @@ public class PlayerController : MonoBehaviour
             if (estante != null)
                 estante.OcultarIndicador();
         }
+    }
+
+    RestockShelf EncontrarEstanteParaReposicion(ProductBox caja)
+    {
+        if (caja == null || caja.datosProducto == null)
+            return null;
+
+        Ray placementRay = new Ray(camTransform.position, camTransform.forward);
+        RaycastHit[] hits = Physics.RaycastAll(placementRay, distanciaDeColocacion);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (RaycastHit hit in hits)
+        {
+            RestockShelf estanteMirado = hit.collider.GetComponentInParent<RestockShelf>();
+            if (estanteMirado != null && estanteMirado.PuedeRecibirProducto(caja.datosProducto))
+                return estanteMirado;
+        }
+
+        RestockShelf estanteCercano = null;
+        float menorDistancia = distanciaDeColocacion;
+
+        foreach (RestockShelf estante in RestockShelf.Instancias)
+        {
+            if (estante == null || !estante.PuedeRecibirProducto(caja.datosProducto))
+                continue;
+
+            float distancia = DistanciaAlEstante(estante);
+            if (distancia < menorDistancia)
+            {
+                menorDistancia = distancia;
+                estanteCercano = estante;
+            }
+        }
+
+        return estanteCercano;
+    }
+
+    float DistanciaAlEstante(RestockShelf estante)
+    {
+        Collider[] colliders = estante.GetComponentsInChildren<Collider>();
+        if (colliders.Length == 0)
+            return Vector3.Distance(transform.position, estante.transform.position);
+
+        float menorDistancia = float.MaxValue;
+        foreach (Collider col in colliders)
+        {
+            if (col == null || !col.enabled)
+                continue;
+
+            Vector3 puntoMasCercano = col.ClosestPoint(transform.position);
+            float distancia = Vector3.Distance(transform.position, puntoMasCercano);
+            if (distancia < menorDistancia)
+                menorDistancia = distancia;
+        }
+
+        return menorDistancia;
     }
 
     public void AplicarEstadoCursor()
