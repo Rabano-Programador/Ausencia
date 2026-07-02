@@ -50,6 +50,20 @@ public class PlayerController : MonoBehaviour
     [Header("UI Interaccion")]
     public TextMeshProUGUI textoInteraccion;
 
+    [Header("HUD Brazos")]
+    public GameObject manosVacias;
+    public GameObject manosConEscaner;
+    public GameObject manosConCaja;
+
+    [Header("HUD Brazos Movimiento")]
+    public Transform contenedorBrazosHUD;
+    public bool activarJiggleBrazos = true;
+    public bool probarJiggleBrazosSiempre = false;
+    public float frecuenciaJiggleBrazos = 7f;
+    public float amplitudVerticalJiggle = 0.04f;
+    public float amplitudVerticalJiggleUI = 12f;
+    public float suavizadoJiggleBrazos = 14f;
+    private bool debeJigglearBrazos;
 
     [SerializeField] Collider playerDetection;
 
@@ -74,6 +88,9 @@ public class PlayerController : MonoBehaviour
     private bool estaEnLaCaja = false;
     private bool estaEnTransbank = false;
     private float bloqueoInteraccionCajaHasta = 0f;
+    private readonly Dictionary<Transform, Vector3> posicionesInicialesHUD = new Dictionary<Transform, Vector3>();
+    private readonly Dictionary<Transform, Quaternion> rotacionesInicialesHUD = new Dictionary<Transform, Quaternion>();
+    private readonly Dictionary<RectTransform, Vector2> posicionesInicialesRectHUD = new Dictionary<RectTransform, Vector2>();
 
     public bool EstaEnLaCaja => estaEnLaCaja;
     public bool CanMove => canMove;
@@ -103,6 +120,8 @@ public class PlayerController : MonoBehaviour
         originalHeight = capsule.height;
         originalCenter = capsule.center;
         originalCameraPos = camTransform.localPosition;
+        RegistrarOrigenesHUDBrazos();
+        ActualizarHUDBrazos();
     }
     #endregion
 
@@ -346,11 +365,27 @@ public class PlayerController : MonoBehaviour
                 {
                     QTEManager.Instance.AcumularTension(QTEManager.Instance.tensionPorReponer);
                 }
+
+                if (caja.unidadesRestantes <= 0)
+                {
+                    grabbedTransform = null;
+                    OcultarIndicadoresEstantes();
+                }
+
+                ActualizarHUDBrazos();
             }
         }
         #endregion
+
+        ActualizarHUDBrazos();
+        debeJigglearBrazos = DebeMoverBrazosHUD();
     }
     #endregion
+
+    private void LateUpdate()
+    {
+        ActualizarJiggleHUDBrazos();
+    }
 
     #region Agacharse
     private void Crouch()
@@ -391,6 +426,7 @@ public class PlayerController : MonoBehaviour
         Collider col = grabbedTransform.GetComponent<Collider>();
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
         if (col != null) col.enabled = false;
+        ActualizarHUDBrazos();
     }
 
     private void ReleaseTransform()
@@ -401,6 +437,7 @@ public class PlayerController : MonoBehaviour
         if (rb != null) { rb.isKinematic = false; rb.useGravity = true; rb.freezeRotation = false; }
         grabbedTransform = null;
         OcultarIndicadoresEstantes();
+        ActualizarHUDBrazos();
     }
 
     public void ForzarSoltarItem()
@@ -429,6 +466,7 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        ActualizarHUDBrazos();
     }
 
     private void SalirDeModoCaja()
@@ -436,6 +474,7 @@ public class PlayerController : MonoBehaviour
         estaEnLaCaja = false;
         bloqueoInteraccionCajaHasta = Time.unscaledTime + 0.2f;
         SetCanMove(true);
+        ActualizarHUDBrazos();
     }
 
     private void EntrarAModoTransbank()
@@ -444,6 +483,7 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        ActualizarHUDBrazos();
     }
 
     public void SalirDeModoTransbank()
@@ -452,6 +492,7 @@ public class PlayerController : MonoBehaviour
 
         camTransform.localPosition = originalCameraPos;
         AplicarEstadoCursor();
+        ActualizarHUDBrazos();
     }
     #endregion
 
@@ -547,6 +588,111 @@ public class PlayerController : MonoBehaviour
         }
 
         return menorDistancia;
+    }
+
+    void ActualizarHUDBrazos()
+    {
+        bool tieneCajaEnMano = grabbedTransform != null && grabbedTransform.GetComponent<ProductBox>() != null;
+        bool mostrarEscaner = !tieneCajaEnMano && (estaEnLaCaja || estaEnTransbank);
+        bool mostrarVacias = !tieneCajaEnMano && !mostrarEscaner;
+
+        SetActiveIfNotNull(manosVacias, mostrarVacias);
+        SetActiveIfNotNull(manosConEscaner, mostrarEscaner);
+        SetActiveIfNotNull(manosConCaja, tieneCajaEnMano);
+    }
+
+    void ActualizarJiggleHUDBrazos()
+    {
+        Transform objetivo = ObtenerTransformJiggleBrazos();
+        if (objetivo == null)
+            return;
+
+        RegistrarOrigenHUD(objetivo);
+
+        Vector3 posicionBase = posicionesInicialesHUD[objetivo];
+        Quaternion rotacionBase = rotacionesInicialesHUD[objetivo];
+        float offsetVerticalNormalizado = activarJiggleBrazos && debeJigglearBrazos
+            ? Mathf.Sin(Time.time * frecuenciaJiggleBrazos)
+            : 0f;
+
+        Vector3 posicionObjetivo = posicionBase;
+        Quaternion rotacionObjetivo = rotacionBase;
+
+        RectTransform rectObjetivo = objetivo as RectTransform;
+        if (rectObjetivo != null)
+        {
+            Vector2 posicionRectBase = posicionesInicialesRectHUD[rectObjetivo];
+            Vector2 posicionRectObjetivo = posicionRectBase + Vector2.up * offsetVerticalNormalizado * amplitudVerticalJiggleUI;
+
+            float rectT = 1f - Mathf.Exp(-suavizadoJiggleBrazos * Time.deltaTime);
+            rectObjetivo.anchoredPosition = Vector2.Lerp(rectObjetivo.anchoredPosition, posicionRectObjetivo, rectT);
+            rectObjetivo.localRotation = Quaternion.Slerp(rectObjetivo.localRotation, rotacionObjetivo, rectT);
+            return;
+        }
+
+        posicionObjetivo += Vector3.up * offsetVerticalNormalizado * amplitudVerticalJiggle;
+
+        float t = 1f - Mathf.Exp(-suavizadoJiggleBrazos * Time.deltaTime);
+        objetivo.localPosition = Vector3.Lerp(objetivo.localPosition, posicionObjetivo, t);
+        objetivo.localRotation = Quaternion.Slerp(objetivo.localRotation, rotacionObjetivo, t);
+    }
+
+    Transform ObtenerTransformJiggleBrazos()
+    {
+        if (contenedorBrazosHUD != null)
+            return contenedorBrazosHUD;
+
+        if (manosConCaja != null && manosConCaja.activeSelf)
+            return manosConCaja.transform;
+
+        if (manosConEscaner != null && manosConEscaner.activeSelf)
+            return manosConEscaner.transform;
+
+        if (manosVacias != null && manosVacias.activeSelf)
+            return manosVacias.transform;
+
+        return null;
+    }
+
+    bool DebeMoverBrazosHUD()
+    {
+        if (probarJiggleBrazosSiempre)
+            return true;
+
+        if (!canMove || estaEnLaCaja || estaEnTransbank)
+            return false;
+
+        bool hayInputMovimiento = Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.01f ||
+            Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.01f;
+
+        return hayInputMovimiento || PlayerMovement.sqrMagnitude > 0.01f;
+    }
+
+    void RegistrarOrigenesHUDBrazos()
+    {
+        RegistrarOrigenHUD(contenedorBrazosHUD);
+        if (manosVacias != null) RegistrarOrigenHUD(manosVacias.transform);
+        if (manosConEscaner != null) RegistrarOrigenHUD(manosConEscaner.transform);
+        if (manosConCaja != null) RegistrarOrigenHUD(manosConCaja.transform);
+    }
+
+    void RegistrarOrigenHUD(Transform objetivo)
+    {
+        if (objetivo == null || posicionesInicialesHUD.ContainsKey(objetivo))
+            return;
+
+        posicionesInicialesHUD.Add(objetivo, objetivo.localPosition);
+        rotacionesInicialesHUD.Add(objetivo, objetivo.localRotation);
+
+        RectTransform rectObjetivo = objetivo as RectTransform;
+        if (rectObjetivo != null)
+            posicionesInicialesRectHUD.Add(rectObjetivo, rectObjetivo.anchoredPosition);
+    }
+
+    void SetActiveIfNotNull(GameObject objeto, bool activo)
+    {
+        if (objeto != null && objeto.activeSelf != activo)
+            objeto.SetActive(activo);
     }
 
     public void AplicarEstadoCursor()
